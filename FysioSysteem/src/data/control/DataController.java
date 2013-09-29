@@ -72,7 +72,7 @@ public class DataController {
         if (!ftp.isVerbonden() && !ftp.isIngelogd()) ftp.verbind(); //Verbind als er geen verbinding is
         else if (!ftp.isVerbonden() || !ftp.isIngelogd()) return false;
         
-        boolean returnValue = true;
+        boolean returnValue;
         File file = saveObjectF(mainFolder + Folder.FTPFysio.getPad() + separator + bestand + type, object);
         if (file != null) {
             returnValue = ftp.uploadFileNaarSever(file);

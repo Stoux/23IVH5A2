@@ -197,5 +197,12 @@ public class FtpController {
         return ingelogd;
     }
     
+    /**
+     * Geeft mogelijke foutmeldingen terug voor nette errorhandling
+     * @return error
+     */
+    public String getError(){
+        return error;
+    }
     
 }
