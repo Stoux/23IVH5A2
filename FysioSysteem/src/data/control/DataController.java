@@ -64,9 +64,9 @@ public class DataController {
     
     /**
      * Verstuur een object naar de FTP server
-     * @param bestand
-     * @param object
-     * @return 
+     * @param bestand de bestandnaam
+     * @param object het object
+     * @return gelukt
      */
     public boolean syncObjectMetFTP(String bestand, Object object) {
         if (!ftp.isVerbonden() && !ftp.isIngelogd()) ftp.verbind(); //Verbind als er geen verbinding is
@@ -134,15 +134,26 @@ public class DataController {
     
     /**
      * Laad een opgeslagen object
-     * @param folder Folder waar het is opgeslagen
+     * @param folder Folder waar het object is opgeslagen
      * @param bestand Naam van het bestand
+     * @param objectKlasse De klasse die het object zou moeten zijn
+     * @return Het object | Null als het bestand niet is gevonden of niet de goede klasse was
+     */
+    public Object laadObject(Folder folder, String bestand, Class objectKlasse) {
+        return laadObject(bestand + type, folder, objectKlasse);
+    }
+    
+    /**
+     * Laad een opgeslagen object
+     * @param folder Folder waar het is opgeslagen
+     * @param bestand Naam van het bestand + .dat
      * @param objectKlasse De klasse die het object zou moeten zijn
      * @return Het geladen object | Null als het bestand niet is gevonden of niet de goede klasse was
      */
-    private Object laadObject(Folder folder, String bestand, Class objectKlasse) {
+    private Object laadObject(String bestand, Folder folder, Class objectKlasse) {
         Object returnObject;
         try {
-            FileInputStream fis = new FileInputStream(new File(mainFolder + folder + separator + bestand + type));
+            FileInputStream fis = new FileInputStream(new File(mainFolder + folder + separator + bestand));
             try (ObjectInputStream ois = new ObjectInputStream(fis)) {
                 returnObject = objectKlasse.cast(ois.readObject());
             }
@@ -152,7 +163,40 @@ public class DataController {
         return returnObject;
     }
     
+    /**
+     * Laad alle objecten van een bepaalde klasse uit een folder
+     * @param folder de folder
+     * @param objectKlasse de klasse
+     * @return Arraylist met alle objecten
+     */
+    public ArrayList<Object> laadObjectenUitFolder(Folder folder, Class objectKlasse) {
+        ArrayList<Object> objecten = new ArrayList<>();
+        File map = new File(mainFolder + folder);
+        for (String filename : map.list()) {
+            Object object = laadObject(filename, folder, objectKlasse);
+            if (object != null) {
+                objecten.add(object);
+            }
+        }
+        return objecten;
+    }
     
+    /**
+     * Verwijder een bestand
+     * @param folder De folder waar het bestand staat
+     * @param bestand De naam van het bestand
+     * @return gelukt
+     */
+    private boolean verwijderBestand(Folder folder, String bestand) {
+        boolean returnValue;
+        File file = new File(mainFolder + folder + separator + bestand + type);
+        if (file.exists()) {
+            returnValue = file.delete();
+        } else {
+            returnValue = false;
+        }
+        return returnValue;
+    }
     
     /**
      * Haal alle bestanden op in een bepaalde folder
