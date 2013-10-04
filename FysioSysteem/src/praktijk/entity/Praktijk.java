@@ -1,7 +1,7 @@
 package praktijk.entity;
 
 /**
- * Bevat alle informatie van een fysiopraktijk
+ * Bevat alle informatie van een fysiotherapiepraktijk
  * @author Dennis
  */
 public class Praktijk {
@@ -15,7 +15,7 @@ public class Praktijk {
     private int faxnummer;
     
     /**
-     * Maakt een nieuwe praktijk aan en stelt alle informatie in
+     * Maakt een nieuwe fysiotherapiepraktijk aan en stelt alle informatie in
      * @param naam naam van de praktijk naam van de praktijk
      * @param plaats plaats van de praktijk
      * @param postcode postcode van de praktijk
