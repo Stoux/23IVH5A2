@@ -6,7 +6,7 @@ package data.entity;
  */
 public enum Folder {
     
-    Therapeuten("Therapeuten"), Praktijken("Praktijken"), Behandelingen("Behandelingen"), FTPFysio("FTP" + System.getProperty("file.separator") + "Fysio"), FTPFacturatie("FTP" + System.getProperty("file.separator") + "Facturatie");
+    Therapeuten("Therapeuten"), Praktijken("Praktijken"), Behandelingen("Behandelingen"), BehandelingGegevens("Behandelingen" + System.getProperty("file.separator") + "StamGegevens"), FTPFysio("FTP" + System.getProperty("file.separator") + "Fysio"), FTPFacturatie("FTP" + System.getProperty("file.separator") + "Facturatie");
 
     private String pad;
     

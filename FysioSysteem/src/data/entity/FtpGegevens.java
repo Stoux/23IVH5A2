@@ -1,10 +1,12 @@
 package data.entity;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Leon Stam
  */
-public class FtpGegevens {
+public class FtpGegevens implements Serializable {
     
     private String host;
     private int port;

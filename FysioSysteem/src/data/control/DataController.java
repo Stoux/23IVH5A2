@@ -187,7 +187,7 @@ public class DataController {
      * @param bestand De naam van het bestand
      * @return gelukt
      */
-    private boolean verwijderBestand(Folder folder, String bestand) {
+    public boolean verwijderBestand(Folder folder, String bestand) {
         boolean returnValue;
         File file = new File(mainFolder + folder + separator + bestand + type);
         if (file.exists()) {
