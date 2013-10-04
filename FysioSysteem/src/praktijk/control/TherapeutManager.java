@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import praktijk.entity.Therapeut;
 import data.control.DataController;
 import data.entity.Folder;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Manager van {@link therapeut.boundary.TherapeutOverzichtGUI TherapeutOverzichtGUI} en {@link therapeut.boundary.TherapeutWijzigGUI TherapeutWijzigGUI}
@@ -27,7 +27,7 @@ public class TherapeutManager {
             therapeuten.add((Therapeut) obj);
         }
         
-        //sorteer de praktijken op naam
+        //sorteer de therapeuten op naam
         Collections.sort(therapeuten, Therapeut.therapeutNameComparator);
     }
     
@@ -54,9 +54,10 @@ public class TherapeutManager {
      * @return succes: is het toevoegen geslaagd?
      */
     public boolean voegToe(Therapeut therapeut) {
-        therapeuten.add(therapeut);
-        // TODO: Opslaan van nieuwe therapeut
-        return dataController.saveObject(Folder.Therapeuten, String.valueOf(therapeut.getBsn()), therapeut);
+        boolean succes = dataController.saveObject(Folder.Therapeuten, String.valueOf(therapeut.getBsn()), therapeut);
+        if (succes)
+            therapeuten.add(therapeut);
+        return succes;
     }
     
     /**
@@ -66,19 +67,47 @@ public class TherapeutManager {
      * @return succes: is het toevoegen geslaagd?
      */
     public boolean wijzig(int index, Therapeut therapeut) {
-        therapeuten.set(index, therapeut);
+        boolean succes = dataController.saveObject(Folder.Therapeuten, String.valueOf(therapeut.getBsn()), therapeut);
+        if (succes)
+            therapeuten.set(index, therapeut);
+        return succes;
+    }
+    
+    /**
+     * Verwijder een therapeut, deze wordt ook verwijderd uit het {@link data datasubsysteem}
+     * @param index De index die deze therapeut heeft in de {@link java.util.ArrayList ArrayList} en JTable
+     * @return succes: is het toevoegen geslaagd?
+     */
+    public boolean verwijder(int index) {
+        boolean succes = dataController.verwijderBestand(Folder.Therapeuten, String.valueOf(therapeuten.get(index).getBsn()));
+        if (succes)
+            therapeuten.remove(index);
+        return succes;
+    }
+    
+    /**
+     * Doorzoekt de namen van de therapeuten op de woorden in de query
+     * @param query de woorden waarop gezocht wordt
+     * @return de therapeuten die voldoen aan de zoekopdracht
+     */
+    public ArrayList<Therapeut> zoekTherapeut(String query) {
+        ArrayList<Therapeut> gevondenTherapeuten = new ArrayList<>();
+        List<String> keywords = Arrays.asList(query.toLowerCase().split("\\s+"));
         
-        //TODO: Opslaan van gewijzigde therapeut
-        return dataController.saveObject(Folder.Therapeuten, String.valueOf(therapeut.getBsn()), therapeut);
-    }
-    
-    public boolean verwijder() {
-        // TODO: verwijderen van therapeut
-        throw new UnsupportedOperationException("Nog niet geïmplementeerd");
-    }
-    
-    public void toonTherapeut(String naam) {
-        // TODO: Zoeken op therapeut
-        throw new UnsupportedOperationException("Nog niet geïmplementeerd");
+        for(Therapeut therapeut : therapeuten) {
+            Iterator<String> iterator = keywords.iterator();
+            String naam = therapeut.getNaam().toLowerCase();
+            boolean containsWords = true;
+            
+            while (iterator.hasNext() && containsWords) {
+                if (!naam.contains(iterator.next()))
+                    containsWords = false;
+            }
+            
+            if (containsWords)
+                gevondenTherapeuten.add(therapeut);
+        }
+        
+        return gevondenTherapeuten;
     }
 }

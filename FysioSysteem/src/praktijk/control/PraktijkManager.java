@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import praktijk.entity.Praktijk;
 import data.control.DataController;
 import data.entity.Folder;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Manager van {@link praktijk.boundary.PraktijkOverzichtGUI PraktijkOverzichtGUI} en {@link praktijk.boundary.PraktijkWijzigGUI PraktijkWijzigGUI}
@@ -54,9 +54,10 @@ public class PraktijkManager {
      * @return succes: is het toevoegen geslaagd?
      */
     public boolean voegToe(Praktijk praktijk) {
-        praktijken.add(praktijk);
-        // TODO: Opslaan van nieuwe praktijk
-        return dataController.saveObject(Folder.Praktijken, String.valueOf(praktijk.getKvk()), praktijk);
+        boolean succes = dataController.saveObject(Folder.Praktijken, String.valueOf(praktijk.getKvk()), praktijk);
+        if (succes)
+            praktijken.add(praktijk);
+        return succes;
     }
     
     /**
@@ -66,19 +67,47 @@ public class PraktijkManager {
      * @return succes: is het toevoegen geslaagd?
      */
     public boolean wijzig(int index, Praktijk praktijk) {
-        praktijken.set(index, praktijk);
+        boolean succes = dataController.saveObject(Folder.Praktijken, String.valueOf(praktijk.getKvk()), praktijk);
+        if (succes)
+            praktijken.set(index, praktijk);
+        return succes;
+    }
+    
+    /**
+     * Verwijder een praktijk, deze wordt ook verwijderd uit het {@link data datasubsysteem}
+     * @param index De index die deze prakijk heeft in de {@link java.util.ArrayList ArrayList} en JTable
+     * @return succes: is het toevoegen geslaagd?
+     */
+    public boolean verwijder(int index) {
+        boolean succes = dataController.verwijderBestand(Folder.Praktijken, String.valueOf(praktijken.get(index).getKvk()));
+        if (succes)
+            praktijken.remove(index);
+        return succes;
+    }
+    
+    /**
+     * Doorzoekt de namen van de praktijken op de woorden in de query
+     * @param query de woorden waarop gezocht wordt
+     * @return de praktijken die voldoen aan de zoekopdracht
+     */
+    public ArrayList<Praktijk> zoekPraktijk(String query) {
+        ArrayList<Praktijk> gevondenPraktijken = new ArrayList<>();
+        List<String> keywords = Arrays.asList(query.toLowerCase().split("\\s+"));
         
-        //TODO: Opslaan van gewijzigde praktijk
-        return dataController.saveObject(Folder.Praktijken, String.valueOf(praktijk.getKvk()), praktijk);
-    }
-    
-    public boolean verwijder() {
-        // TODO: verwijderen van praktijk
-        throw new UnsupportedOperationException("Nog niet geïmplementeerd");
-    }
-    
-    public void toonPraktijk(String naam) {
-        // TODO: Zoeken op praktijk
-        throw new UnsupportedOperationException("Nog niet geïmplementeerd");
+        for(Praktijk praktijk : praktijken) {
+            Iterator<String> iterator = keywords.iterator();
+            String naam = praktijk.getNaam().toLowerCase();
+            boolean containsWords = true;
+            
+            while (iterator.hasNext() && containsWords) {
+                if (!naam.contains(iterator.next()))
+                    containsWords = false;
+            }
+            
+            if (containsWords)
+                gevondenPraktijken.add(praktijk);
+        }
+        
+        return gevondenPraktijken;
     }
 }
