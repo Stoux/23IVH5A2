@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import praktijk.entity.Praktijk;
 import data.control.DataController;
 import data.entity.Folder;
+import java.util.Collections;
 
 /**
  * Manager van {@link praktijk.boundary.PraktijkOverzichtGUI PraktijkOverzichtGUI} en {@link praktijk.boundary.PraktijkWijzigGUI PraktijkWijzigGUI}
@@ -14,10 +15,20 @@ public class PraktijkManager {
     private DataController dataController;
     
     /**
-     * Initialiseert de ArrayList en folders
+     * Constructor<br />
+     * Haalt de praktijken op uit het {@link data datasubsysteem}
      */
     private PraktijkManager() {
         praktijken = new ArrayList<>();
+        dataController = new DataController();
+        
+        //ophalen van objecten uit data subsysteem, cast deze naar praktijken
+        for (Object obj : dataController.laadObjectenUitFolder(Folder.Praktijken, Praktijk.class)) {
+            praktijken.add((Praktijk) obj);
+        }
+        
+        //sorteer de praktijken op naam
+        Collections.sort(praktijken, Praktijk.praktijkNameComparator);
     }
     
     /**
@@ -30,7 +41,7 @@ public class PraktijkManager {
     
     /**
      * Verkrijg een bepaalde praktijk
-     * @param index De index die deze prakijk heeft in de {@link java.util.ArrayList ArrayList} en JTable
+     * @param index De index die deze praktijk heeft in de {@link java.util.ArrayList ArrayList} en JTable
      * @return De gevraagde praktijk
      */
     public Praktijk getPraktijk(int index) {

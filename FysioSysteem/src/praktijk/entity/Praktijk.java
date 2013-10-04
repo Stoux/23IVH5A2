@@ -1,18 +1,21 @@
 package praktijk.entity;
 
+import java.io.Serializable;
+import java.util.Comparator;
+
 /**
  * Bevat alle informatie van een fysiotherapiepraktijk
  * @author Dennis
  */
-public class Praktijk {
+public class Praktijk implements Serializable {
     private String naam;
     private String plaats;
     private String postcode;
     private String huisnummer;
-    private int kvkNummer;
+    private long kvkNummer;
     private String iban;
-    private int telefoonnummer;
-    private int faxnummer;
+    private long telefoonnummer;
+    private long faxnummer;
     
     /**
      * Maakt een nieuwe fysiotherapiepraktijk aan en stelt alle informatie in
@@ -25,7 +28,7 @@ public class Praktijk {
      * @param telefoonnummer telefoonnummer van de praktijk
      * @param faxnummer faxnummer van de praktijk 
      */
-    public Praktijk(String naam, String plaats, String postcode, String huisnummer, int kvkNummer, String iban, int telefoonnummer, int faxnummer) {
+    public Praktijk(String naam, String plaats, String postcode, String huisnummer, long kvkNummer, String iban, long telefoonnummer, long faxnummer) {
         this.naam = naam;
         this.plaats = plaats;
         this.postcode = postcode;
@@ -35,7 +38,23 @@ public class Praktijk {
         this.telefoonnummer = telefoonnummer;
         this.faxnummer = faxnummer;
     }
-
+    
+    /**
+     * Comparator voor het sorteren van praktijken.
+     * Er wordt gesorteerd op de naam van de praktijk.
+     */
+    public static Comparator<Praktijk> praktijkNameComparator = new Comparator<Praktijk>() {
+        // TODO: Theorie, nog niet getest!
+        @Override
+        public int compare(Praktijk praktijk1, Praktijk praktijk2) {
+            //omzetten naar kleine letters, maakt het sorter niet hoofdlettergevoelig
+            String naam1 = praktijk1.getNaam().toLowerCase();
+            String naam2 = praktijk2.getNaam().toLowerCase();
+            //compare de strings
+            return naam1.compareTo(naam2);
+        }
+    };
+    
     /**
      * Geeft de naam van de praktijk terug
      * @return de naam van de praktijk
@@ -72,7 +91,7 @@ public class Praktijk {
      * Geeft het KVK-nummer van de praktijk terug
      * @return het KVK-nummer
      */
-    public int getKvk() {
+    public long getKvk() {
         return kvkNummer;
     }
 
@@ -88,7 +107,7 @@ public class Praktijk {
      * Geeft het telefoonnummer van de praktijk terug
      * @return het telefoonnummer waarop de praktijk bereikbaar is
      */
-    public int getTelnr() {
+    public long getTelnr() {
         return telefoonnummer;
     }
 
@@ -96,7 +115,7 @@ public class Praktijk {
      * Geeft het faxnummer van de praktijk terug
      * @return het faxnummer waarop de praktijk bereikbaar is
      */
-    public int getFaxnr() {
+    public long getFaxnr() {
         return faxnummer;
     }
 
@@ -144,7 +163,7 @@ public class Praktijk {
      * Wijzig het telefoonnummer van de praktijk
      * @param telefoonnummer Het nieuwe telefoonnummer
      */
-    public void setTelnr(int telefoonnummer) {
+    public void setTelnr(long telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
     }
 
@@ -152,7 +171,7 @@ public class Praktijk {
      * Wijzig het faxnummer van de praktijk
      * @param faxnummer 
      */
-    public void setFaxnr(int faxnummer) {
+    public void setFaxnr(long faxnummer) {
         this.faxnummer = faxnummer;
     }
 }

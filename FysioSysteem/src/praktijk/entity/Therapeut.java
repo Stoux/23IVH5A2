@@ -1,22 +1,24 @@
 package praktijk.entity;
 
+import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Bevat alle informatie van een fysiotherapeut
  * @author Dennis
  */
-public class Therapeut {
+public class Therapeut implements Serializable {
     private String naam;
     private String tussenvoegsel;
     private String achternaam;
     private Date geboortedatum;
     private Geslacht geslacht;
-    private int bsn;
+    private long bsn;
     private String postcode;
     private String huisnummer;
-    private int telefoonnummer;
-    private int praktijkKvk;
+    private long telefoonnummer;
+    private long praktijkKvk;
 
     /**
      * Maakt een nieuwe fysiotherapeut aan en stelt alle informatie in
@@ -28,8 +30,9 @@ public class Therapeut {
      * @param postcode postcode van de therapeut
      * @param huisnummer huisnummer van de therapeut
      * @param telefoonnummer telefoonnummer van de therapeut 
+     * @param praktijkKvk KVK-nummer van de praktijk waar de therapeut werkzaam is
      */
-    public Therapeut (String naam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, int bsn, String postcode, String huisnummer, int telefoonnummer, int praktijkKvk) {
+    public Therapeut (String naam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, long bsn, String postcode, String huisnummer, long telefoonnummer, long praktijkKvk) {
         this.naam = naam;
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
@@ -41,6 +44,22 @@ public class Therapeut {
         this.telefoonnummer = telefoonnummer;
         this.praktijkKvk = praktijkKvk;
     }
+    
+    /**
+     * Comparator voor het sorteren van therapeuten.
+     * Er wordt gesorteerd op de naam van de therapeut.
+     */
+    public static Comparator<Therapeut> therapeutNameComparator = new Comparator<Therapeut>() {
+        // TODO: Comparator voor therapeuten: theorie, nog niet getest!
+        @Override
+        public int compare(Therapeut therapeut1, Therapeut therapeut2) {
+            //omzetten naar kleine letters, maakt het sorter niet hoofdlettergevoelig
+            String naam1 = therapeut1.getNaam().toLowerCase();
+            String naam2 = therapeut2.getNaam().toLowerCase();
+            //compare de strings
+            return naam1.compareTo(naam2);
+        }
+    };
     
     /**
      * Geeft de voornaam van de therapeut terug
@@ -86,7 +105,7 @@ public class Therapeut {
      * Geeft de BSN-nummer van de therapeut terug
      * @return BSN-nummer van de therapeut
      */
-    public int getBsn() {
+    public long getBsn() {
         return bsn;
     }
 
@@ -110,7 +129,7 @@ public class Therapeut {
      * Geeft het telefoonnummer van de therapeut terug
      * @return telefoonnummer van de therapeut
      */
-    public int getTelnr() {
+    public long getTelnr() {
         return telefoonnummer;
     }
     
@@ -118,7 +137,7 @@ public class Therapeut {
      * Geeft het KVK-nummer van de fysiotherapiepraktijk terug, waar de therapeut werkzaam is
      * @return het KVK-nummer van de praktijk
      */
-    public int getPraktijkKvk() {
+    public long getPraktijkKvk() {
         return praktijkKvk;
     }
 
@@ -182,7 +201,7 @@ public class Therapeut {
      * Wijzig het telefoonnummer van de therapeut
      * @param telefoonnummer Het nieuwe telefoonnummer
      */
-    public void setTelnr(int telefoonnummer) {
+    public void setTelnr(long telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
     }
     
@@ -190,7 +209,7 @@ public class Therapeut {
      * Wijzig de praktijk waar de therapeut werkzaam is
      * @param praktijkKvk Het nieuwe KVK-nummer van de praktijk
      */
-    public void setPraktijkKvk(int praktijkKvk) {
+    public void setPraktijkKvk(long praktijkKvk) {
         this.praktijkKvk = praktijkKvk;
     }
     

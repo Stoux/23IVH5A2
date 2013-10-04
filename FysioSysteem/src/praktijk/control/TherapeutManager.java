@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import praktijk.entity.Therapeut;
 import data.control.DataController;
 import data.entity.Folder;
+import java.util.Collections;
 
 /**
  * Manager van {@link therapeut.boundary.TherapeutOverzichtGUI TherapeutOverzichtGUI} en {@link therapeut.boundary.TherapeutWijzigGUI TherapeutWijzigGUI}
@@ -14,10 +15,20 @@ public class TherapeutManager {
     private DataController dataController;
     
     /**
-     * Initialiseert de ArrayList
+     * Constructor<br />
+     * Haalt de therapeuten op uit het {@link data datasubsysteem}
      */
     private TherapeutManager() {
         therapeuten = new ArrayList<>();
+        dataController = new DataController();
+        
+        //ophalen van objecten uit data subsysteem, cast deze naar therapeuten
+        for (Object obj : dataController.laadObjectenUitFolder(Folder.Therapeuten, Therapeut.class)) {
+            therapeuten.add((Therapeut) obj);
+        }
+        
+        //sorteer de praktijken op naam
+        Collections.sort(therapeuten, Therapeut.therapeutNameComparator);
     }
     
     /**
@@ -30,7 +41,7 @@ public class TherapeutManager {
     
     /**
      * Verkrijg een bepaalde therapeut
-     * @param index De index die deze therapeut heeft in de {@link java.util.ArrayList ArrayList}
+     * @param index De index die deze therapeut heeft in de {@link java.util.ArrayList ArrayList} en JTable
      * @return De gevraagde therapeut
      */
     public Therapeut getTherapeut(int index) {
