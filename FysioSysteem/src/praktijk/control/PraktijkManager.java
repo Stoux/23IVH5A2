@@ -90,13 +90,15 @@ public class PraktijkManager {
      * @param query de woorden waarop gezocht wordt
      * @return de praktijken die voldoen aan de zoekopdracht
      */
-    public ArrayList<Praktijk> zoekPraktijk(String query) {
+    public ArrayList<Praktijk> zoekPraktijk(String query, boolean isName) {
         ArrayList<Praktijk> gevondenPraktijken = new ArrayList<>();
+        //splits de query op de spatie (regex)
         List<String> keywords = Arrays.asList(query.toLowerCase().split("\\s+"));
         
         for(Praktijk praktijk : praktijken) {
             Iterator<String> iterator = keywords.iterator();
-            String naam = praktijk.getNaam().toLowerCase();
+            String naam = (isName ? praktijk.getNaam() : praktijk.getPlaats()).toLowerCase();
+            //boolean wordt false, wanneer niet alle zoekworden terugkomen in de naam/plaatsnaam
             boolean containsWords = true;
             
             while (iterator.hasNext() && containsWords) {

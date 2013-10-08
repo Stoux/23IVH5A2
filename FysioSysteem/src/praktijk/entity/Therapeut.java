@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Dennis
  */
 public class Therapeut implements Serializable {
-    private String naam;
+    private String voornaam;
     private String tussenvoegsel;
     private String achternaam;
     private Date geboortedatum;
@@ -22,7 +22,8 @@ public class Therapeut implements Serializable {
 
     /**
      * Maakt een nieuwe fysiotherapeut aan en stelt alle informatie in
-     * @param tussenvoegsel tussenvoegsel van de therapeut tussenvoegsel van de therapeut
+     * @param voornaam voornaam van de therapeut
+     * @param tussenvoegsel tussenvoegsel van de therapeut
      * @param achternaam achternaam van de therapeut
      * @param geboortedatum geboortedatum van de therapeut
      * @param geslacht geslacht van de therapeut
@@ -32,8 +33,8 @@ public class Therapeut implements Serializable {
      * @param telefoonnummer telefoonnummer van de therapeut 
      * @param praktijkKvk KVK-nummer van de praktijk waar de therapeut werkzaam is
      */
-    public Therapeut (String naam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, long bsn, String postcode, String huisnummer, long telefoonnummer, long praktijkKvk) {
-        this.naam = naam;
+    public Therapeut (String voornaam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, long bsn, String postcode, String huisnummer, long telefoonnummer, long praktijkKvk) {
+        this.voornaam = voornaam;
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
@@ -54,8 +55,8 @@ public class Therapeut implements Serializable {
         @Override
         public int compare(Therapeut therapeut1, Therapeut therapeut2) {
             //omzetten naar kleine letters, maakt het sorter niet hoofdlettergevoelig
-            String naam1 = therapeut1.getNaam().toLowerCase();
-            String naam2 = therapeut2.getNaam().toLowerCase();
+            String naam1 = therapeut1.getVolledigeNaam().toLowerCase();
+            String naam2 = therapeut2.getVolledigeNaam().toLowerCase();
             //compare de strings
             return naam1.compareTo(naam2);
         }
@@ -65,8 +66,8 @@ public class Therapeut implements Serializable {
      * Geeft de voornaam van de therapeut terug
      * @return de voornaam van de therapeut
      */
-    public String getNaam() {
-        return naam;
+    public String getVoorNaam() {
+        return voornaam;
     }
 
     /**
@@ -83,6 +84,13 @@ public class Therapeut implements Serializable {
      */
     public String getAchternaam() {
         return achternaam;
+    }
+    
+    public String getVolledigeNaam() {
+        String naam = achternaam + ", " + voornaam;
+        if (!tussenvoegsel.isEmpty())
+            naam += " " + tussenvoegsel;
+        return naam;
     }
 
     /**
@@ -143,10 +151,10 @@ public class Therapeut implements Serializable {
 
     /**
      * Wijzig de voornaam van de therapeut
-     * @param naam De nieuwe voornaam
+     * @param voornaam De nieuwe voornaam
      */
-    public void setNaam(String naam) {
-        this.naam = naam;
+    public void setVoorNaam(String voornaam) {
+        this.voornaam = voornaam;
     }
 
     /**

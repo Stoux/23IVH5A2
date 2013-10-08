@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import praktijk.entity.Therapeut;
 import data.control.DataController;
 import data.entity.Folder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -92,11 +94,13 @@ public class TherapeutManager {
      */
     public ArrayList<Therapeut> zoekTherapeut(String query) {
         ArrayList<Therapeut> gevondenTherapeuten = new ArrayList<>();
+        //splits de query op de spatie (regex)
         List<String> keywords = Arrays.asList(query.toLowerCase().split("\\s+"));
         
         for(Therapeut therapeut : therapeuten) {
             Iterator<String> iterator = keywords.iterator();
-            String naam = therapeut.getNaam().toLowerCase();
+            String naam = therapeut.getVolledigeNaam().toLowerCase();
+            //boolean wordt false, wanneer niet alle zoekworden terugkomen in de naam
             boolean containsWords = true;
             
             while (iterator.hasNext() && containsWords) {
@@ -109,5 +113,15 @@ public class TherapeutManager {
         }
         
         return gevondenTherapeuten;
+    }
+    
+    public boolean checkDatum(String datum) {
+        try {
+            Date parsed = new SimpleDateFormat("dd-MM-yyyy").parse(datum);
+            return true;
+        }
+        catch (ParseException e) {
+            return false;
+        }
     }
 }
