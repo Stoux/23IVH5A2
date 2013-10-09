@@ -4,6 +4,11 @@
  */
 package rapportage.boundary;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import rapportage.control.CumulatiefControl;
 
 /**
@@ -18,8 +23,8 @@ public class CumulatiefGUI extends javax.swing.JFrame {
     
     // TODO new CumulatiefControl(defaulttablemodel van de jtable)
     public CumulatiefGUI() {
-        control = new CumulatiefControl(null);
         initComponents();
+        control = new CumulatiefControl((DefaultTableModel) overzichtTabel.getModel());
     }
 
     /**
@@ -31,22 +36,139 @@ public class CumulatiefGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        inhoudPanel = new javax.swing.JPanel();
+        terugButton = new javax.swing.JButton();
+        printenButton = new javax.swing.JButton();
+        startdatumTextField = new javax.swing.JTextField();
+        einddatumTextField = new javax.swing.JTextField();
+        zoekButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        overzichtTabel = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        terugMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        terugButton.setText("Terug");
+
+        printenButton.setText("Printen");
+
+        startdatumTextField.setText("Startdatum");
+
+        einddatumTextField.setText("Einddatum");
+
+        zoekButton.setText("Zoeken");
+        zoekButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zoekButtonActionPerformed(evt);
+            }
+        });
+
+        overzichtTabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Bedrijfscode", "Therapeutcode", "Behandelingscode", "Aantal behandelingen", "Datum", "Opmerkingen"
+            }
+        ));
+        overzichtTabel.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(overzichtTabel);
+
+        javax.swing.GroupLayout inhoudPanelLayout = new javax.swing.GroupLayout(inhoudPanel);
+        inhoudPanel.setLayout(inhoudPanelLayout);
+        inhoudPanelLayout.setHorizontalGroup(
+            inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inhoudPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(einddatumTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(startdatumTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+                    .addComponent(zoekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(terugButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(printenButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        inhoudPanelLayout.setVerticalGroup(
+            inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inhoudPanelLayout.createSequentialGroup()
+                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inhoudPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(startdatumTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(einddatumTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(zoekButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(printenButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(terugButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        fileMenu.setText("File");
+
+        terugMenuItem.setActionCommand("");
+        terugMenuItem.setLabel("Terug");
+        fileMenu.add(terugMenuItem);
+
+        jMenuBar1.add(fileMenu);
+
+        helpMenu.setText("Help");
+        jMenuBar1.add(helpMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(inhoudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(inhoudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
+        boolean b = control.zoek(parseDate(startdatumTextField.getText()), parseDate(einddatumTextField.getText()), (DefaultTableModel) overzichtTabel.getModel());
+        if(b == true){
+            overzichtTabel.setModel(control.getModel());
+        } else {
+            JOptionPane.showMessageDialog(this, "Zoeken op datum is niet geslaagd.");
+        }
+    }//GEN-LAST:event_zoekButtonActionPerformed
+    
+    private Date parseDate(String s){
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            return df.parse(s);
+        } catch (ParseException ex) {
+            System.out.println("Failed parsing date: " + ex.toString());
+            return null;
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -63,24 +185,31 @@ public class CumulatiefGUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CumulatiefGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CumulatiefGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CumulatiefGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CumulatiefGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new CumulatiefGUI().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField einddatumTextField;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JPanel inhoudPanel;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable overzichtTabel;
+    private javax.swing.JButton printenButton;
+    private javax.swing.JTextField startdatumTextField;
+    private javax.swing.JButton terugButton;
+    private javax.swing.JMenuItem terugMenuItem;
+    private javax.swing.JButton zoekButton;
     // End of variables declaration//GEN-END:variables
 }
