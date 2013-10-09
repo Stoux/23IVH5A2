@@ -20,7 +20,7 @@ public class TherapeutManager {
      * Constructor<br />
      * Haalt de therapeuten op uit het {@link data datasubsysteem}
      */
-    private TherapeutManager() {
+    public TherapeutManager() {
         therapeuten = new ArrayList<>();
         dataController = new DataController();
         

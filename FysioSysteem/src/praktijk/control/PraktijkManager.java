@@ -18,7 +18,7 @@ public class PraktijkManager {
      * Constructor<br />
      * Haalt de praktijken op uit het {@link data datasubsysteem}
      */
-    private PraktijkManager() {
+    public PraktijkManager() {
         praktijken = new ArrayList<>();
         dataController = new DataController();
         
