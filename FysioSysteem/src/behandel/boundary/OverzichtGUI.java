@@ -8,10 +8,8 @@ import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import main.HomeGUI;
 
 /**
  *
@@ -183,7 +181,7 @@ public class OverzichtGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void terugMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugMenuItemActionPerformed
-        new HomeGUI().setVisible(true);
+        //new HomeGUI().setVisible(true);
         
     }//GEN-LAST:event_terugMenuItemActionPerformed
 
