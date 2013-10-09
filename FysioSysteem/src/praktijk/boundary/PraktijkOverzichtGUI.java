@@ -15,25 +15,26 @@ import praktijk.entity.Praktijk;
  */
 public class PraktijkOverzichtGUI extends javax.swing.JFrame {
     PraktijkManager manager;
+    DefaultTableModel tableModel;
 
     /**
      * Creates new form PraktijkOverzichtGUI
      */
     public PraktijkOverzichtGUI() {
         initComponents();
-        manager = new PraktijkManager();
+//        manager = new PraktijkManager();
         
-//        ArrayList<Praktijk> lijst = new ArrayList<>();
-//        lijst.add(new Praktijk("Test1", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
-//        lijst.add(new Praktijk("Test2", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
-//        lijst.add(new Praktijk("Test3", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
-//        lijst.add(new Praktijk("Test4", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
+        ArrayList<Praktijk> lijst = new ArrayList<>();
+        lijst.add(new Praktijk("Test1", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
+        lijst.add(new Praktijk("Test2", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
+        lijst.add(new Praktijk("Test3", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
+        lijst.add(new Praktijk("Test4", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
         
-//        for(Praktijk p : lijst) {
-        for(Praktijk p : manager.getPraktijken()) {
-            DefaultTableModel model = new DefaultTableModel();
-            model.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getPostcode(), p.getHuisnummer(), p.getIban() });
-            praktijkenTable.setModel(model);
+        tableModel = (DefaultTableModel) praktijkenTable.getModel();
+        
+        for(Praktijk p : lijst) {
+//        for(Praktijk p : manager.getPraktijken()) {
+            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getPostcode(), p.getHuisnummer(), p.getIban() });
         }
         
     }
@@ -55,6 +56,12 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         terugButton = new javax.swing.JButton();
         verwijderButton = new javax.swing.JButton();
         bewerkButton = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,10 +74,7 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
 
         praktijkenTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Naam", "Plaatsnaam", "Straatnaam", "Huisnummer", "Rekeningnummer"
@@ -83,6 +87,24 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         verwijderButton.setText("Verwijder");
 
         bewerkButton.setText("Bewerk");
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("Bewerk");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Verwijder");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Terug");
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,16 +121,14 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(terugButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(verwijderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 9, Short.MAX_VALUE))
-                    .addComponent(bewerkButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bewerkButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(verwijderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bewerkButton)
@@ -166,6 +186,12 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bewerkButton;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable praktijkenTable;
     private javax.swing.JButton terugButton;
