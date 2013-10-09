@@ -12,7 +12,7 @@ public class Behandeling implements Serializable {
     private int behandelingsID;
     private int bsn;
     private String behandelingscode;
-    private String fysiotherapeutcode;
+    private Long fysiotherapeutBSN;
     private Date begintijd;
     private Date eindtijd;
     private Status status;
@@ -23,17 +23,17 @@ public class Behandeling implements Serializable {
      * @param behandelingsID het ID
      * @param bsn het Burgerservicenummer
      * @param behandelingscode de behandelingscode
-     * @param fysiotherapeutcode de code van de fysiotherapeut
+     * @param fysiotherapeutBSN de code van de fysiotherapeut
      * @param begintijd de begintijd
      * @param eindtijd de eindtijd
      * @param status de status van de behandeling
      * @param opmerking een eventuele opmerking
      */
-    public Behandeling(int behandelingsID, int bsn, String behandelingscode, String fysiotherapeutcode, Date begintijd, Date eindtijd, Status status, String opmerking) {
+    public Behandeling(int behandelingsID, int bsn, String behandelingscode, long fysiotherapeutBSN, Date begintijd, Date eindtijd, Status status, String opmerking) {
         this.behandelingsID = behandelingsID;
         this.bsn = bsn;
         this.behandelingscode = behandelingscode;
-        this.fysiotherapeutcode = fysiotherapeutcode;
+        this.fysiotherapeutBSN = fysiotherapeutBSN;
         this.begintijd = begintijd;
         this.eindtijd = eindtijd;
         this.status = status;
@@ -81,11 +81,11 @@ public class Behandeling implements Serializable {
     }
 
     /**
-     * Get de fysiotherapeutcode
+     * Get de fysiotherapeutBSN
      * @return de code van de therapeut
      */
-    public String getFysiotherapeutcode() {
-        return fysiotherapeutcode;
+    public long getFysiotherapeutBSN() {
+        return fysiotherapeutBSN;
     }
 
     /**
@@ -129,11 +129,11 @@ public class Behandeling implements Serializable {
     }
 
     /**
-     * Set de fysiotherapeutcode
-     * @param fysiotherapeutcode de code 
+     * Set de fysiotherapeutBSN
+     * @param fysiotherapeutBSN de code 
      */
-    public void setFysiotherapeutcode(String fysiotherapeutcode) {
-        this.fysiotherapeutcode = fysiotherapeutcode;
+    public void setFysiotherapeutBSN(long fysiotherapeutBSN) {
+        this.fysiotherapeutBSN = fysiotherapeutBSN;
     }
 
     /**

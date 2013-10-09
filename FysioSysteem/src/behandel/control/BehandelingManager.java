@@ -2,6 +2,7 @@ package behandel.control;
 
 import behandel.entity.BehandelGegevens;
 import behandel.entity.Behandeling;
+import behandel.entity.Behandeling.Status;
 import data.control.DataController;
 import data.entity.Folder;
 import java.text.ParseException;
@@ -137,6 +138,35 @@ public class BehandelingManager {
     }
     
     /**
+     * Het updaten van een behandeling
+     * @param behandelingsID het id
+     * @param behandelingscode de code
+     * @param begintijd de begintijd
+     * @param eindtijd de eindtijd
+     * @param status de status
+     * @param opmerking de opmerking
+     * @return gelukt
+     */
+    public boolean updateBehandeling(int behandelingsID, String behandelingscode, long fysiotherapeutbsn, Date begintijd, Date eindtijd, Status status, String opmerking) {
+        boolean returnBoolean = false;
+        Behandeling behandeling = getBehandeling(behandelingsID);
+        if (behandeling != null) {
+            behandeling.setBehandelingscode(behandelingscode);
+            behandeling.setFysiotherapeutBSN(fysiotherapeutbsn);
+            behandeling.setBegintijd(begintijd);
+            behandeling.setEindtijd(eindtijd);
+            behandeling.setStatus(status);
+            behandeling.setOpmerking(opmerking);
+            returnBoolean = dataController.saveObject(Folder.Behandelingen, Integer.toString(behandelingsID), behandeling);
+            aangepastePatienten.add(behandeling.getBurgerServiceNummer());
+        } 
+        return returnBoolean;
+    }
+    
+    
+    
+    
+    /**
      * Verwijder een behandeling aan de hand van het behandelingsID
      * @param behandelingsID het ID
      * @return of het verwijderen is geslaagd
@@ -151,6 +181,9 @@ public class BehandelingManager {
         }
         return returnBoolean;
     }
+    
+    
+    
     
     /**
      * Verwijder een behandeling uit de array & van het systeem
