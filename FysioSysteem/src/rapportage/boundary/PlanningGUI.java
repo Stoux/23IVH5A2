@@ -5,7 +5,6 @@
 package rapportage.boundary;
 
 import behandel.control.BehandelingManager;
-import data.control.DataController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,16 +17,17 @@ import rapportage.control.PlanningControl;
  * @author Jan
  */
 public class PlanningGUI extends javax.swing.JFrame {
+
     private PlanningControl control;
+
     /**
      * Creates new form PlanningGUI
      */
-    
-    // TODO new PlanningControl(defaulttablemodel van de jtable)
     public PlanningGUI(BehandelingManager manager) {
         initComponents();
         control = new PlanningControl((DefaultTableModel) overzichtTabel.getModel(), manager);
-        this.setVisible(true);
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+        control.getGegevens(new Date(new Date().getTime() - 84600000), new Date(new Date().getTime() + 86400000), (DefaultTableModel) overzichtTabel.getModel());
     }
 
     /**
@@ -43,12 +43,12 @@ public class PlanningGUI extends javax.swing.JFrame {
         startdatumTextField = new javax.swing.JTextField();
         einddatumTextField = new javax.swing.JTextField();
         datumButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        overzichtTabel = new javax.swing.JTable();
         sofinummerTextField = new javax.swing.JTextField();
         sofinummerButton = new javax.swing.JButton();
         terugButton = new javax.swing.JButton();
         printButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        overzichtTabel = new org.jdesktop.swingx.JXTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         terugMenuItem = new javax.swing.JMenuItem();
@@ -67,20 +67,6 @@ public class PlanningGUI extends javax.swing.JFrame {
             }
         });
 
-        overzichtTabel.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Bedrijf", "TherapeutCode", "Sofinummer", "BehandelCode", "Aantal Behandelingen", "Datum", "Opmerkingen"
-            }
-        ));
-        overzichtTabel.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(overzichtTabel);
-
         sofinummerTextField.setText("Sofinummer");
 
         sofinummerButton.setText("Zoek op Sofinummer");
@@ -93,6 +79,33 @@ public class PlanningGUI extends javax.swing.JFrame {
         terugButton.setText("Terug");
 
         printButton.setText("Printen");
+
+        overzichtTabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Bedrijfscode", "TherapeutCode", "Sofinummer", "BehandelCode", "Datum", "Opmerkingen"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(overzichtTabel);
+        overzichtTabel.getColumnModel().getColumn(0).setResizable(false);
+        overzichtTabel.getColumnModel().getColumn(1).setResizable(false);
+        overzichtTabel.getColumnModel().getColumn(2).setResizable(false);
+        overzichtTabel.getColumnModel().getColumn(3).setResizable(false);
+        overzichtTabel.getColumnModel().getColumn(4).setResizable(false);
+        overzichtTabel.getColumnModel().getColumn(5).setResizable(false);
 
         javax.swing.GroupLayout inhoudPanelLayout = new javax.swing.GroupLayout(inhoudPanel);
         inhoudPanel.setLayout(inhoudPanelLayout);
@@ -107,7 +120,7 @@ public class PlanningGUI extends javax.swing.JFrame {
                     .addComponent(sofinummerTextField)
                     .addComponent(sofinummerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(printButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -116,25 +129,27 @@ public class PlanningGUI extends javax.swing.JFrame {
         );
         inhoudPanelLayout.setVerticalGroup(
             inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inhoudPanelLayout.createSequentialGroup()
+            .addGroup(inhoudPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(inhoudPanelLayout.createSequentialGroup()
+                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inhoudPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(printButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(terugButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inhoudPanelLayout.createSequentialGroup()
-                        .addComponent(startdatumTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(einddatumTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(datumButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sofinummerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sofinummerButton)
+                    .addGroup(inhoudPanelLayout.createSequentialGroup()
+                        .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(inhoudPanelLayout.createSequentialGroup()
+                                .addComponent(startdatumTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(einddatumTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(datumButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sofinummerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sofinummerButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -173,7 +188,7 @@ public class PlanningGUI extends javax.swing.JFrame {
 
     private void datumButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datumButtonActionPerformed
         boolean b = control.zoekDatum(parseDate(startdatumTextField.getText()), parseDate(einddatumTextField.getText()), (DefaultTableModel) overzichtTabel.getModel());
-        if(b == true){
+        if (b == true) {
             overzichtTabel.setModel(control.getModel());
         } else {
             JOptionPane.showMessageDialog(this, "Zoeken op datum is niet geslaagd.");
@@ -182,24 +197,22 @@ public class PlanningGUI extends javax.swing.JFrame {
 
     private void sofinummerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sofinummerButtonActionPerformed
         boolean b = control.zoekSofinummer(Integer.parseInt(sofinummerTextField.getText()), (DefaultTableModel) overzichtTabel.getModel());
-        if(b == true){
+        if (b == true) {
             overzichtTabel.setModel(control.getModel());
         } else {
             JOptionPane.showMessageDialog(this, "Zoeken op datum is niet geslaagd.");
         }
     }//GEN-LAST:event_sofinummerButtonActionPerformed
 
-    private Date parseDate(String s){
+    private Date parseDate(String s) {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         try {
             return df.parse(s);
         } catch (ParseException ex) {
-            System.out.println("Failed parsing date: " + ex.toString());
+            JOptionPane.showMessageDialog(this, ex.toString());
             return null;
         }
     }
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton datumButton;
     private javax.swing.JTextField einddatumTextField;
@@ -207,8 +220,8 @@ public class PlanningGUI extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel inhoudPanel;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable overzichtTabel;
+    private javax.swing.JScrollPane jScrollPane2;
+    private org.jdesktop.swingx.JXTable overzichtTabel;
     private javax.swing.JButton printButton;
     private javax.swing.JButton sofinummerButton;
     private javax.swing.JTextField sofinummerTextField;
