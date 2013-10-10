@@ -53,7 +53,7 @@ public class FtpController {
      */
     public boolean verbind() {
         if (!isVerbonden()) connect();
-        if (!isIngelogd()) login();
+        if (isVerbonden()) { if (!isIngelogd()) login(); }
         if (isIngelogd() && isVerbonden()) {
             return true;
         } else {

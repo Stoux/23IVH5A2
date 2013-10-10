@@ -435,10 +435,16 @@ public class BehandelingGUI extends javax.swing.JFrame {
             if (manager.getPatient(bsn) == null) { //Kijk of de patient bestaat
                 geefError("Er is geen patient bekend met dit BSN."); return;
             }
+            if (!manager.isFysiotherapeutBeschikbaar((int) fysioBSN, begintijd, eindtijd)) { //Kijk of de therapeut beschikbaar is
+                geefError("Therapeut is niet beschikbaar voor deze periode."); return;
+            }
             manager.maakBehandeling(bsn, code, fysioBSN, begintijd, eindtijd, status, opmerking); //Maak de behandeling
             updateOverzicht(true);
         } else {
             int id = behandeling.getBehandelingsID();            
+            if (!manager.isFysiotherapeutBeschikbaar((int) fysioBSN, begintijd, eindtijd, id)) { //Kijk of de therapeut beschikbaar is
+                geefError("Therapeut is niet beschikbaar voor deze periode."); return;
+            }
             boolean succes = manager.updateBehandeling(id, code, fysioBSN, begintijd, eindtijd, status, opmerking); //Update behandeling
             if (!succes) {
                 geefError("Het aanpassen van de behandeling is mislukt! Probeer opnieuw?");

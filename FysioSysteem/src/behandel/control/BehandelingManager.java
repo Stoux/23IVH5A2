@@ -343,17 +343,31 @@ public class BehandelingManager {
     }
     
     /**
-     * Check of de fysiotherapeut is beschikbaar voor de aangegeven periode
+     * Check of de fysiotherapeut beschikbaar is voor de aangegeven periode.
      * @param bsn Het burgerservicenummer van de fysiotherapeut
      * @param beginTijd De begin tijd Date
      * @param eindTijd De eind tijd Date
      * @return beschikbaar
      */
-    private boolean isFysiotherapeutBeschikbaar(int bsn, Date beginTijd, Date eindTijd) {
-        for (Behandeling behandeling : getBehandelingen()) {
-            if (behandeling.getFysiotherapeutBSN() == bsn) {
-                if ((beginTijd.before(behandeling.getBegintijd()) && eindTijd.after(behandeling.getEindtijd())) || (beginTijd.after(behandeling.getBegintijd()) && beginTijd.before(behandeling.getEindtijd())) || (eindTijd.after(behandeling.getBegintijd()) && eindTijd.before(behandeling.getEindtijd()))) {
-                return false;
+    public boolean isFysiotherapeutBeschikbaar(int bsn, Date beginTijd, Date eindTijd) {
+        return isFysiotherapeutBeschikbaar(bsn, beginTijd, eindTijd, -1);
+    }
+    
+    /**
+     * Check of de fysiotherapeut beschikbaar is voor de aangegeven periode. Negeer de behandeling die word aangepast.
+     * @param bsn Het burgerservicenummer van de fysiotherapeut
+     * @param beginTijd De begin tijd Date
+     * @param eindTijd De eint tijd Date
+     * @param behandelingsID Het ID van de behandeling die genegeerd mag worden.
+     * @return beschikbaar
+     */
+    public boolean isFysiotherapeutBeschikbaar(int bsn, Date beginTijd, Date eindTijd, int behandelingsID) {
+        for (Behandeling behandeling : getBehandelingen()) { //Check alle behandelingen
+            if (behandeling.getFysiotherapeutBSN() == bsn) { //Kijk het BSN van de fysio overeenkomt
+                if (behandelingsID != behandeling.getBehandelingsID()) { //Negeer de behandeling met het ID
+                    if ((beginTijd.before(behandeling.getBegintijd()) && eindTijd.after(behandeling.getEindtijd())) || (beginTijd.after(behandeling.getBegintijd()) && beginTijd.before(behandeling.getEindtijd())) || (eindTijd.after(behandeling.getBegintijd()) && eindTijd.before(behandeling.getEindtijd()))) {
+                        return false; //Niet beschikbaar, return false
+                    }
                 }
             }
         }
