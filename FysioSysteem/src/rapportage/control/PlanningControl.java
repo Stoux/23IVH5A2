@@ -4,6 +4,7 @@
  */
 package rapportage.control;
 
+import behandel.control.BehandelingManager;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,7 +19,7 @@ public class PlanningControl {
      * Constructor voor PlanningControl, waar alle logica in zit.
      * @param model Het huidige model van de jTable in PlanningGUI
      */
-    public PlanningControl(DefaultTableModel model){
+    public PlanningControl(DefaultTableModel model, BehandelingManager manager){
         this.model = model;
     }
     

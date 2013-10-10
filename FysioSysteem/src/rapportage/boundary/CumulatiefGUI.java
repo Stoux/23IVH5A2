@@ -4,6 +4,8 @@
  */
 package rapportage.boundary;
 
+import behandel.control.BehandelingManager;
+import data.control.DataController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,7 +26,7 @@ public class CumulatiefGUI extends javax.swing.JFrame {
     // TODO new CumulatiefControl(defaulttablemodel van de jtable)
     public CumulatiefGUI() {
         initComponents();
-        control = new CumulatiefControl((DefaultTableModel) overzichtTabel.getModel());
+        control = new CumulatiefControl((DefaultTableModel) overzichtTabel.getModel(), new BehandelingManager(new DataController()));
     }
 
     /**

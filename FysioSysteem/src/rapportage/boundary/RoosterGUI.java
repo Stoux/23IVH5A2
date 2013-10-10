@@ -4,6 +4,8 @@
  */
 package rapportage.boundary;
 
+import behandel.control.BehandelingManager;
+import data.control.DataController;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -23,9 +25,12 @@ public class RoosterGUI extends javax.swing.JFrame {
      */
     // TODO new RoosterControl(defaulttablemodel van de jtable)
     public RoosterGUI() {
-        control = new RoosterControl(null);
         initComponents();
+        control = new RoosterControl((DefaultTableModel) roosterTabel.getModel(), new BehandelingManager(new DataController()));
         roosterTabel.setShowGrid(true);
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+        int rowSize = (roosterTabel.getHeight()-20) / 8;
+        roosterTabel.setRowHeight(rowSize);
     }
 
     /**

@@ -4,6 +4,7 @@
  */
 package rapportage.control;
 
+import behandel.control.BehandelingManager;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -13,13 +14,16 @@ import javax.swing.table.DefaultTableModel;
 
 public class CumulatiefControl {
     private DefaultTableModel model;
+    private BehandelingManager manager;
     
     /**
      * Constructor voor CumulatiefControl, waar alle logica in zit.
      * @param model Het huidige model van de jTable in CumulatiefGUI
+     * @param manager De behandelmanager, waarmee de data opgehaald wordt
      */
-    public CumulatiefControl(DefaultTableModel model){
+    public CumulatiefControl(DefaultTableModel model, BehandelingManager manager){
         this.model = model;
+        this.manager = manager;
     }
     
     /**

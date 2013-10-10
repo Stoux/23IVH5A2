@@ -4,6 +4,8 @@
  */
 package rapportage.boundary;
 
+import behandel.control.BehandelingManager;
+import data.control.DataController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,9 +24,9 @@ public class PlanningGUI extends javax.swing.JFrame {
      */
     
     // TODO new PlanningControl(defaulttablemodel van de jtable)
-    public PlanningGUI() {
+    public PlanningGUI(BehandelingManager manager) {
         initComponents();
-        control = new PlanningControl((DefaultTableModel) overzichtTabel.getModel());
+        control = new PlanningControl((DefaultTableModel) overzichtTabel.getModel(), manager);
     }
 
     /**
