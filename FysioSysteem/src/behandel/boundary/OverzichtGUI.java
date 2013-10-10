@@ -6,7 +6,6 @@ package behandel.boundary;
 
 import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,25 +23,28 @@ public class OverzichtGUI extends javax.swing.JFrame {
      */
     private BehandelingManager manager;
     
-    private SimpleDateFormat datum;
-    private SimpleDateFormat tijd;
-    
     public OverzichtGUI(BehandelingManager manager) {
         this.manager = manager;
-        datum = new SimpleDateFormat("dd/MM/yyyy");
-        tijd = new SimpleDateFormat("HH:mm");
+        if (!manager.isPatientenOpgehaald()) {
+            JOptionPane.showMessageDialog(this, "<html>Het is niet gelukt om de patienten om te halen.<br>Daardoor is dit deelsysteem helaas niet beschikbaar.", "Fout", JOptionPane.ERROR_MESSAGE, null);
+            return;
+        }
         initComponents();
         updateTabel(); 
     }
 
-    private void updateTabel() {
+    /**
+     * Update de tabel
+     */
+    public void updateTabel() {
         ArrayList<Behandeling> behandelingen = manager.getBehandelingen();
-        DefaultTableModel overzichtModel = (DefaultTableModel) overzichtTabel.getModel();
+        DefaultTableModel overzichtModel = (DefaultTableModel) overzichtTabelX.getModel();
+        overzichtModel.setRowCount(0);
         
         for (Behandeling behandeling : behandelingen) {
-            String deDatum = datum.format(behandeling.getBegintijd());
-            String beginTijd = tijd.format(behandeling.getBegintijd()); 
-            String eindTijd = tijd.format(behandeling.getEindtijd());
+            String deDatum = manager.formatDatum(behandeling.getBegintijd());
+            String beginTijd = manager.formatTijd(behandeling.getBegintijd()); 
+            String eindTijd = manager.formatTijd(behandeling.getEindtijd());
             overzichtModel.addRow(new Object[]{behandeling.getBehandelingsID(), behandeling.getBurgerServiceNummer(), behandeling.getFysiotherapeutBSN(), behandeling.getBehandelingscode(), deDatum, beginTijd, eindTijd, behandeling.getStatus(), behandeling.getOpmerking() });  
         }
     }
@@ -56,8 +58,8 @@ public class OverzichtGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        overzichtTabel = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        overzichtTabelX = new org.jdesktop.swingx.JXTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         toevoegenMenuItem = new javax.swing.JMenuItem();
@@ -69,48 +71,56 @@ public class OverzichtGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        overzichtTabel.setAutoCreateRowSorter(true);
-        overzichtTabel.setModel(new javax.swing.table.DefaultTableModel(
+        overzichtTabelX.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Patiënt", "Fysiotherapeutcode", "Behandelcode(s)", "Datum", "Begin tijd", "Eind tijd", "Status", "Opmerkingen"
+                "ID", "Patiënt BSN", "Fysiotherapeut BSN", "Behandelcode", "Datum", "Begin tijd", "Eind tijd", "Status", "Opmerking"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        overzichtTabel.getTableHeader().setReorderingAllowed(false);
-        overzichtTabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        overzichtTabelX.setEditable(false);
+        overzichtTabelX.getTableHeader().setReorderingAllowed(false);
+        overzichtTabelX.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                overzichtTabelMouseReleased(evt);
+                overzichtTabelXMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(overzichtTabel);
-        overzichtTabel.getColumnModel().getColumn(0).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(0).setPreferredWidth(40);
-        overzichtTabel.getColumnModel().getColumn(1).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(1).setPreferredWidth(100);
-        overzichtTabel.getColumnModel().getColumn(2).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(2).setPreferredWidth(40);
-        overzichtTabel.getColumnModel().getColumn(3).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(3).setPreferredWidth(40);
-        overzichtTabel.getColumnModel().getColumn(4).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(4).setPreferredWidth(140);
-        overzichtTabel.getColumnModel().getColumn(5).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(5).setPreferredWidth(40);
-        overzichtTabel.getColumnModel().getColumn(6).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(6).setPreferredWidth(40);
-        overzichtTabel.getColumnModel().getColumn(7).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(7).setPreferredWidth(40);
-        overzichtTabel.getColumnModel().getColumn(8).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(8).setPreferredWidth(100);
+        jScrollPane2.setViewportView(overzichtTabelX);
+        overzichtTabelX.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        overzichtTabelX.getColumnModel().getColumn(0).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(0).setPreferredWidth(5);
+        overzichtTabelX.getColumnModel().getColumn(1).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(1).setPreferredWidth(9);
+        overzichtTabelX.getColumnModel().getColumn(2).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(2).setPreferredWidth(9);
+        overzichtTabelX.getColumnModel().getColumn(3).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(3).setPreferredWidth(5);
+        overzichtTabelX.getColumnModel().getColumn(4).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(4).setPreferredWidth(10);
+        overzichtTabelX.getColumnModel().getColumn(5).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(5).setPreferredWidth(5);
+        overzichtTabelX.getColumnModel().getColumn(6).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(6).setPreferredWidth(5);
+        overzichtTabelX.getColumnModel().getColumn(7).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(7).setPreferredWidth(10);
+        overzichtTabelX.getColumnModel().getColumn(8).setResizable(false);
+        overzichtTabelX.getColumnModel().getColumn(8).setPreferredWidth(30);
 
         fileMenu.setText("File");
 
@@ -168,13 +178,11 @@ public class OverzichtGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1302, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
         );
 
         pack();
@@ -203,15 +211,24 @@ public class OverzichtGUI extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_bewerkenMenuItemActionPerformed
 
-    private void overzichtTabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overzichtTabelMouseReleased
+    private void overzichtTabelXMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overzichtTabelXMouseReleased
+        try {
+            System.out.println(getSelectedBehandelingID()); //Probeer een row te selecten
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return;
+        }
         bewerkenMenuItem.setEnabled(true);
         verwijderMenuItem.setEnabled(true);
-    }//GEN-LAST:event_overzichtTabelMouseReleased
+    }//GEN-LAST:event_overzichtTabelXMouseReleased
 
-    
+    /**
+     * Haal het ID op van de geselecteerde behandeling
+     * @return het ID
+     */
     private int getSelectedBehandelingID() {
-        int row = overzichtTabel.getSelectedRow();
-        return (int) overzichtTabel.getModel().getValueAt(row, 0);
+        int row = overzichtTabelX.getSelectedRow();
+        row = overzichtTabelX.convertRowIndexToModel(row);
+        return (int) overzichtTabelX.getModel().getValueAt(row, 0);
     }
     
     /**
@@ -254,8 +271,8 @@ public class OverzichtGUI extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable overzichtTabel;
+    private javax.swing.JScrollPane jScrollPane2;
+    private org.jdesktop.swingx.JXTable overzichtTabelX;
     private javax.swing.JMenuItem terugMenuItem;
     private javax.swing.JMenuItem toevoegenMenuItem;
     private javax.swing.JMenuItem verwijderMenuItem;

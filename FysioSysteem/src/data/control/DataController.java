@@ -38,7 +38,7 @@ public class DataController {
         
         //Maak folders
         for(Folder f : Folder.values()) {
-            maakFolder(f.getPad());
+            maakFolder(f);
         }
         
         //Maak de FTP controller aan
@@ -87,8 +87,8 @@ public class DataController {
      * @param pad Naam van de folder
      * @return of het gelukt is
      */
-    private boolean maakFolder(String pad) {
-        File f = new File(mainFolder + pad); //Maak de file/folder aan
+    private boolean maakFolder(Folder pad) {
+        File f = new File(mainFolder + pad.getPad()); //Maak de file/folder aan
         boolean returnValue;
         if (f.exists()) { //Kijk of de folder bestaat
             returnValue = true;
@@ -126,7 +126,6 @@ public class DataController {
             }
             returnValue = file;
         } catch (IOException e) {
-            e.printStackTrace();
             returnValue = null;
         }
         return returnValue;
@@ -153,11 +152,11 @@ public class DataController {
     private Object laadObject(String bestand, Folder folder, Class objectKlasse) {
         Object returnObject;
         try {
-            FileInputStream fis = new FileInputStream(new File(mainFolder + folder + separator + bestand));
+            FileInputStream fis = new FileInputStream(new File(mainFolder + folder.getPad() + separator + bestand));
             try (ObjectInputStream ois = new ObjectInputStream(fis)) {
                 returnObject = objectKlasse.cast(ois.readObject());
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | ClassCastException e) {
             returnObject = null;
         }
         return returnObject;
@@ -171,9 +170,10 @@ public class DataController {
      */
     public ArrayList<Object> laadObjectenUitFolder(Folder folder, Class objectKlasse) {
         ArrayList<Object> objecten = new ArrayList<>();
-        File map = new File(mainFolder + folder);
-        for (String filename : map.list()) {
-            Object object = laadObject(filename, folder, objectKlasse);
+        File map = new File(mainFolder + folder.getPad());
+        for (File file : map.listFiles()) {
+            if (file.isDirectory()) continue;
+            Object object = laadObject(file.getName(), folder, objectKlasse);
             if (object != null) {
                 objecten.add(object);
             }
@@ -189,7 +189,7 @@ public class DataController {
      */
     public boolean verwijderBestand(Folder folder, String bestand) {
         boolean returnValue;
-        File file = new File(mainFolder + folder + separator + bestand + type);
+        File file = new File(mainFolder + folder.getPad() + separator + bestand + type);
         if (file.exists()) {
             returnValue = file.delete();
         } else {

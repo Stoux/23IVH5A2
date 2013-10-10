@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import praktijk.control.TherapeutManager;
 import praktijk.entity.Therapeut;
 
 /**
@@ -21,9 +22,10 @@ import praktijk.entity.Therapeut;
 public class BehandelingManager {
     
     /**
-     * De DataController
+     * Externe managers/controllers
      */
     private DataController dataController;
+    private TherapeutManager therapeutManager;
     
     /**
      * Behandel gegevens
@@ -44,17 +46,19 @@ public class BehandelingManager {
     private boolean patientenOpgehaald;
     
     /**
-     * Format van de datum
-     * tijdFormat - Tijd + Datum
+     * TimeFormats
      */
-    private SimpleDateFormat tijdFormat;
+    private SimpleDateFormat datum;
+    private SimpleDateFormat tijd;
+    private SimpleDateFormat datumTijd;
     
     /**
      * Constructor van de manager
      * @param dataController de DataController
      */
-    public BehandelingManager(DataController dataController) {
+    public BehandelingManager(DataController dataController, TherapeutManager therapeutManager) {
         this.dataController = dataController;
+        this.therapeutManager = therapeutManager;
         
         //Maak de lijsten
         stamGegevens = new HashMap<>();
@@ -63,8 +67,9 @@ public class BehandelingManager {
         aangepastePatienten = new HashSet<>();
         
         //Maak de DateFormat
-        // TODO: Geef de DateFormat een patroon mee
-        tijdFormat = new SimpleDateFormat(null);
+        datum = new SimpleDateFormat("dd/MM/yyyy");
+        tijd = new SimpleDateFormat("HH:mm");
+        datumTijd = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         
         //Haal de opgeslagen gegevens op
         haalPatientenHashMapOp();
@@ -110,6 +115,14 @@ public class BehandelingManager {
         return stamGegevens.get(behandelingcode);
     }
     
+    /**
+     * Get alle behandelcodes van de stamgegevens
+     * @return Lijst met alle codes
+     */
+    public ArrayList<String> getBehandelCodes() {
+        return new ArrayList<>(stamGegevens.keySet());        
+    }
+    
     
     /**
      * Laad alle behandelingen in die opgeslagen zijn
@@ -138,6 +151,28 @@ public class BehandelingManager {
     }
     
     /**
+     * Maak een nieuwe behandeling aan
+     * @param bsn BurgerServiceNummer van de patient
+     * @param behandelingscode de behandelingscode
+     * @param fysiotherapeutBSN De BSN van de fysiotherapeut
+     * @param begintijd De begin date
+     * @param eindtijd De eind date
+     * @param status De status
+     * @param opmerking Een mogelijke opmerking
+     * @return De nieuwe behandeling
+     */
+    public Behandeling maakBehandeling(int bsn, String behandelingscode, long fysiotherapeutBSN, Date begintijd, Date eindtijd, Status status, String opmerking) {
+        int id = 1;
+        for (Behandeling behandeling : behandelingen) {
+            if (behandeling.getBehandelingsID() > id) id = behandeling.getBehandelingsID();
+        }
+        Behandeling behandeling = new Behandeling(id, bsn, behandelingscode, fysiotherapeutBSN, begintijd, eindtijd, status, opmerking);
+        dataController.saveObject(Folder.Behandelingen, String.valueOf(id), behandeling);
+        aangepastePatienten.add(bsn);
+        return behandeling;
+    }
+    
+    /**
      * Het updaten van een behandeling
      * @param behandelingsID het id
      * @param behandelingscode de code
@@ -162,10 +197,7 @@ public class BehandelingManager {
         } 
         return returnBoolean;
     }
-    
-    
-    
-    
+
     /**
      * Verwijder een behandeling aan de hand van het behandelingsID
      * @param behandelingsID het ID
@@ -181,9 +213,6 @@ public class BehandelingManager {
         }
         return returnBoolean;
     }
-    
-    
-    
     
     /**
      * Verwijder een behandeling uit de array & van het systeem
@@ -229,20 +258,45 @@ public class BehandelingManager {
         return returnBool;
     }
     
+    /**
+     * Format een date naar dd/MM/yyyy
+     * @param date de date
+     * @return formatted string
+     */
+    public String formatDatum(Date date) {
+        return datum.format(date);
+    }
     
     /**
-     * Check of het een valide datum is
-     * @param datum de datum
-     * @return de date
+     * Format een date naar HH:mm
+     * @param date de date
+     * @return formatted string
      */
-    private Date checkDatum(String datum) {
+    public String formatTijd(Date date) {
+        return tijd.format(date);
+    }
+    
+    /**
+     * Parse een string (Format: dd/MM/yyyy HH:mm) naar date
+     * @param datum de datum string
+     * @return de date of null als het geen valide string is
+     */
+    public Date parseDateString(String datum) {
         Date returnDate;
         try {
-            returnDate = tijdFormat.parse(datum); //Parse de datum
+            returnDate = datumTijd.parse(datum);
         } catch (ParseException e) {
             returnDate = null; //Geen geldige datum string
         }
         return returnDate;
+    }
+    
+    /**
+     * Get de DateFormat: dd/MM/yyyy
+     * @return de Format
+     */
+    public SimpleDateFormat getDatumFormat() {
+        return datum;
     }
     
     /**
@@ -255,12 +309,37 @@ public class BehandelingManager {
     }
     
     /**
+     * Get een arraylist met alle patient nummers
+     * @return Lijst met alle BSNummers van alle patienten in strings
+     */
+    public ArrayList<String> getPatientenBSNLijst() {
+        ArrayList<String> patientenLijst = new ArrayList<>();
+        for (int patient : patienten.keySet()) {
+            patientenLijst.add(String.valueOf(patient));
+        }
+        return patientenLijst;
+    }
+    
+    /**
      * Get alle therapeuten
      * @return arraylist met alle therapeuten
      */
     public ArrayList<Therapeut> getTherapeuten() {
-        // TODO vul in nadat de manager van praktijk systeem dit ondersteund.
-        return null;
+        return therapeutManager.getTherapeuten();
+    }
+    
+    /**
+     * Check of een therapeut bestaat
+     * @param bsn Het BurgerServiceNummer van de therapeut
+     * @return bestaat
+     */
+    public boolean isBestaandeTherapeut(long bsn) {
+        for (Therapeut therapeut : getTherapeuten()) {
+            if (therapeut.getBsn() == bsn) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
