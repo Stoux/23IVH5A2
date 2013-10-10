@@ -350,8 +350,14 @@ public class BehandelingManager {
      * @return beschikbaar
      */
     private boolean isFysiotherapeutBeschikbaar(int bsn, Date beginTijd, Date eindTijd) {
-        // TODO: Maak wanneer de praktijkmanager beschikbaar is
-        return false;
+        for (Behandeling behandeling : getBehandelingen()) {
+            if (behandeling.getFysiotherapeutBSN() == bsn) {
+                if ((beginTijd.before(behandeling.getBegintijd()) && eindTijd.after(behandeling.getEindtijd())) || (beginTijd.after(behandeling.getBegintijd()) && beginTijd.before(behandeling.getEindtijd())) || (eindTijd.after(behandeling.getBegintijd()) && eindTijd.before(behandeling.getEindtijd()))) {
+                return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
