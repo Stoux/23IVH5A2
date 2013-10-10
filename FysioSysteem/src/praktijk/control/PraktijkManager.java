@@ -106,7 +106,7 @@ public class PraktijkManager {
                     containsWords = false;
             }
             
-            if (containsWords)
+            if (containsWords) 
                 gevondenPraktijken.add(praktijk);
         }
         

@@ -5,6 +5,7 @@
 package praktijk.boundary;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import praktijk.control.PraktijkManager;
 import praktijk.entity.Praktijk;
@@ -14,29 +15,19 @@ import praktijk.entity.Praktijk;
  * @author Leon
  */
 public class PraktijkOverzichtGUI extends javax.swing.JFrame {
-    PraktijkManager manager;
-    DefaultTableModel tableModel;
+    private PraktijkManager manager;
+    private DefaultTableModel tableModel;
 
     /**
      * Creates new form PraktijkOverzichtGUI
      */
-    public PraktijkOverzichtGUI() {
+    public PraktijkOverzichtGUI() {       
         initComponents();
-//        manager = new PraktijkManager();
         
-        ArrayList<Praktijk> lijst = new ArrayList<>();
-        lijst.add(new Praktijk("Test1", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
-        lijst.add(new Praktijk("Test2", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
-        lijst.add(new Praktijk("Test3", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
-        lijst.add(new Praktijk("Test4", "Test", "Test", "Test", 123456789, "Test", 123456789, 123456789));
+        manager = new PraktijkManager();       
+        tableModel = (DefaultTableModel) praktijkenTable.getModel();        
         
-        tableModel = (DefaultTableModel) praktijkenTable.getModel();
-        
-        for(Praktijk p : lijst) {
-//        for(Praktijk p : manager.getPraktijken()) {
-            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getPostcode(), p.getHuisnummer(), p.getIban() });
-        }
-        
+        vernieuwOverzicht();        
     }
 
     /**
@@ -53,24 +44,26 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         zoekButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         praktijkenTable = new javax.swing.JTable();
-        terugButton = new javax.swing.JButton();
-        verwijderButton = new javax.swing.JButton();
-        bewerkButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        toevoegenMenuItem = new javax.swing.JMenuItem();
+        bewerkenMenuItem = new javax.swing.JMenuItem();
+        verwijderMenuItem = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        zoekTextField.setText("zoekwoord");
         zoekTextField.setName(""); // NOI18N
 
-        zoekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Naam", "Plaatsnaam", "Sofinummer" }));
+        zoekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Naam", "Plaatsnaam" }));
 
         zoekButton.setText("Zoeken");
+        zoekButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zoekButtonActionPerformed(evt);
+            }
+        });
 
         praktijkenTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,19 +75,31 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(praktijkenTable);
 
-        terugButton.setText("Terug");
-
-        verwijderButton.setText("Verwijder");
-
-        bewerkButton.setText("Bewerk");
-
         jMenu1.setText("File");
 
-        jMenuItem1.setText("Bewerk");
-        jMenu1.add(jMenuItem1);
+        toevoegenMenuItem.setText("Toevoegen");
+        toevoegenMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toevoegenMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(toevoegenMenuItem);
 
-        jMenuItem2.setText("Verwijder");
-        jMenu1.add(jMenuItem2);
+        bewerkenMenuItem.setText("Bewerken");
+        bewerkenMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bewerkenMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(bewerkenMenuItem);
+
+        verwijderMenuItem.setText("Verwijderen");
+        verwijderMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verwijderMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(verwijderMenuItem);
 
         jMenuItem3.setText("Terug");
         jMenu1.add(jMenuItem3);
@@ -117,39 +122,92 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
                     .addComponent(zoekComboBox, 0, 125, Short.MAX_VALUE)
                     .addComponent(zoekButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(terugButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bewerkButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                    .addComponent(verwijderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bewerkButton)
+                        .addComponent(zoekTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(verwijderButton)
+                        .addComponent(zoekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(terugButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(zoekTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(zoekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(zoekButton))))
+                        .addComponent(zoekButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
+        // TODO add your handling code here:
+        String query = zoekTextField.getText();
+        Boolean isNaam = true;        
+        
+        if(zoekComboBox.getSelectedIndex() == 1) {
+            isNaam = false;
+        }
+
+        ArrayList<Praktijk> gevondenPraktijken = manager.zoekPraktijk(query, isNaam);
+        
+        leegTabel();
+        for(Praktijk p : gevondenPraktijken) {
+            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getPostcode(), p.getHuisnummer(), p.getIban() });
+        }
+    }//GEN-LAST:event_zoekButtonActionPerformed
+
+    private void toevoegenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toevoegenMenuItemActionPerformed
+        // TODO add your handling code here:
+        PraktijkWijzigGUI praktijkWijzigGUI = new PraktijkWijzigGUI(this, manager);
+        praktijkWijzigGUI.setVisible(true);
+    }//GEN-LAST:event_toevoegenMenuItemActionPerformed
+
+    private void bewerkenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bewerkenMenuItemActionPerformed
+        // TODO add your handling code here:
+        int index = praktijkenTable.getSelectedRow();
+        
+        if(index != -1) {
+            PraktijkWijzigGUI praktijkWijzigGUI = new PraktijkWijzigGUI(this, manager, index);
+            praktijkWijzigGUI.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Er is geen praktijk geselecteerd.", "Error", JOptionPane.ERROR_MESSAGE);
+        }        
+    }//GEN-LAST:event_bewerkenMenuItemActionPerformed
+
+    private void verwijderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verwijderMenuItemActionPerformed
+        // TODO add your handling code here:
+        int index = praktijkenTable.getSelectedRow();
+        
+        if(index != -1) {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Weet u zeker dat u deze praktijk wilt verwijderen?");
+            if(dialogResult == JOptionPane.YES_OPTION)
+            {
+                if(!manager.verwijder(index)) {
+                    JOptionPane.showMessageDialog(this, "Error", "Er ging iets mis bij het verwijderen.", JOptionPane.ERROR_MESSAGE);
+                }
+                vernieuwOverzicht();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Er is geen praktijk geselecteerd.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_verwijderMenuItemActionPerformed
+     
+    private void leegTabel() {
+        tableModel.setRowCount(0);
+    }
+    
+    public void vernieuwOverzicht() {
+        leegTabel();
+        for(Praktijk p : manager.getPraktijken()) {
+            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getPostcode(), p.getHuisnummer(), p.getIban() });
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -185,17 +243,15 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bewerkButton;
+    private javax.swing.JMenuItem bewerkenMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable praktijkenTable;
-    private javax.swing.JButton terugButton;
-    private javax.swing.JButton verwijderButton;
+    private javax.swing.JMenuItem toevoegenMenuItem;
+    private javax.swing.JMenuItem verwijderMenuItem;
     private javax.swing.JButton zoekButton;
     private javax.swing.JComboBox zoekComboBox;
     private javax.swing.JTextField zoekTextField;

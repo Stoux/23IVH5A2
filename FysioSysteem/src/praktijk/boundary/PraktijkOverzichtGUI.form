@@ -9,15 +9,29 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="toevoegenMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Bewerk"/>
+                <Property name="text" type="java.lang.String" value="Toevoegen"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toevoegenMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="bewerkenMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Verwijder"/>
+                <Property name="text" type="java.lang.String" value="Bewerken"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bewerkenMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="verwijderMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Verwijderen"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verwijderMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
@@ -65,13 +79,7 @@
                   <Component id="zoekButton" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="452" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="terugButton" max="32767" attributes="0"/>
-                  <Component id="bewerkButton" pref="98" max="32767" attributes="0"/>
-                  <Component id="verwijderButton" alignment="0" max="32767" attributes="0"/>
-              </Group>
+              <Component id="jScrollPane1" pref="568" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -80,23 +88,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane1" min="-2" pref="311" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="bewerkButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="zoekTextField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="verwijderButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="zoekComboBox" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="terugButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="311" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="zoekTextField" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="zoekComboBox" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="zoekButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="zoekButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -107,17 +106,15 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="zoekTextField">
       <Properties>
-        <Property name="text" type="java.lang.String" value="zoekwoord"/>
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="zoekComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="2">
             <StringItem index="0" value="Naam"/>
             <StringItem index="1" value="Plaatsnaam"/>
-            <StringItem index="2" value="Sofinummer"/>
           </StringArray>
         </Property>
       </Properties>
@@ -126,6 +123,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Zoeken"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="zoekButtonActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -181,20 +181,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="terugButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Terug"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="verwijderButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Verwijder"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="bewerkButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Bewerk"/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>
