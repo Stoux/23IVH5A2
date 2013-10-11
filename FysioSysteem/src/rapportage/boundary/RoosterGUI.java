@@ -59,7 +59,7 @@ public class RoosterGUI extends javax.swing.JFrame {
         setDatumWeek();
         control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
         roosterTabel.setModel(control.getModel());
-        this.repaint();
+        roosterTabel.repaint();
     }
 
     private boolean setDatumWeek() {
@@ -329,7 +329,10 @@ public class RoosterGUI extends javax.swing.JFrame {
 
     private void fysiotherapeutComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fysiotherapeutComboBoxActionPerformed
         String therapeutNaam = fysiotherapeutComboBox.getSelectedItem().toString();
-//        control.
+        setDatumWeek();
+        control.maakRooster(beginDatum, eindDatum, therapeutNaam);
+        roosterTabel.setModel(control.getModel());
+        roosterTabel.repaint();
     }//GEN-LAST:event_fysiotherapeutComboBoxActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel beschrijvingLabel1;

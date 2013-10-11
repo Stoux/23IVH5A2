@@ -76,6 +76,50 @@ public class RoosterControl {
         DateFormat dagUur = new SimpleDateFormat("k");
         DateFormat dagWeek = new SimpleDateFormat("u");
         DateFormat dagMaand = new SimpleDateFormat("dd/MM");
+        String behandelingenNegenUurMaandag = " ";
+        String behandelingenNegenUurDinsdag = " ";
+        String behandelingenNegenUurWoensdag = " ";
+        String behandelingenNegenUurDonderdag = " ";
+        String behandelingenNegenUurVrijdag = " ";
+        String behandelingenTienUurMaandag = " ";
+        String behandelingenTienUurDinsdag = " ";
+        String behandelingenTienUurWoensdag = " ";
+        String behandelingenTienUurDonderdag = " ";
+        String behandelingenTienUurVrijdag = " ";
+        String behandelingenElfUurMaandag = " ";
+        String behandelingenElfUurDinsdag = " ";
+        String behandelingenElfUurWoensdag = " ";
+        String behandelingenElfUurDonderdag = " ";
+        String behandelingenElfUurVrijdag = " ";
+        String behandelingenTwaalfUurMaandag = " ";
+        String behandelingenTwaalfUurDinsdag = " ";
+        String behandelingenTwaalfUurWoensdag = " ";
+        String behandelingenTwaalfUurDonderdag = " ";
+        String behandelingenTwaalfUurVrijdag = " ";
+        String behandelingenEenUurMaandag = " ";
+        String behandelingenEenUurDinsdag = " ";
+        String behandelingenEenUurWoensdag = " ";
+        String behandelingenEenUurDonderdag = " ";
+        String behandelingenEenUurVrijdag = " ";
+        String behandelingenTweeUurMaandag = " ";
+        String behandelingenTweeUurDinsdag = " ";
+        String behandelingenTweeUurWoensdag = " ";
+        String behandelingenTweeUurDonderdag = " ";
+        String behandelingenTweeUurVrijdag = " ";
+        String behandelingenDrieUurMaandag = " ";
+        String behandelingenDrieUurDinsdag = " ";
+        String behandelingenDrieUurWoensdag = " ";
+        String behandelingenDrieUurDonderdag = " ";
+        String behandelingenDrieUurVrijdag = " ";
+        String behandelingenVierUurMaandag = " ";
+        String behandelingenVierUurDinsdag = " ";
+        String behandelingenVierUurWoensdag = " ";
+        String behandelingenVierUurDonderdag = " ";
+        String behandelingenVierUurVrijdag = " ";
+
+
+
+
 
 
 
@@ -86,12 +130,8 @@ public class RoosterControl {
                 int dagBehandeling = Integer.parseInt(dagWeek.format(b.getBegintijd()));
 
                 if (beginTijdBehandeling == 9) {
-                    String behandelingenNegenUurMaandag = " ";
-                    String behandelingenNegenUurDinsdag = " ";
-                    String behandelingenNegenUurWoensdag = " ";
-                    String behandelingenNegenUurDonderdag = " ";
-                    String behandelingenNegenUurVrijdag = " ";
-                    
+
+
                     if (dagBehandeling == 1) {
                         behandelingenNegenUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -107,16 +147,10 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenNegenUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.setRowCount(0);
-                    model.addRow(new Object[]{behandelingenNegenUurMaandag,behandelingenNegenUurDinsdag,behandelingenNegenUurWoensdag,behandelingenNegenUurDonderdag,behandelingenNegenUurVrijdag});
                 }
                 if (beginTijdBehandeling == 10) {
-                    String behandelingenTienUurMaandag = " ";
-                    String behandelingenTienUurDinsdag = " ";
-                    String behandelingenTienUurWoensdag = " ";
-                    String behandelingenTienUurDonderdag = " ";
-                    String behandelingenTienUurVrijdag = " ";
-                    
+
+
                     if (dagBehandeling == 1) {
                         behandelingenTienUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -132,15 +166,11 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenTienUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.addRow(new Object[]{behandelingenTienUurMaandag,behandelingenTienUurDinsdag,behandelingenTienUurWoensdag,behandelingenTienUurDonderdag,behandelingenTienUurVrijdag});
+
                 }
                 if (beginTijdBehandeling == 11) {
-                    String behandelingenElfUurMaandag = " ";
-                    String behandelingenElfUurDinsdag = " ";
-                    String behandelingenElfUurWoensdag = " ";
-                    String behandelingenElfUurDonderdag = " ";
-                    String behandelingenElfUurVrijdag = " ";
-                    
+
+
                     if (dagBehandeling == 1) {
                         behandelingenElfUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -156,15 +186,11 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenElfUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.addRow(new Object[]{behandelingenElfUurMaandag,behandelingenElfUurDinsdag,behandelingenElfUurWoensdag,behandelingenElfUurDonderdag,behandelingenElfUurVrijdag});
+
                 }
                 if (beginTijdBehandeling == 12) {
-                    String behandelingenTwaalfUurMaandag = " ";
-                    String behandelingenTwaalfUurDinsdag = " ";
-                    String behandelingenTwaalfUurWoensdag = " ";
-                    String behandelingenTwaalfUurDonderdag = " ";
-                    String behandelingenTwaalfUurVrijdag = " ";
-                    
+
+
                     if (dagBehandeling == 1) {
                         behandelingenTwaalfUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -180,15 +206,11 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenTwaalfUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.addRow(new Object[]{behandelingenTwaalfUurMaandag,behandelingenTwaalfUurDinsdag,behandelingenTwaalfUurWoensdag,behandelingenTwaalfUurDonderdag,behandelingenTwaalfUurVrijdag});
+
                 }
                 if (beginTijdBehandeling == 13) {
-                    String behandelingenEenUurMaandag = " ";
-                    String behandelingenEenUurDinsdag = " ";
-                    String behandelingenEenUurWoensdag = " ";
-                    String behandelingenEenUurDonderdag = " ";
-                    String behandelingenEenUurVrijdag = " ";
-                    
+
+
                     if (dagBehandeling == 1) {
                         behandelingenEenUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -204,15 +226,11 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenEenUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.addRow(new Object[]{behandelingenEenUurMaandag,behandelingenEenUurDinsdag,behandelingenEenUurWoensdag,behandelingenEenUurDonderdag,behandelingenEenUurVrijdag});
+
                 }
                 if (beginTijdBehandeling == 14) {
-                    String behandelingenTweeUurMaandag = " ";
-                    String behandelingenTweeUurDinsdag = " ";
-                    String behandelingenTweeUurWoensdag = " ";
-                    String behandelingenTweeUurDonderdag = " ";
-                    String behandelingenTweeUurVrijdag = " ";
-                    
+
+
                     if (dagBehandeling == 1) {
                         behandelingenTweeUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -228,16 +246,12 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenTweeUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.addRow(new Object[]{behandelingenTweeUurMaandag,behandelingenTweeUurDinsdag,behandelingenTweeUurWoensdag,behandelingenTweeUurDonderdag,behandelingenTweeUurVrijdag});
+
                 }
-            
-            if (beginTijdBehandeling == 15) {
-                    String behandelingenDrieUurMaandag = " ";
-                    String behandelingenDrieUurDinsdag = " ";
-                    String behandelingenDrieUurWoensdag = " ";
-                    String behandelingenDrieUurDonderdag = " ";
-                    String behandelingenDrieUurVrijdag = " ";
-                    
+
+                if (beginTijdBehandeling == 15) {
+
+
                     if (dagBehandeling == 1) {
                         behandelingenDrieUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -253,15 +267,11 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenDrieUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.addRow(new Object[]{behandelingenDrieUurMaandag,behandelingenDrieUurDinsdag,behandelingenDrieUurWoensdag,behandelingenDrieUurDonderdag,behandelingenDrieUurVrijdag});
+
                 }
-            if (beginTijdBehandeling == 16) {
-                    String behandelingenVierUurMaandag = " ";
-                    String behandelingenVierUurDinsdag = " ";
-                    String behandelingenVierUurWoensdag = " ";
-                    String behandelingenVierUurDonderdag = " ";
-                    String behandelingenVierUurVrijdag = " ";
-                    
+                if (beginTijdBehandeling == 16) {
+
+
                     if (dagBehandeling == 1) {
                         behandelingenVierUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
@@ -277,12 +287,27 @@ public class RoosterControl {
                     if (dagBehandeling == 5) {
                         behandelingenVierUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    model.addRow(new Object[]{behandelingenVierUurMaandag,behandelingenVierUurDinsdag,behandelingenVierUurWoensdag,behandelingenVierUurDonderdag,behandelingenVierUurVrijdag});
+                    
                 }
             }
 
 
         }
+        model.setRowCount(0);
+        model.addRow(new Object[]{behandelingenNegenUurMaandag, behandelingenNegenUurDinsdag, behandelingenNegenUurWoensdag, behandelingenNegenUurDonderdag, behandelingenNegenUurVrijdag});
+        model.addRow(new Object[]{behandelingenTienUurMaandag, behandelingenTienUurDinsdag, behandelingenTienUurWoensdag, behandelingenTienUurDonderdag, behandelingenTienUurVrijdag});
+        model.addRow(new Object[]{behandelingenElfUurMaandag, behandelingenElfUurDinsdag, behandelingenElfUurWoensdag, behandelingenElfUurDonderdag, behandelingenElfUurVrijdag});
+        model.addRow(new Object[]{behandelingenTwaalfUurMaandag, behandelingenTwaalfUurDinsdag, behandelingenTwaalfUurWoensdag, behandelingenTwaalfUurDonderdag, behandelingenTwaalfUurVrijdag});
+        model.addRow(new Object[]{behandelingenEenUurMaandag, behandelingenEenUurDinsdag, behandelingenEenUurWoensdag, behandelingenEenUurDonderdag, behandelingenEenUurVrijdag});
+        model.addRow(new Object[]{behandelingenTweeUurMaandag, behandelingenTweeUurDinsdag, behandelingenTweeUurWoensdag, behandelingenTweeUurDonderdag, behandelingenTweeUurVrijdag});
+        model.addRow(new Object[]{behandelingenDrieUurMaandag, behandelingenDrieUurDinsdag, behandelingenDrieUurWoensdag, behandelingenDrieUurDonderdag, behandelingenDrieUurVrijdag});
+        model.addRow(new Object[]{behandelingenVierUurMaandag, behandelingenVierUurDinsdag, behandelingenVierUurWoensdag, behandelingenVierUurDonderdag, behandelingenVierUurVrijdag});
+
+
+
+
+
+
         return succes;
     }
 }
