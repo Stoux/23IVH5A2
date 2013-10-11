@@ -18,7 +18,7 @@ public class Therapeut implements Serializable {
     private int bsn;
     private String postcode;
     private String huisnummer;
-    private long telefoonnummer;
+    private String telefoonnummer;
     private long praktijkKvk;
 
     /**
@@ -34,7 +34,7 @@ public class Therapeut implements Serializable {
      * @param telefoonnummer telefoonnummer van de therapeut 
      * @param praktijkKvk KVK-nummer van de praktijk waar de therapeut werkzaam is
      */
-    public Therapeut (String voornaam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, int bsn, String postcode, String huisnummer, long telefoonnummer, long praktijkKvk) {
+    public Therapeut (String voornaam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, int bsn, String postcode, String huisnummer, String telefoonnummer, long praktijkKvk) {
         this.voornaam = voornaam;
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
@@ -141,7 +141,7 @@ public class Therapeut implements Serializable {
      * Geeft het telefoonnummer van de therapeut terug
      * @return telefoonnummer van de therapeut
      */
-    public long getTelnr() {
+    public String getTelnr() {
         return telefoonnummer;
     }
     
@@ -213,7 +213,7 @@ public class Therapeut implements Serializable {
      * Wijzig het telefoonnummer van de therapeut
      * @param telefoonnummer Het nieuwe telefoonnummer
      */
-    public void setTelnr(long telefoonnummer) {
+    public void setTelnr(String telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
     }
     

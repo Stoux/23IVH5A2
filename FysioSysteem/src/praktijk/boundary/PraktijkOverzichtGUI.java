@@ -15,9 +15,7 @@ import praktijk.entity.Praktijk;
  * @author Leon
  */
 public class PraktijkOverzichtGUI extends javax.swing.JFrame {
-    
     private HomeGUI homeGUI;
-    
     private PraktijkManager manager;
     private DefaultTableModel tableModel;
 

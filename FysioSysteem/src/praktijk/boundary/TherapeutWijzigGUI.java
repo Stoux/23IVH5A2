@@ -253,7 +253,7 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
             int bsn = Integer.parseInt(bsnTextField.getText());
             String postcode = postcodeTextField.getText();
             String huisnr = huisnrTextField.getText();
-            long telefoonnr = Long.parseLong(telefoonnummerTextField.getText());
+            String telefoonnr = telefoonnummerTextField.getText();
             long praktijkKvk = (long) praktijken.keySet().toArray()[praktijkComboBox.getSelectedIndex()];
             if (geslachtComboBox.getSelectedIndex() == 1) {
                 geslacht = Geslacht.Vrouwelijk;

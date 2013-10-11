@@ -200,8 +200,8 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
             String huisnr = huisnrTextField.getText();
             long kvknr = Long.parseLong(kvkNummerTextField.getText());
             String iban = ibannrTextField.getText();
-            long telefoonnr = Long.parseLong(telefoonnummerTextField.getText());
-            long faxnr = Long.parseLong(faxnummerTextField.getText());
+            String telefoonnr = telefoonnummerTextField.getText();
+            String faxnr = faxnummerTextField.getText();
 
             Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telefoonnr, faxnr);
             boolean succes;

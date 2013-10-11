@@ -14,8 +14,8 @@ public class Praktijk implements Serializable {
     private String huisnummer;
     private long kvkNummer;
     private String iban;
-    private long telefoonnummer;
-    private long faxnummer;
+    private String telefoonnummer;
+    private String faxnummer;
     
     /**
      * Maakt een nieuwe fysiotherapiepraktijk aan en stelt alle informatie in
@@ -28,7 +28,7 @@ public class Praktijk implements Serializable {
      * @param telefoonnummer telefoonnummer van de praktijk
      * @param faxnummer faxnummer van de praktijk 
      */
-    public Praktijk(String naam, String plaats, String postcode, String huisnummer, long kvkNummer, String iban, long telefoonnummer, long faxnummer) {
+    public Praktijk(String naam, String plaats, String postcode, String huisnummer, long kvkNummer, String iban, String telefoonnummer, String faxnummer) {
         this.naam = naam;
         this.plaats = plaats;
         this.postcode = postcode;
@@ -106,7 +106,7 @@ public class Praktijk implements Serializable {
      * Geeft het telefoonnummer van de praktijk terug
      * @return het telefoonnummer waarop de praktijk bereikbaar is
      */
-    public long getTelnr() {
+    public String getTelnr() {
         return telefoonnummer;
     }
 
@@ -114,7 +114,7 @@ public class Praktijk implements Serializable {
      * Geeft het faxnummer van de praktijk terug
      * @return het faxnummer waarop de praktijk bereikbaar is
      */
-    public long getFaxnr() {
+    public String getFaxnr() {
         return faxnummer;
     }
 
@@ -162,7 +162,7 @@ public class Praktijk implements Serializable {
      * Wijzig het telefoonnummer van de praktijk
      * @param telefoonnummer Het nieuwe telefoonnummer
      */
-    public void setTelnr(long telefoonnummer) {
+    public void setTelnr(String telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
     }
 
@@ -170,7 +170,7 @@ public class Praktijk implements Serializable {
      * Wijzig het faxnummer van de praktijk
      * @param faxnummer 
      */
-    public void setFaxnr(long faxnummer) {
+    public void setFaxnr(String faxnummer) {
         this.faxnummer = faxnummer;
     }
 }
