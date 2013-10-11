@@ -28,6 +28,10 @@ public class StartGUI extends javax.swing.JFrame {
         sThread.start();
     }
     
+    /**
+     * Set de text naar een bepaalde stap
+     * @param stap
+     */
     public void setStatus(int stap) {
         switch(stap) {
             case 1:
@@ -53,6 +57,12 @@ public class StartGUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Open het HomeScherm
+     * @param therapeutManager De Therapeut manager
+     * @param praktijkManager De Praktijk manager
+     * @param behandelingManager De Behandeling manager
+     */
     public void openHomeScherm(TherapeutManager therapeutManager, PraktijkManager praktijkManager, BehandelingManager behandelingManager) {
         new HomeGUI(therapeutManager, praktijkManager, behandelingManager).maakZichtbaar();
         dispose();

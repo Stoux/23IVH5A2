@@ -7,6 +7,7 @@ package home.control;
 import behandel.control.BehandelingManager;
 import data.control.DataController;
 import home.boundary.StartGUI;
+import static java.lang.Thread.sleep;
 import praktijk.control.PraktijkManager;
 import praktijk.control.TherapeutManager;
 
@@ -40,6 +41,11 @@ public class StartThread extends Thread {
     
     @Override
     public void run() {
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            this.interrupt();
+        }
         startScherm.setStatus(1);
         dataController = new DataController();
         startScherm.setStatus(2);

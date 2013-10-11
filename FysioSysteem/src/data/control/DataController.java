@@ -69,7 +69,10 @@ public class DataController {
      * @return gelukt
      */
     public boolean syncObjectMetFTP(String bestand, Object object) {
-        if (!ftp.isVerbonden() && !ftp.isIngelogd()) ftp.verbind(); //Verbind als er geen verbinding is
+        if (!ftp.isVerbonden() && !ftp.isIngelogd()) {
+            ftp.verbind(); //Verbind als er geen verbinding is
+            if (!ftp.isVerbonden() || !ftp.isIngelogd()) return false;
+        } 
         else if (!ftp.isVerbonden() || !ftp.isIngelogd()) return false;
         
         boolean returnValue;
