@@ -53,6 +53,9 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Vult de combobox met de namen van alle praktijken
+     */
     private void vulComboBox() {
         praktijken = manager.getPraktijkNamen();
         
@@ -63,6 +66,9 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(praktijkComboBox);
     }
     
+    /**
+     * Vult alle velden in met geselecteerde therapeut data
+     */
     private void vulVelden() {
         voornaamTextField.setText(wijzigTherapeut.getVoornaam());
         tussenvoegselTextField.setText(wijzigTherapeut.getTussenvoegsel());
@@ -235,13 +241,17 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Sluit het venster
+     * @param evt 
+     */
     private void annulerenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerenButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_annulerenButtonActionPerformed
 
     /**
-     * 
-     * @param evt event van listener
+     * Maakt een nieuwe therapeut aan of wijzigd de gegevens van een bestaande therapeut
+     * @param evt 
      */
     private void opslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opslaanButtonActionPerformed
         if (!voornaamTextField.getText().isEmpty() && !achternaamTextField.getText().isEmpty() && !bsnTextField.getText().isEmpty() && !postcodeTextField.getText().isEmpty() && !huisnrTextField.getText().isEmpty() && !telefoonnummerTextField.getText().isEmpty() && praktijkComboBox.getSelectedIndex() != -1) {

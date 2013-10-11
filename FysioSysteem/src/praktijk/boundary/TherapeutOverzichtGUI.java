@@ -204,6 +204,10 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Tabel met therapeuten wordt leeggemaakt en gevuld met gevonden therapeuten
+     * @param evt 
+     */
     private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
         String query = zoekTextField.getText();
 
@@ -215,12 +219,21 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_zoekButtonActionPerformed
 
+    /**
+     * Er wordt een nieuw venster geopend waar therapeuten aangemaakt kunnen worden
+     * @param evt 
+     */
     private void toevoegenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toevoegenMenuItemActionPerformed
         TherapeutWijzigGUI therapeutWijzigGUI = new TherapeutWijzigGUI(this, manager);
         therapeutWijzigGUI.setLocationRelativeTo(this);
         therapeutWijzigGUI.setVisible(true);
     }//GEN-LAST:event_toevoegenMenuItemActionPerformed
 
+    /**
+     * Er wordt een nieuw venster geopend waar de in de lijst geselecteerde
+     * therapeut aangepast kan worden
+     * @param evt 
+     */
     private void bewerkenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bewerkenMenuItemActionPerformed
         int index = therapeutenTable.getSelectedRow();
         
@@ -233,6 +246,11 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
         }        
     }//GEN-LAST:event_bewerkenMenuItemActionPerformed
 
+    /**
+     * Er wordt gevraagd of de in de lijst geselecteerde therapeut verwijderd
+     * moet worden
+     * @param evt 
+     */
     private void verwijderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verwijderMenuItemActionPerformed
         int index = therapeutenTable.getSelectedRow();
         
@@ -251,25 +269,43 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_verwijderMenuItemActionPerformed
 
+    /**
+     * Sluit het venster en ga terug naar het hoofdmenu
+     * @param evt 
+     */
     private void terugMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugMenuItemActionPerformed
         sluitGUI();
     }//GEN-LAST:event_terugMenuItemActionPerformed
 
+     /**
+     * Het zoekveld wordt leeggemaakt en alle therapeuten worden getoond
+     * @param evt 
+     */
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         zoekTextField.setText(null);
         vernieuwOverzicht();
     }//GEN-LAST:event_resetButtonActionPerformed
      
+    /**
+     * Venster wordt afgesloten en home menu wordt getoond
+     */
     private void sluitGUI() {
         homeGUI.setVisible(true);
         homeGUI.setLocationRelativeTo(null);
         dispose();
     }
     
+    /**
+     * Maakt de tabel waarin de therapeuten getoond worden leeg
+     */
     private void leegTabel() {
         tableModel.setRowCount(0);
     }
     
+     /**
+     * Maakt de tabel waarin de therapeuten getoond worden leeg
+     * en vult deze opnieuw met alle therapeuten
+     */
     public void vernieuwOverzicht() {
         leegTabel();
         for(Therapeut t : manager.getTherapeuten()) {

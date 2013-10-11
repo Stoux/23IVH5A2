@@ -41,6 +41,9 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Vult alle velden in met geselecteerde praktijk data
+     */
     private void vulVelden() {
         naamTextField.setText(wijzigPraktijk.getNaam());
         plaatsTextField.setText(wijzigPraktijk.getPlaats());
@@ -188,10 +191,18 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Sluit het venster
+     * @param evt 
+     */
     private void annulerenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerenButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_annulerenButtonActionPerformed
 
+    /**
+     * Maakt een nieuwe praktijk aan of wijzigd de gegevens van een bestaande praktijk
+     * @param evt 
+     */
     private void opslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opslaanButtonActionPerformed
         if (!naamTextField.getText().isEmpty() && !plaatsTextField.getText().isEmpty() && !postcodeTextField.getText().isEmpty() && !huisnrTextField.getText().isEmpty() && !kvkNummerTextField.getText().isEmpty() && !ibannrTextField.getText().isEmpty() && !telefoonnummerTextField.getText().isEmpty() && !faxnummerTextField.getText().isEmpty()) {
             String naam = naamTextField.getText();
