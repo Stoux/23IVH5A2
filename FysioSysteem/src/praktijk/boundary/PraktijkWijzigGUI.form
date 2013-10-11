@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
@@ -47,11 +47,11 @@
                   <Component id="naamTextField" max="32767" attributes="0"/>
                   <Component id="plaatsTextField" alignment="0" max="32767" attributes="0"/>
                   <Component id="postcodeTextField" alignment="0" max="32767" attributes="0"/>
-                  <Component id="kvkFormattedField" max="32767" attributes="0"/>
-                  <Component id="telefoonnrFormattedField" max="32767" attributes="0"/>
-                  <Component id="faxnrFormattedField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="kvkNummerTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="telefoonnummerTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="faxnummerTextField" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -80,7 +80,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="kvkFormattedField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="kvkNummerTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -90,13 +90,13 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="telefoonnrFormattedField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="telefoonnummerTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="faxnrFormattedField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="faxnummerTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -175,20 +175,11 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opslaanButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="kvkFormattedField">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(format)"/>
-      </AuxValues>
+    <Component class="javax.swing.JTextField" name="kvkNummerTextField">
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="telefoonnrFormattedField">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(format)"/>
-      </AuxValues>
+    <Component class="javax.swing.JTextField" name="telefoonnummerTextField">
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="faxnrFormattedField">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(format)"/>
-      </AuxValues>
+    <Component class="javax.swing.JTextField" name="faxnummerTextField">
     </Component>
   </SubComponents>
 </Form>

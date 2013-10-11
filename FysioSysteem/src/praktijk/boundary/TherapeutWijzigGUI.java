@@ -1,6 +1,5 @@
 package praktijk.boundary;
 
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,14 +20,12 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
     private int index;
     private Therapeut wijzigTherapeut;
     private boolean isNieuw;
-    private NumberFormat format;
     private HashMap<Long, String> praktijken;
 
     /**
      * Creates new form TherapeutWijzigGUI
      */
     public TherapeutWijzigGUI(TherapeutOverzichtGUI overzicht, TherapeutManager manager) {
-        format = NumberFormat.getNumberInstance();
         initComponents();
         this.manager = manager;
         this.overzichtGUI = overzicht;
@@ -41,9 +38,7 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
     }
     
     public TherapeutWijzigGUI(TherapeutOverzichtGUI overzicht, TherapeutManager manager, int index) {
-        format = NumberFormat.getNumberInstance();
         initComponents();
-        
         this.manager = manager;
         this.overzichtGUI = overzicht;
         this.index = index;
