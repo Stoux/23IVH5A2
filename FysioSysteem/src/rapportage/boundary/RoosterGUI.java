@@ -57,14 +57,15 @@ public class RoosterGUI extends javax.swing.JFrame {
 
         therapeuten = bManager.getTherapeuten();
 
-        for (int i = 0; i < therapeuten.size(); i++) {
-            fysiotherapeutComboBox.addItem(therapeuten.get(i).getVolledigeNaam());
+        for (Therapeut therapeut : therapeuten) {
+            fysiotherapeutComboBox.addItem(therapeut.getBsn() + " | " + therapeut.getVolledigeNaam());
         }
+
         setDatumWeek();
         control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
         setHeaders("huidige");
         roosterTabel.setModel(control.getModel());
-        
+
 
 
     }
@@ -72,76 +73,43 @@ public class RoosterGUI extends javax.swing.JFrame {
     private boolean setDatumWeek() {
         boolean succes = false;
         DateFormat dateFormat = new SimpleDateFormat("u");
-        Date huidigeDatum = new Date(System.currentTimeMillis());
+        Date huidigeDatum = new Date();
         int dagNummer = Integer.parseInt(dateFormat.format(huidigeDatum));
-
         switch (dagNummer) {
             case 1:
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -1);
-                beginDatum = new Date(cal.getTimeInMillis());
-                cal.add(Calendar.DATE, +1);
-                beginWeek = new Date(cal.getTimeInMillis());
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, +5);
-                eindDatum = new Date(cal.getTimeInMillis());
+                setDatumWeek(huidigeDatum, -1, +1, +5);
                 succes = true;
                 break;
             case 2:
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -2);
-                beginDatum = new Date(cal.getTimeInMillis());
-                cal.add(Calendar.DATE, +1);
-                beginWeek = new Date(cal.getTimeInMillis());
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, +4);
-                eindDatum = new Date(cal.getTimeInMillis());               
+                setDatumWeek(huidigeDatum, -2, +1, +4);
                 succes = true;
                 break;
             case 3:
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -3);
-                beginDatum = new Date(cal.getTimeInMillis());
-                cal.add(Calendar.DATE, +1);
-                beginWeek = new Date(cal.getTimeInMillis());
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, +3);
-                eindDatum = new Date(cal.getTimeInMillis());
+                setDatumWeek(huidigeDatum, -3, +1, +3);
                 succes = true;
                 break;
             case 4:
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -4);
-                beginDatum = new Date(cal.getTimeInMillis());
-                cal.add(Calendar.DATE, +1);
-                beginWeek = new Date(cal.getTimeInMillis());
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, +2);
-                eindDatum = new Date(cal.getTimeInMillis());
+                setDatumWeek(huidigeDatum, -4, +1, +2);
                 succes = true;
                 break;
             case 5:
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -5);
-                beginDatum = new Date(cal.getTimeInMillis());
-                cal.add(Calendar.DATE, +1);
-                beginWeek = new Date(cal.getTimeInMillis());
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, +1);
-                eindDatum = new Date(cal.getTimeInMillis());
+                setDatumWeek(huidigeDatum, -5, +1, +1);
                 succes = true;
                 break;
-
         }
         return succes;
+    }
+    
+    private void setDatumWeek(Date huidigeDatum, int dagBegin, int dagWeek, int dagEind) {
+        cal = Calendar.getInstance();
+        cal.setTime(huidigeDatum);
+        cal.add(Calendar.DATE, dagBegin);
+        beginDatum = new Date(cal.getTimeInMillis());
+        cal.add(Calendar.DATE, dagWeek);
+        beginWeek = new Date(cal.getTimeInMillis());
+        cal.setTime(huidigeDatum);
+        cal.add(Calendar.DATE, dagEind);
+        eindDatum = new Date(cal.getTimeInMillis());
     }
 
     private boolean setData(String kant) {
@@ -164,84 +132,51 @@ public class RoosterGUI extends javax.swing.JFrame {
             eindDatum = new Date(cal.getTimeInMillis());
             succes = true;
         }
+        System.out.println("Begin: " + beginDatum + " | Eind: " + eindDatum);
 
         return succes;
     }
 
     private void setHeaders(String kant) {
+        switch (kant) {
+            case "huidige":
+                setHeaders(0);
+                break;
+            case "vorige":
+                setHeaders(-7);
+                break;
+            case "volgende":
+                setHeaders(+7);
+                break;
+        }
+    }
+
+    private void setHeaders(int addDagen) {
         JTableHeader header = roosterTabel.getTableHeader();
         TableColumnModel tcm = header.getColumnModel();
         cal = Calendar.getInstance();
-        if (kant.equals("huidige")) {
-            cal.setTime(beginWeek);
-            Date maandag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(0).setHeaderValue("Maandag: " + dagMaand.format(maandag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +1);
-            Date dinsdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(1).setHeaderValue("Dinsdag: " + dagMaand.format(dinsdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +2);
-            Date woensdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(2).setHeaderValue("Woensdag: " + dagMaand.format(woensdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +3);
-            Date donderdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(3).setHeaderValue("Donderdag: " + dagMaand.format(donderdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +4);
-            Date vrijdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(4).setHeaderValue("Vrijdag: " + dagMaand.format(vrijdag));
-            header.repaint();
-        }
-        if (kant.equals("volgende")) {
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +7);
-            beginWeek = new Date(cal.getTimeInMillis());
-            Date maandag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(0).setHeaderValue("Maandag: " + dagMaand.format(maandag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +1);
-            Date dinsdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(1).setHeaderValue("Dinsdag: " + dagMaand.format(dinsdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +2);
-            Date woensdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(2).setHeaderValue("Woensdag: " + dagMaand.format(woensdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +3);
-            Date donderdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(3).setHeaderValue("Donderdag: " + dagMaand.format(donderdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +4);
-            Date vrijdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(4).setHeaderValue("Vrijdag: " + dagMaand.format(vrijdag));
-            header.repaint();
-        }
-        if (kant.equals("vorige")) {
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, -7);
-            beginWeek = new Date(cal.getTimeInMillis());
-            Date maandag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(0).setHeaderValue("Maandag: " + dagMaand.format(maandag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +1);
-            Date dinsdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(1).setHeaderValue("Dinsdag: " + dagMaand.format(dinsdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +2);
-            Date woensdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(2).setHeaderValue("Woensdag: " + dagMaand.format(woensdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +3);
-            Date donderdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(3).setHeaderValue("Donderdag: " + dagMaand.format(donderdag));
-            cal.setTime(beginWeek);
-            cal.add(Calendar.DATE, +4);
-            Date vrijdag = new Date(cal.getTimeInMillis());
-            tcm.getColumn(4).setHeaderValue("Vrijdag: " + dagMaand.format(vrijdag));
-            header.repaint();
-        }
+        cal.setTime(beginWeek);
+        cal.add(Calendar.DATE, addDagen);
+        beginWeek = new Date(cal.getTimeInMillis());
+        Date maandag = new Date(cal.getTimeInMillis());
+        tcm.getColumn(0).setHeaderValue("Maandag: " + dagMaand.format(maandag));
+        cal.setTime(beginWeek);
+        cal.add(Calendar.DATE, +1);
+        Date dinsdag = new Date(cal.getTimeInMillis());
+        tcm.getColumn(1).setHeaderValue("Dinsdag: " + dagMaand.format(dinsdag));
+        cal.setTime(beginWeek);
+        cal.add(Calendar.DATE, +2);
+        Date woensdag = new Date(cal.getTimeInMillis());
+        tcm.getColumn(2).setHeaderValue("Woensdag: " + dagMaand.format(woensdag));
+        cal.setTime(beginWeek);
+        cal.add(Calendar.DATE, +3);
+        Date donderdag = new Date(cal.getTimeInMillis());
+        tcm.getColumn(3).setHeaderValue("Donderdag: " + dagMaand.format(donderdag));
+        cal.setTime(beginWeek);
+        cal.add(Calendar.DATE, +4);
+        Date vrijdag = new Date(cal.getTimeInMillis());
+        tcm.getColumn(4).setHeaderValue("Vrijdag: " + dagMaand.format(vrijdag));
+        header.repaint();
     }
 
     private void sluitGUI() {
