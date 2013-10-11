@@ -160,7 +160,7 @@ public class FtpController {
     private boolean changeDirectory(String pad) {
         if (!isVerbonden() || !isIngelogd()) return false; //Niet verbonden of ingelogd dus kan niet uigevoerd worden
         try {
-            if (!ftpClient.currentDirectory().equals(pad)) {
+            if (!ftpClient.currentDirectory().equals("/" + pad)) {
                 try {
                     ftpClient.changeDirectory(pad);
                     return true;
