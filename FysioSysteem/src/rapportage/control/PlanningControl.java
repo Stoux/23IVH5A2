@@ -75,6 +75,21 @@ public class PlanningControl {
         }
         return success;
     }
+    
+    public boolean getGegevensVanArrayList(Date beginDatum, Date eindDatum, DefaultTableModel planningModel, ArrayList<Behandeling> behandelingen) {
+        boolean success = false;
+        planningModel.setRowCount(0);
+        for (Behandeling b : behandelingen) {
+            if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
+                planningModel.addRow(new Object[]{"x", b.getFysiotherapeutBSN(), b.getBurgerServiceNummer(), b.getBehandelingscode(), b.getBegintijd(), b.getOpmerking()});
+            }
+        }
+        if (planningModel.getRowCount() > 0) {
+            success = true;
+            model = planningModel;
+        }
+        return success;
+    }
 
     /**
      * Zoek functie voor een bepaalde periode
@@ -96,6 +111,17 @@ public class PlanningControl {
      * @return successboolean
      */
     public boolean zoekSofinummer(int sofiNummer, DefaultTableModel planningModel) {
-        throw new UnsupportedOperationException();
+        ArrayList<Behandeling> behandelingen = manager.getBehandelingen();
+        ArrayList<Behandeling> gesorteerd = new ArrayList<>();
+        for(Behandeling b:behandelingen){
+            if(b.getBurgerServiceNummer() == sofiNummer){
+                gesorteerd.add(b);
+            }
+        }
+        if(gesorteerd.isEmpty()){
+            return false;
+        } else {
+            return getGegevensVanArrayList(new Date(new Date().getTime() - 604800000), new Date(new Date().getTime() + 604800000), planningModel, gesorteerd);
+        }
     }
 }
