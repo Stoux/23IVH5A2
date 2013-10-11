@@ -4,33 +4,34 @@ import home.boundary.HomeGUI;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
-import praktijk.control.PraktijkManager;
-import praktijk.entity.Praktijk;
+import praktijk.control.TherapeutManager;
+import praktijk.entity.Therapeut;
 
 /**
  *
  * @author Leon
  */
-public class PraktijkOverzichtGUI extends javax.swing.JFrame {
-    
-    private HomeGUI homeGUI;
-    
-    private PraktijkManager manager;
+public class TherapeutOverzichtGUI extends javax.swing.JFrame {
+    private HomeGUI homeGUI;    
+    private TherapeutManager manager;
     private DefaultTableModel tableModel;
+    private HashMap<Long, String> praktijken;
 
     /**
-     * Creates new form PraktijkOverzichtGUI
+     * Creates new form TherapeutOverzichtGUI
      */
-    public PraktijkOverzichtGUI(HomeGUI homeGUI, PraktijkManager praktijkManager) {       
+    public TherapeutOverzichtGUI(HomeGUI homeGUI, TherapeutManager therapeutManager) {       
         this.homeGUI = homeGUI;
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         
-        manager = praktijkManager;
-        tableModel = (DefaultTableModel) praktijkenTable.getModel();       
+        manager = therapeutManager;
+        praktijken = manager.getPraktijkNamen();
+        tableModel = (DefaultTableModel) therapeutenTable.getModel();
         
         PromptSupport.setPrompt("Zoekterm...", zoekTextField);
         
@@ -54,7 +55,7 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        praktijkenTable = new javax.swing.JTable();
+        therapeutenTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         zoekTextField = new javax.swing.JTextField();
         zoekComboBox = new javax.swing.JComboBox();
@@ -69,14 +70,14 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         terugMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Praktijken overzicht");
+        setTitle("Therapeuten overzicht");
 
-        praktijkenTable.setModel(new javax.swing.table.DefaultTableModel(
+        therapeutenTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Naam", "Plaats", "kvkNummer", "Telefoonnummer", "Faxnummer"
+                "Naam", "Geboortedatum", "Postcode", "Huisnummer", "Praktijk"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -87,13 +88,13 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(praktijkenTable);
+        jScrollPane1.setViewportView(therapeutenTable);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Zoeken"));
 
         zoekTextField.setName(""); // NOI18N
 
-        zoekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Naam", "Plaatsnaam" }));
+        zoekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Naam" }));
 
         zoekButton.setText("Zoeken");
         zoekButton.addActionListener(new java.awt.event.ActionListener() {
@@ -117,10 +118,10 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(zoekTextField)
-                    .addComponent(zoekComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 155, Short.MAX_VALUE)
+                    .addComponent(zoekComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 156, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(zoekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(zoekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -205,45 +206,38 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
 
     private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
         String query = zoekTextField.getText();
-        //zoeken op naam is geselecteerd
-        Boolean isNaam = true;        
-        
-        //zoeken op plaatsnaam is geselecteerd
-        if(zoekComboBox.getSelectedIndex() == 1) {
-            isNaam = false;
-        }
 
-        ArrayList<Praktijk> gevondenPraktijken = manager.zoekPraktijk(query, isNaam);
+        ArrayList<Therapeut> gevondenTherapeuten = manager.zoekTherapeut(query);
         
         leegTabel();
-        for(Praktijk p : gevondenPraktijken) {
-            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getKvk(), p.getTelnr(), p.getFaxnr()});
+        for(Therapeut t : gevondenTherapeuten) {
+            tableModel.addRow(new Object[] { t.getVolledigeNaam(), t.getGeboortedatumFormatted(), t.getPostcode(), t.getHuisnummer(), praktijken.get(t.getPraktijkKvk()) });
         }
     }//GEN-LAST:event_zoekButtonActionPerformed
 
     private void toevoegenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toevoegenMenuItemActionPerformed
-        PraktijkWijzigGUI praktijkWijzigGUI = new PraktijkWijzigGUI(this, manager);
-        praktijkWijzigGUI.setLocationRelativeTo(this);
-        praktijkWijzigGUI.setVisible(true);
+        TherapeutWijzigGUI therapeutWijzigGUI = new TherapeutWijzigGUI(this, manager);
+        therapeutWijzigGUI.setLocationRelativeTo(this);
+        therapeutWijzigGUI.setVisible(true);
     }//GEN-LAST:event_toevoegenMenuItemActionPerformed
 
     private void bewerkenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bewerkenMenuItemActionPerformed
-        int index = praktijkenTable.getSelectedRow();
+        int index = therapeutenTable.getSelectedRow();
         
         if(index != -1) {
-            PraktijkWijzigGUI praktijkWijzigGUI = new PraktijkWijzigGUI(this, manager, index);
-            praktijkWijzigGUI.setLocationRelativeTo(this);
-            praktijkWijzigGUI.setVisible(true);
+            TherapeutWijzigGUI therapeutWijzigGUI = new TherapeutWijzigGUI(this, manager, index);
+            therapeutWijzigGUI.setLocationRelativeTo(this);
+            therapeutWijzigGUI.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Er is geen praktijk geselecteerd.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Er is geen therapeut geselecteerd.", "Error", JOptionPane.ERROR_MESSAGE);
         }        
     }//GEN-LAST:event_bewerkenMenuItemActionPerformed
 
     private void verwijderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verwijderMenuItemActionPerformed
-        int index = praktijkenTable.getSelectedRow();
+        int index = therapeutenTable.getSelectedRow();
         
         if(index != -1) {
-            int dialogResult = JOptionPane.showConfirmDialog(null, "Weet u zeker dat u deze praktijk wilt verwijderen?", "Verwijderen", JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Weet u zeker dat u deze therapeut wilt verwijderen?", "Verwijderen", JOptionPane.YES_NO_OPTION);
             if(dialogResult == JOptionPane.YES_OPTION)
             {
                 if(manager.verwijder(index))
@@ -252,7 +246,7 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Er is een fout opgetreden bij het verwijderen.", "Fout", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Er is geen praktijk geselecteerd.", "Fout", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Er is geen therapeut geselecteerd.", "Fout", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_verwijderMenuItemActionPerformed
@@ -278,8 +272,8 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
     
     public void vernieuwOverzicht() {
         leegTabel();
-        for(Praktijk p : manager.getPraktijken()) {
-            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getKvk(), p.getTelnr(), p.getFaxnr()});
+        for(Therapeut t : manager.getTherapeuten()) {
+            tableModel.addRow(new Object[] { t.getVolledigeNaam(), t.getGeboortedatumFormatted(), t.getPostcode(), t.getHuisnummer(), praktijken.get(t.getPraktijkKvk()) });
         }
     }
     
@@ -290,9 +284,9 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JTable praktijkenTable;
     private javax.swing.JButton resetButton;
     private javax.swing.JMenuItem terugMenuItem;
+    private javax.swing.JTable therapeutenTable;
     private javax.swing.JMenuItem toevoegenMenuItem;
     private javax.swing.JMenuItem verwijderMenuItem;
     private javax.swing.JButton zoekButton;

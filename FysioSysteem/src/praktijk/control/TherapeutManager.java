@@ -7,6 +7,7 @@ import data.entity.Folder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import praktijk.entity.Praktijk;
 
 /**
  * Manager van {@link therapeut.boundary.TherapeutOverzichtGUI TherapeutOverzichtGUI} en {@link therapeut.boundary.TherapeutWijzigGUI TherapeutWijzigGUI}
@@ -115,13 +116,19 @@ public class TherapeutManager {
         return gevondenTherapeuten;
     }
     
-    public boolean checkDatum(String datum) {
-        try {
-            Date parsed = new SimpleDateFormat("dd-MM-yyyy").parse(datum);
-            return true;
+    /**
+     * Teruggeven van lijst met KVK-nummers en namen
+     * @return KVK-nummers met bijbehorende namen
+     */
+    public HashMap<Long, String> getPraktijkNamen() {
+        PraktijkManager praktijkManager = new PraktijkManager(dataController);
+        ArrayList<Praktijk> praktijken = praktijkManager.getPraktijken();
+        HashMap<Long, String> namen = new HashMap<>();
+        
+        for (Praktijk praktijk : praktijken) {
+            namen.put(praktijk.getKvk(), praktijk.getNaam());
         }
-        catch (ParseException e) {
-            return false;
-        }
+        
+        return namen;
     }
 }
