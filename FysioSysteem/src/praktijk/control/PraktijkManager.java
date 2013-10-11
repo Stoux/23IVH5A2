@@ -18,24 +18,24 @@ public class PraktijkManager {
      * Constructor<br />
      * Haalt de praktijken op uit het {@link data datasubsysteem}
      */
-    public PraktijkManager() {
+    public PraktijkManager(DataController dataController) {
+        this.dataController = dataController;
         praktijken = new ArrayList<>();
-        dataController = new DataController();
         
         //ophalen van objecten uit data subsysteem, cast deze naar praktijken
         for (Object obj : dataController.laadObjectenUitFolder(Folder.Praktijken, Praktijk.class)) {
             praktijken.add((Praktijk) obj);
         }
-        
-        //sorteer de praktijken op naam
-        Collections.sort(praktijken, Praktijk.praktijkNameComparator);
     }
     
     /**
-     * Verkrijg alle praktijken
+     * Verkrijg alle praktijken.<br />
+     * Alvorens het terugsturen worden deze gesorteerd, aangezien de kans groot is dat er wijzigingen hebben plaatsgevonden.
      * @return Een {@link java.util.ArrayList ArrayList} met alle {@link praktijk.entity.Praktijk praktijken}
      */
     public ArrayList<Praktijk> getPraktijken() {
+        //sorteer de praktijken op naam
+        Collections.sort(praktijken, Praktijk.praktijkNameComparator);
         return praktijken;
     }
     

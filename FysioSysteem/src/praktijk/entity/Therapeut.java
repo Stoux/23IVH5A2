@@ -14,7 +14,7 @@ public class Therapeut implements Serializable {
     private String achternaam;
     private Date geboortedatum;
     private Geslacht geslacht;
-    private long bsn;
+    private int bsn;
     private String postcode;
     private String huisnummer;
     private long telefoonnummer;
@@ -33,7 +33,7 @@ public class Therapeut implements Serializable {
      * @param telefoonnummer telefoonnummer van de therapeut 
      * @param praktijkKvk KVK-nummer van de praktijk waar de therapeut werkzaam is
      */
-    public Therapeut (String voornaam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, long bsn, String postcode, String huisnummer, long telefoonnummer, long praktijkKvk) {
+    public Therapeut (String voornaam, String tussenvoegsel, String achternaam, Date geboortedatum, Geslacht geslacht, int bsn, String postcode, String huisnummer, long telefoonnummer, long praktijkKvk) {
         this.voornaam = voornaam;
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
@@ -113,7 +113,7 @@ public class Therapeut implements Serializable {
      * Geeft de BSN-nummer van de therapeut terug
      * @return BSN-nummer van de therapeut
      */
-    public long getBsn() {
+    public int getBsn() {
         return bsn;
     }
 

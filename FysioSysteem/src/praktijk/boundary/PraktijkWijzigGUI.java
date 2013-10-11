@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package praktijk.boundary;
 
+import java.text.NumberFormat;
 import javax.swing.JOptionPane;
 import praktijk.control.PraktijkManager;
 import praktijk.entity.Praktijk;
@@ -17,27 +14,36 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
     private PraktijkOverzichtGUI overzichtGUI;
     private int index;
     private Praktijk wijzigPraktijk;
-    private String modus;
+    private boolean isNieuw;
+    private NumberFormat format;
 
     /**
      * Creates new form PraktijkWijzigGUI
      */
     public PraktijkWijzigGUI(PraktijkOverzichtGUI overzicht, PraktijkManager manager) {
+        format = NumberFormat.getNumberInstance();
         initComponents();
         this.manager = manager;
         this.overzichtGUI = overzicht;
-        this.modus = "Nieuw";
+        this.isNieuw = true;
+        
+        this.setTitle("Praktijk toevoegen");
     }
     
     public PraktijkWijzigGUI(PraktijkOverzichtGUI overzicht, PraktijkManager manager, int index) {
+        format = NumberFormat.getNumberInstance();
         initComponents();
+        
         this.manager = manager;
         this.overzichtGUI = overzicht;
         this.index = index;
-        this.modus = "Wijzig";
+        this.isNieuw = false;
         this.wijzigPraktijk = manager.getPraktijk(index);
         
+        kvkFormattedField.setEnabled(false);
+        this.setTitle("Praktijk wijzigen");
         vulVelden();
+        
     }
     
     private void vulVelden() {
@@ -45,10 +51,10 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         plaatsTextField.setText(wijzigPraktijk.getPlaats());
         postcodeTextField.setText(wijzigPraktijk.getPostcode());
         huisnrTextField.setText(wijzigPraktijk.getHuisnummer());
-        kvknrTextField.setText(String.valueOf(wijzigPraktijk.getKvk()));
-        rekeningnrTextField.setText(wijzigPraktijk.getIban());
-        telefoonnrTextField.setText(String.valueOf(wijzigPraktijk.getTelnr()));
-        faxnrTextField.setText(String.valueOf(wijzigPraktijk.getFaxnr()));
+        kvkFormattedField.setText(String.valueOf(wijzigPraktijk.getKvk()));
+        ibannrTextField.setText(wijzigPraktijk.getIban());
+        telefoonnrFormattedField.setText(String.valueOf(wijzigPraktijk.getTelnr()));
+        faxnrFormattedField.setText(String.valueOf(wijzigPraktijk.getFaxnr()));
     }
 
     /**
@@ -72,14 +78,14 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         plaatsTextField = new javax.swing.JTextField();
         postcodeTextField = new javax.swing.JTextField();
         huisnrTextField = new javax.swing.JTextField();
-        kvknrTextField = new javax.swing.JTextField();
-        rekeningnrTextField = new javax.swing.JTextField();
-        telefoonnrTextField = new javax.swing.JTextField();
-        faxnrTextField = new javax.swing.JTextField();
+        ibannrTextField = new javax.swing.JTextField();
         annulerenButton = new javax.swing.JButton();
         opslaanButton = new javax.swing.JButton();
+        kvkFormattedField = new javax.swing.JFormattedTextField(format);
+        telefoonnrFormattedField = new javax.swing.JFormattedTextField(format);
+        faxnrFormattedField = new javax.swing.JFormattedTextField(format);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         praktijkNaamLabel.setText("Naam");
 
@@ -89,9 +95,9 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Huisnummer");
 
-        jLabel4.setText("kvk-nummer");
+        jLabel4.setText("KVK-nummer");
 
-        jLabel5.setText("Rekeningnummer");
+        jLabel5.setText("IBAN-nummer");
 
         jLabel6.setText("Telefoonnummer");
 
@@ -126,22 +132,20 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel1)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(faxnrTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(telefoonnrTextField)
-                    .addComponent(rekeningnrTextField)
-                    .addComponent(kvknrTextField)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(opslaanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(annulerenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ibannrTextField)
                     .addComponent(huisnrTextField)
                     .addComponent(naamTextField)
                     .addComponent(plaatsTextField)
-                    .addComponent(postcodeTextField))
-                .addGap(99, 99, 99))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(opslaanButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(annulerenButton)
+                    .addComponent(postcodeTextField)
+                    .addComponent(kvkFormattedField)
+                    .addComponent(telefoonnrFormattedField)
+                    .addComponent(faxnrFormattedField))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -165,67 +169,73 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(kvknrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kvkFormattedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rekeningnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ibannrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(telefoonnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(telefoonnrFormattedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(faxnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(faxnrFormattedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(annulerenButton)
-                    .addComponent(opslaanButton))
-                .addContainerGap())
+                    .addComponent(opslaanButton)
+                    .addComponent(annulerenButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void annulerenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerenButtonActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_annulerenButtonActionPerformed
 
     private void opslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opslaanButtonActionPerformed
-        // TODO add your handling code here:       
-        String naam = naamTextField.getText();
-        String plaats = plaatsTextField.getText();
-        String postcode = postcodeTextField.getText();
-        String huisnr = huisnrTextField.getText();
-        long kvknr = Long.parseLong(kvknrTextField.getText());
-        String iban = rekeningnrTextField.getText();
-        long telefoonnr = Long.parseLong(telefoonnrTextField.getText());
-        long faxnr = Long.parseLong(faxnrTextField.getText());
-                
-        Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telefoonnr, faxnr);
-        if(modus.equals("Nieuw")) {
-            if(!manager.voegToe(praktijk)) {
-                JOptionPane.showMessageDialog(this, "Error", "Er ging iets mis bij het toevoegen.", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        
-        if(modus.equals("Wijzig")) {
-            if(!manager.wijzig(index, praktijk)) {
-                JOptionPane.showMessageDialog(this, "Error", "Er ging iets mis bij het wijzigen.", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        if (!naamTextField.getText().isEmpty() && !plaatsTextField.getText().isEmpty() && !postcodeTextField.getText().isEmpty() && !huisnrTextField.getText().isEmpty() && !kvkFormattedField.getText().isEmpty() && !ibannrTextField.getText().isEmpty() && !telefoonnrFormattedField.getText().isEmpty() && !faxnrFormattedField.getText().isEmpty()) {
+            String naam = naamTextField.getText();
+            String plaats = plaatsTextField.getText();
+            String postcode = postcodeTextField.getText();
+            String huisnr = huisnrTextField.getText();
+            long kvknr = Long.parseLong(kvkFormattedField.getText());
+            String iban = ibannrTextField.getText();
+            long telefoonnr = Long.parseLong(telefoonnrFormattedField.getText());
+            long faxnr = Long.parseLong(faxnrFormattedField.getText());
 
-        this.dispose();
-        overzichtGUI.vernieuwOverzicht();
+            Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telefoonnr, faxnr);
+            boolean succes;
+            
+            if(isNieuw) {
+                succes = manager.voegToe(praktijk);
+            }
+            else {
+                succes = manager.wijzig(index, praktijk);
+            }
+
+            if (succes) {
+                overzichtGUI.vernieuwOverzicht();
+                this.dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Er is een fout opgetreden bij het opslaan van de praktijk.", "Fout", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Controleer of alle velden (correct) ingevuld zijn.", "Fout", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_opslaanButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton annulerenButton;
-    private javax.swing.JTextField faxnrTextField;
+    private javax.swing.JFormattedTextField faxnrFormattedField;
     private javax.swing.JTextField huisnrTextField;
+    private javax.swing.JTextField ibannrTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -233,13 +243,12 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField kvknrTextField;
+    private javax.swing.JFormattedTextField kvkFormattedField;
     private javax.swing.JTextField naamTextField;
     private javax.swing.JButton opslaanButton;
     private javax.swing.JTextField plaatsTextField;
     private javax.swing.JTextField postcodeTextField;
     private javax.swing.JLabel praktijkNaamLabel;
-    private javax.swing.JTextField rekeningnrTextField;
-    private javax.swing.JTextField telefoonnrTextField;
+    private javax.swing.JFormattedTextField telefoonnrFormattedField;
     // End of variables declaration//GEN-END:variables
 }

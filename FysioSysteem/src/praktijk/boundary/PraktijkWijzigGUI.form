@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -35,25 +35,23 @@
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="faxnrTextField" pref="150" max="32767" attributes="0"/>
-                  <Component id="telefoonnrTextField" max="32767" attributes="0"/>
-                  <Component id="rekeningnrTextField" max="32767" attributes="0"/>
-                  <Component id="kvknrTextField" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="opslaanButton" min="-2" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="annulerenButton" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="ibannrTextField" max="32767" attributes="0"/>
                   <Component id="huisnrTextField" max="32767" attributes="0"/>
                   <Component id="naamTextField" max="32767" attributes="0"/>
                   <Component id="plaatsTextField" alignment="0" max="32767" attributes="0"/>
                   <Component id="postcodeTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="kvkFormattedField" max="32767" attributes="0"/>
+                  <Component id="telefoonnrFormattedField" max="32767" attributes="0"/>
+                  <Component id="faxnrFormattedField" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="opslaanButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="annulerenButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,30 +80,30 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="kvknrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="kvkFormattedField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="rekeningnrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ibannrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="telefoonnrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="telefoonnrFormattedField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="faxnrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="faxnrFormattedField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="annulerenButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="opslaanButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="annulerenButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -135,12 +133,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="kvk-nummer"/>
+        <Property name="text" type="java.lang.String" value="KVK-nummer"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Rekeningnummer"/>
+        <Property name="text" type="java.lang.String" value="IBAN-nummer"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -159,13 +157,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="huisnrTextField">
     </Component>
-    <Component class="javax.swing.JTextField" name="kvknrTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="rekeningnrTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="telefoonnrTextField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="faxnrTextField">
+    <Component class="javax.swing.JTextField" name="ibannrTextField">
     </Component>
     <Component class="javax.swing.JButton" name="annulerenButton">
       <Properties>
@@ -182,6 +174,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opslaanButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="kvkFormattedField">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(format)"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="telefoonnrFormattedField">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(format)"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="faxnrFormattedField">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(format)"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

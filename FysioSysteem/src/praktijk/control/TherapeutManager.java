@@ -20,24 +20,24 @@ public class TherapeutManager {
      * Constructor<br />
      * Haalt de therapeuten op uit het {@link data datasubsysteem}
      */
-    public TherapeutManager() {
+    public TherapeutManager(DataController dataController) {
+        this.dataController = dataController;
         therapeuten = new ArrayList<>();
-        dataController = new DataController();
         
         //ophalen van objecten uit data subsysteem, cast deze naar therapeuten
         for (Object obj : dataController.laadObjectenUitFolder(Folder.Therapeuten, Therapeut.class)) {
             therapeuten.add((Therapeut) obj);
         }
-        
-        //sorteer de therapeuten op naam
-        Collections.sort(therapeuten, Therapeut.therapeutNameComparator);
     }
     
     /**
-     * Verkrijg alle therapeuten
+     * Verkrijg alle therapeuten.<br />
+     * Alvorens het terugsturen worden deze gesorteerd, aangezien de kans groot is dat er wijzigingen hebben plaatsgevonden.
      * @return Een {@link java.util.ArrayList ArrayList} met alle {@link therapeut.entity.Therapeut therapeuten}
      */
     public ArrayList<Therapeut> getTherapeuten() {
+        //sorteer de therapeuten op naam
+        Collections.sort(therapeuten, Therapeut.therapeutNameComparator);
         return therapeuten;
     }
     
