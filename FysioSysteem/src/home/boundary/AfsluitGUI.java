@@ -38,11 +38,11 @@ public class AfsluitGUI extends javax.swing.JFrame {
                 afsluitLabel.setText("Gegevens synchroniseren met de server...");
                 if (behandelingManager.synchroniseerBehandelingen()) {
                     afsluitLabel.setText("De gegevens zijn gesynchroniseerd.");
-                    waarschuwingLabel.setText("Het programma word nu afgesloten.");
+                    waarschuwingLabel.setText("Het programma wordt nu afgesloten.");
                 } else {
                     afsluitLabel.setText("De gegevens zijn helaas niet gesynchroniseerd.");
                 }
-                waarschuwingLabel.setText("Het programma word nu afgesloten.");
+                waarschuwingLabel.setText("Het programma wordt nu afgesloten.");
                 try {
                     sleep(2000);
                 } catch (InterruptedException e) {}
