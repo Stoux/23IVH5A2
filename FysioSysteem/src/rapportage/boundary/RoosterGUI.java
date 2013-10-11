@@ -70,17 +70,30 @@ public class RoosterGUI extends javax.swing.JFrame {
       
         switch (dagNummer) {
             case 1:
-                beginDatum = huidigeDatum;
                 cal = Calendar.getInstance();
                 cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, +4);
+                cal.add(Calendar.DATE, -1);
+                beginDatum = new Date(cal.getTimeInMillis());
+                cal.setTime(huidigeDatum);
+                cal.add(Calendar.DATE, +5);
                 eindDatum = new Date(cal.getTimeInMillis());
                 succes = true;
                 break;
             case 2:
                 cal = Calendar.getInstance();
                 cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -1);
+                cal.add(Calendar.DATE, -2);
+                beginDatum = new Date(cal.getTimeInMillis());
+                cal = Calendar.getInstance();
+                cal.setTime(huidigeDatum);
+                cal.add(Calendar.DATE, +4);
+                eindDatum = new Date(cal.getTimeInMillis());
+                succes = true;
+                break;
+            case 3:
+                cal = Calendar.getInstance();
+                cal.setTime(huidigeDatum);
+                cal.add(Calendar.DATE, -3);
                 beginDatum = new Date(cal.getTimeInMillis());
                 cal = Calendar.getInstance();
                 cal.setTime(huidigeDatum);
@@ -88,10 +101,10 @@ public class RoosterGUI extends javax.swing.JFrame {
                 eindDatum = new Date(cal.getTimeInMillis());
                 succes = true;
                 break;
-            case 3:
+            case 4:
                 cal = Calendar.getInstance();
                 cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -2);
+                cal.add(Calendar.DATE, -4);
                 beginDatum = new Date(cal.getTimeInMillis());
                 cal = Calendar.getInstance();
                 cal.setTime(huidigeDatum);
@@ -99,27 +112,42 @@ public class RoosterGUI extends javax.swing.JFrame {
                 eindDatum = new Date(cal.getTimeInMillis());
                 succes = true;
                 break;
-            case 4:
+            case 5:
                 cal = Calendar.getInstance();
                 cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -3);
+                cal.add(Calendar.DATE, -5);
                 beginDatum = new Date(cal.getTimeInMillis());
-                cal = Calendar.getInstance();
                 cal.setTime(huidigeDatum);
                 cal.add(Calendar.DATE, +1);
                 eindDatum = new Date(cal.getTimeInMillis());
                 succes = true;
                 break;
-            case 5:
-                cal = Calendar.getInstance();
-                cal.setTime(huidigeDatum);
-                cal.add(Calendar.DATE, -4);
-                beginDatum = new Date(cal.getTimeInMillis());
-                eindDatum = huidigeDatum;
-                succes = true;
-                break;
 
         }
+        return succes;
+    }
+    
+    private boolean setData(String kant) {
+        boolean succes = false;
+        cal = Calendar.getInstance();
+        if(kant.equals("volgende")){
+            cal.setTime(beginDatum);
+            cal.add(Calendar.DATE, +7);
+            beginDatum = new Date(cal.getTimeInMillis());
+            cal.setTime(eindDatum);
+            cal.add(Calendar.DATE, +7);
+            eindDatum = new Date(cal.getTimeInMillis());
+            succes = true;
+        } else if(kant.equals("vorige")){
+            cal.setTime(beginDatum);
+            cal.add(Calendar.DATE, -7);
+            beginDatum = new Date(cal.getTimeInMillis());
+            cal.setTime(eindDatum);
+            cal.add(Calendar.DATE, -7);
+            eindDatum = new Date(cal.getTimeInMillis());
+            succes = true;
+        }
+        
         return succes;
     }
     
@@ -288,43 +316,29 @@ public class RoosterGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void vorigeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vorigeWeekKnopActionPerformed
-//        Calendar currentDate = Calendar.getInstance();
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM");
-//        String huidigeDatum = formatter.format(currentDate.getTime());
-//        System.out.println("De huidige datum is: " + huidigeDatum);
-//
-//
-//        String therapeutNaam = fysiotherapeutComboBox.getSelectedItem().toString();
-//        boolean controle = control.zoekTherapeut(therapeutNaam);
-//
-//        if (controle = true) {
-//            DefaultTableModel model = control.getModel();
-//            roosterTabel.setModel(model);
-//        } else {
-//            //popup alert
-//            JOptionPane.showInternalMessageDialog(
-//                    this.getContentPane(),
-//                    "Er zijn geen behandelingen voor " + therapeutNaam + "gevonden.",
-//                    "Foutmelding",
-//                    JOptionPane.ERROR_MESSAGE);
-//        }
+        if(setData("vorige")){
+            boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
+            if(success){
+                roosterTabel.setModel(control.getModel());
+            } else {
+                JOptionPane.showMessageDialog(this, "Vorige week faal!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "DATUM CALCULATIE FAAL!");
+        }
     }//GEN-LAST:event_vorigeWeekKnopActionPerformed
 
     private void volgendeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volgendeWeekKnopActionPerformed
-//        String therapeutNaam = fysiotherapeutComboBox.getSelectedItem().toString();
-//        boolean controle = control.zoekTherapeut(therapeutNaam);
-//
-//        if (controle = true) {
-//            DefaultTableModel model = control.getModel();
-//            roosterTabel.setModel(model);
-//        } else {
-//            //popup alert
-//            JOptionPane.showInternalMessageDialog(
-//                    this.getContentPane(),
-//                    "Er zijn geen behandelingen voor " + therapeutNaam + "gevonden.",
-//                    "Foutmelding",
-//                    JOptionPane.ERROR_MESSAGE);
-//        }
+        if(setData("volgende")){
+            boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
+            if(success){
+                roosterTabel.setModel(control.getModel());
+            } else {
+                JOptionPane.showMessageDialog(this, "Vorige week faal!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "DATUM CALCULATIE FAAL!");
+        }
     }//GEN-LAST:event_volgendeWeekKnopActionPerformed
 
     private void fysiotherapeutComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fysiotherapeutComboBoxActionPerformed

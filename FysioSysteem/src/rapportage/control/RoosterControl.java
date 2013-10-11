@@ -52,7 +52,6 @@ public class RoosterControl {
     public long zoekTherapeutBSN(String fysiotherapeutNaam) {
         therapeuten = bManager.getTherapeuten();
         long nummer = 0;
-
         for (Therapeut t : therapeuten) {
             if (t.getVolledigeNaam().equals(fysiotherapeutNaam)) {
                 nummer = t.getBsn();
@@ -116,198 +115,162 @@ public class RoosterControl {
         String behandelingenVierUurWoensdag = " ";
         String behandelingenVierUurDonderdag = " ";
         String behandelingenVierUurVrijdag = " ";
+        if (!behandelingen.isEmpty()) {
+            succes = true;
+            for (Behandeling b : behandelingen) {
+                int fysiotherapeutBSN = b.getFysiotherapeutBSN();
+                if (therapeutBSN == fysiotherapeutBSN && !b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
+                    int beginTijdBehandeling = Integer.parseInt(dagUur.format(b.getBegintijd()));
+                    int dagBehandeling = Integer.parseInt(dagWeek.format(b.getBegintijd()));
+                    if (beginTijdBehandeling == 9) {
+                        if (dagBehandeling == 1) {
+                            behandelingenNegenUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenNegenUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenNegenUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenNegenUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenNegenUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                    }
+                    if (beginTijdBehandeling == 10) {
+                        if (dagBehandeling == 1) {
+                            behandelingenTienUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenTienUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenTienUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenTienUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenTienUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                    }
+                    if (beginTijdBehandeling == 11) {
+                        if (dagBehandeling == 1) {
+                            behandelingenElfUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenElfUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenElfUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenElfUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenElfUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                    }
+                    if (beginTijdBehandeling == 12) {
+                        if (dagBehandeling == 1) {
+                            behandelingenTwaalfUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenTwaalfUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenTwaalfUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenTwaalfUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenTwaalfUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                    }
+                    if (beginTijdBehandeling == 13) {
+                        if (dagBehandeling == 1) {
+                            behandelingenEenUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenEenUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenEenUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenEenUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenEenUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                    }
+                    if (beginTijdBehandeling == 14) {
+                        if (dagBehandeling == 1) {
+                            behandelingenTweeUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenTweeUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenTweeUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenTweeUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenTweeUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                    }
+                    if (beginTijdBehandeling == 15) {
+                        if (dagBehandeling == 1) {
+                            behandelingenDrieUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenDrieUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenDrieUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenDrieUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenDrieUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                    }
+                    if (beginTijdBehandeling == 16) {
+                        if (dagBehandeling == 1) {
+                            behandelingenVierUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 2) {
+                            behandelingenVierUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 3) {
+                            behandelingenVierUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 4) {
+                            behandelingenVierUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
+                        if (dagBehandeling == 5) {
+                            behandelingenVierUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
+                        }
 
-
-
-
-
-
-
-        for (Behandeling b : behandelingen) {
-            int fysiotherapeutBSN = b.getBurgerServiceNummer();
-            if (therapeutBSN == fysiotherapeutBSN) {
-                int beginTijdBehandeling = Integer.parseInt(dagUur.format(b.getBegintijd()));
-                int dagBehandeling = Integer.parseInt(dagWeek.format(b.getBegintijd()));
-
-                if (beginTijdBehandeling == 9) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenNegenUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
                     }
-                    if (dagBehandeling == 2) {
-                        behandelingenNegenUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenNegenUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenNegenUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenNegenUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                }
-                if (beginTijdBehandeling == 10) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenTienUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 2) {
-                        behandelingenTienUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenTienUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenTienUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenTienUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-
-                }
-                if (beginTijdBehandeling == 11) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenElfUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 2) {
-                        behandelingenElfUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenElfUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenElfUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenElfUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-
-                }
-                if (beginTijdBehandeling == 12) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenTwaalfUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 2) {
-                        behandelingenTwaalfUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenTwaalfUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenTwaalfUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenTwaalfUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-
-                }
-                if (beginTijdBehandeling == 13) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenEenUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 2) {
-                        behandelingenEenUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenEenUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenEenUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenEenUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-
-                }
-                if (beginTijdBehandeling == 14) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenTweeUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 2) {
-                        behandelingenTweeUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenTweeUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenTweeUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenTweeUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-
-                }
-
-                if (beginTijdBehandeling == 15) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenDrieUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 2) {
-                        behandelingenDrieUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenDrieUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenDrieUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenDrieUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-
-                }
-                if (beginTijdBehandeling == 16) {
-
-
-                    if (dagBehandeling == 1) {
-                        behandelingenVierUurMaandag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 2) {
-                        behandelingenVierUurDinsdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 3) {
-                        behandelingenVierUurWoensdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 4) {
-                        behandelingenVierUurDonderdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    if (dagBehandeling == 5) {
-                        behandelingenVierUurVrijdag = dagUur.format(b.getBegintijd()) + ":00-" + dagUur.format(b.getEindtijd()) + ":00\n" + bManager.getPatient(b.getBurgerServiceNummer()) + "\n" + b.getBehandelingscode();
-                    }
-                    
                 }
             }
-
-
+            model.setRowCount(0);
+            model.addRow(new Object[]{behandelingenNegenUurMaandag, behandelingenNegenUurDinsdag, behandelingenNegenUurWoensdag, behandelingenNegenUurDonderdag, behandelingenNegenUurVrijdag});
+            model.addRow(new Object[]{behandelingenTienUurMaandag, behandelingenTienUurDinsdag, behandelingenTienUurWoensdag, behandelingenTienUurDonderdag, behandelingenTienUurVrijdag});
+            model.addRow(new Object[]{behandelingenElfUurMaandag, behandelingenElfUurDinsdag, behandelingenElfUurWoensdag, behandelingenElfUurDonderdag, behandelingenElfUurVrijdag});
+            model.addRow(new Object[]{behandelingenTwaalfUurMaandag, behandelingenTwaalfUurDinsdag, behandelingenTwaalfUurWoensdag, behandelingenTwaalfUurDonderdag, behandelingenTwaalfUurVrijdag});
+            model.addRow(new Object[]{behandelingenEenUurMaandag, behandelingenEenUurDinsdag, behandelingenEenUurWoensdag, behandelingenEenUurDonderdag, behandelingenEenUurVrijdag});
+            model.addRow(new Object[]{behandelingenTweeUurMaandag, behandelingenTweeUurDinsdag, behandelingenTweeUurWoensdag, behandelingenTweeUurDonderdag, behandelingenTweeUurVrijdag});
+            model.addRow(new Object[]{behandelingenDrieUurMaandag, behandelingenDrieUurDinsdag, behandelingenDrieUurWoensdag, behandelingenDrieUurDonderdag, behandelingenDrieUurVrijdag});
+            model.addRow(new Object[]{behandelingenVierUurMaandag, behandelingenVierUurDinsdag, behandelingenVierUurWoensdag, behandelingenVierUurDonderdag, behandelingenVierUurVrijdag});
         }
-        model.setRowCount(0);
-        model.addRow(new Object[]{behandelingenNegenUurMaandag, behandelingenNegenUurDinsdag, behandelingenNegenUurWoensdag, behandelingenNegenUurDonderdag, behandelingenNegenUurVrijdag});
-        model.addRow(new Object[]{behandelingenTienUurMaandag, behandelingenTienUurDinsdag, behandelingenTienUurWoensdag, behandelingenTienUurDonderdag, behandelingenTienUurVrijdag});
-        model.addRow(new Object[]{behandelingenElfUurMaandag, behandelingenElfUurDinsdag, behandelingenElfUurWoensdag, behandelingenElfUurDonderdag, behandelingenElfUurVrijdag});
-        model.addRow(new Object[]{behandelingenTwaalfUurMaandag, behandelingenTwaalfUurDinsdag, behandelingenTwaalfUurWoensdag, behandelingenTwaalfUurDonderdag, behandelingenTwaalfUurVrijdag});
-        model.addRow(new Object[]{behandelingenEenUurMaandag, behandelingenEenUurDinsdag, behandelingenEenUurWoensdag, behandelingenEenUurDonderdag, behandelingenEenUurVrijdag});
-        model.addRow(new Object[]{behandelingenTweeUurMaandag, behandelingenTweeUurDinsdag, behandelingenTweeUurWoensdag, behandelingenTweeUurDonderdag, behandelingenTweeUurVrijdag});
-        model.addRow(new Object[]{behandelingenDrieUurMaandag, behandelingenDrieUurDinsdag, behandelingenDrieUurWoensdag, behandelingenDrieUurDonderdag, behandelingenDrieUurVrijdag});
-        model.addRow(new Object[]{behandelingenVierUurMaandag, behandelingenVierUurDinsdag, behandelingenVierUurWoensdag, behandelingenVierUurDonderdag, behandelingenVierUurVrijdag});
-
-
-
-
-
-
         return succes;
     }
 }

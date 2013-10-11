@@ -222,7 +222,7 @@ public class PlanningGUI extends javax.swing.JFrame {
         if (b == true) {
             overzichtTabel.setModel(control.getModel());
         } else {
-            JOptionPane.showMessageDialog(this, "Zoeken op datum is niet geslaagd.");
+            JOptionPane.showMessageDialog(this, "Zoeken op sofinummer is niet geslaagd.");
         }
     }//GEN-LAST:event_sofinummerButtonActionPerformed
 
