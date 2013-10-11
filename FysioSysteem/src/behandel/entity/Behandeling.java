@@ -12,7 +12,7 @@ public class Behandeling implements Serializable {
     private int behandelingsID;
     private int bsn;
     private String behandelingscode;
-    private Long fysiotherapeutBSN;
+    private int fysiotherapeutBSN;
     private Date begintijd;
     private Date eindtijd;
     private Status status;
@@ -29,7 +29,7 @@ public class Behandeling implements Serializable {
      * @param status de status van de behandeling
      * @param opmerking een eventuele opmerking
      */
-    public Behandeling(int behandelingsID, int bsn, String behandelingscode, long fysiotherapeutBSN, Date begintijd, Date eindtijd, Status status, String opmerking) {
+    public Behandeling(int behandelingsID, int bsn, String behandelingscode, int fysiotherapeutBSN, Date begintijd, Date eindtijd, Status status, String opmerking) {
         this.behandelingsID = behandelingsID;
         this.bsn = bsn;
         this.behandelingscode = behandelingscode;
@@ -84,7 +84,7 @@ public class Behandeling implements Serializable {
      * Get de fysiotherapeutBSN
      * @return de code van de therapeut
      */
-    public long getFysiotherapeutBSN() {
+    public int getFysiotherapeutBSN() {
         return fysiotherapeutBSN;
     }
 
@@ -132,7 +132,7 @@ public class Behandeling implements Serializable {
      * Set de fysiotherapeutBSN
      * @param fysiotherapeutBSN de code 
      */
-    public void setFysiotherapeutBSN(long fysiotherapeutBSN) {
+    public void setFysiotherapeutBSN(int fysiotherapeutBSN) {
         this.fysiotherapeutBSN = fysiotherapeutBSN;
     }
 

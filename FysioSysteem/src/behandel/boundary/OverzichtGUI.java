@@ -6,6 +6,9 @@ package behandel.boundary;
 
 import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
+import home.boundary.HomeGUI;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,16 +24,27 @@ public class OverzichtGUI extends javax.swing.JFrame {
     /**
      * Creates new form OverzichtGUI
      */
+    private HomeGUI homeGUI;
     private BehandelingManager manager;
     
-    public OverzichtGUI(BehandelingManager manager) {
+    public OverzichtGUI(final HomeGUI homeGUI, BehandelingManager manager) {
         this.manager = manager;
+        this.homeGUI = homeGUI;
         if (!manager.isPatientenOpgehaald()) {
             JOptionPane.showMessageDialog(this, "<html>Het is niet gelukt om de patienten om te halen.<br>Daardoor is dit deelsysteem helaas niet beschikbaar.", "Fout", JOptionPane.ERROR_MESSAGE, null);
             return;
         }
         initComponents();
         updateTabel(); 
+        
+        setExtendedState(this.MAXIMIZED_BOTH);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                homeGUI.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     /**
@@ -46,6 +60,26 @@ public class OverzichtGUI extends javax.swing.JFrame {
             String beginTijd = manager.formatTijd(behandeling.getBegintijd()); 
             String eindTijd = manager.formatTijd(behandeling.getEindtijd());
             overzichtModel.addRow(new Object[]{behandeling.getBehandelingsID(), behandeling.getBurgerServiceNummer(), behandeling.getFysiotherapeutBSN(), behandeling.getBehandelingscode(), deDatum, beginTijd, eindTijd, behandeling.getStatus(), behandeling.getOpmerking() });  
+        }
+        
+        verwijderMenuItem.setEnabled(false);
+        bewerkenMenuItem.setEnabled(false);
+    }
+    
+    /**
+     * Herselecteer een rij aan de hand van het ID
+     * @param behandelingID ID van de behandeling
+     */
+    public void reselectRow(int behandelingID) {
+        DefaultTableModel overzichtModel = (DefaultTableModel) overzichtTabelX.getModel();
+        int rows = overzichtModel.getRowCount();
+        int x = 0;
+        while (x < rows) {
+            if (behandelingID == overzichtModel.getValueAt(x, 0)) {
+                int row = overzichtTabelX.convertRowIndexToModel(x);
+                overzichtTabelX.setRowSelectionInterval(row, row);
+            }
+            x++;
         }
     }
     
@@ -69,7 +103,7 @@ public class OverzichtGUI extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         overzichtTabelX.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -189,8 +223,8 @@ public class OverzichtGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void terugMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugMenuItemActionPerformed
-        //new HomeGUI().setVisible(true);
-        
+        homeGUI.setVisible(true);
+        dispose();
     }//GEN-LAST:event_terugMenuItemActionPerformed
 
     private void verwijderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verwijderMenuItemActionPerformed
@@ -203,17 +237,17 @@ public class OverzichtGUI extends javax.swing.JFrame {
 
     private void toevoegenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toevoegenMenuItemActionPerformed
         new BehandelingGUI(manager, this).setVisible(true);
-        setVisible(false);
+        setEnabled(false);
     }//GEN-LAST:event_toevoegenMenuItemActionPerformed
 
     private void bewerkenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bewerkenMenuItemActionPerformed
         new BehandelingGUI(manager, this, getSelectedBehandelingID()).setVisible(true);
-        setVisible(false);
+        setEnabled(false);
     }//GEN-LAST:event_bewerkenMenuItemActionPerformed
 
     private void overzichtTabelXMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_overzichtTabelXMouseReleased
         try {
-            System.out.println(getSelectedBehandelingID()); //Probeer een row te selecten
+            getSelectedBehandelingID(); //Probeer een row te selecten
         } catch (ArrayIndexOutOfBoundsException e) {
             return;
         }
@@ -227,8 +261,12 @@ public class OverzichtGUI extends javax.swing.JFrame {
      */
     private int getSelectedBehandelingID() {
         int row = overzichtTabelX.getSelectedRow();
-        row = overzichtTabelX.convertRowIndexToModel(row);
-        return (int) overzichtTabelX.getModel().getValueAt(row, 0);
+        if (row != -1) {
+            row = overzichtTabelX.convertRowIndexToModel(row);
+            return (int) overzichtTabelX.getModel().getValueAt(row, 0);
+        } else {
+            return -1;
+        }
     }
     
     /**

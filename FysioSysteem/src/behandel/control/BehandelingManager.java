@@ -161,7 +161,7 @@ public class BehandelingManager {
      * @param opmerking Een mogelijke opmerking
      * @return De nieuwe behandeling
      */
-    public Behandeling maakBehandeling(int bsn, String behandelingscode, long fysiotherapeutBSN, Date begintijd, Date eindtijd, Status status, String opmerking) {
+    public Behandeling maakBehandeling(int bsn, String behandelingscode, int fysiotherapeutBSN, Date begintijd, Date eindtijd, Status status, String opmerking) {
         int id = 1;
         for (Behandeling behandeling : behandelingen) {
             if (behandeling.getBehandelingsID() > id) id = behandeling.getBehandelingsID();
@@ -182,7 +182,7 @@ public class BehandelingManager {
      * @param opmerking de opmerking
      * @return gelukt
      */
-    public boolean updateBehandeling(int behandelingsID, String behandelingscode, long fysiotherapeutbsn, Date begintijd, Date eindtijd, Status status, String opmerking) {
+    public boolean updateBehandeling(int behandelingsID, String behandelingscode, int fysiotherapeutbsn, Date begintijd, Date eindtijd, Status status, String opmerking) {
         boolean returnBoolean = false;
         Behandeling behandeling = getBehandeling(behandelingsID);
         if (behandeling != null) {
@@ -238,7 +238,7 @@ public class BehandelingManager {
      * Synchroniseer de behandelingen met de server
      * @return gelukt
      */
-    private boolean synchroniseerBehandelingen() {
+    public boolean synchroniseerBehandelingen() {
         HashMap<Integer, HashMap<Long, String>> patientenHashMaps = new HashMap<>(); //Hashmap met alle nieuwe hashmaps. Key: BSN | Value: De HashMap met behandelingen
         for (Integer bsn : aangepastePatienten) {
             patientenHashMaps.put(bsn, new HashMap<Long, String>()); //Maak een nieuwe HashMap aan voor de persoon
@@ -387,7 +387,7 @@ public class BehandelingManager {
      * Check of de opgeslagen data nog altijd overeenkomt met de ontvangen gegevens
      */
     private void checkDataIntegriteit() {
-        for (Behandeling behandeling : behandelingen) {
+        for (Behandeling behandeling : new ArrayList<>(behandelingen)) {
             if (!patienten.containsKey(behandeling.getBurgerServiceNummer())) { //Als de patient van de behandeling niet meer bestaat/in het systeem staat
                 deleteBehandeling(behandeling); //Verwijder de behandeling
             }

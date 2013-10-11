@@ -5,6 +5,9 @@
 package rapportage.boundary;
 
 import behandel.control.BehandelingManager;
+import home.boundary.HomeGUI;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,16 +21,25 @@ import rapportage.control.PlanningControl;
  */
 public class PlanningGUI extends javax.swing.JFrame {
 
+    private HomeGUI homeGUI;
     private PlanningControl control;
 
     /**
      * Creates new form PlanningGUI
      */
-    public PlanningGUI(BehandelingManager manager) {
+    public PlanningGUI(HomeGUI homeGUI, BehandelingManager manager) {
+        this.homeGUI = homeGUI;
         initComponents();
         control = new PlanningControl((DefaultTableModel) overzichtTabel.getModel(), manager);
         this.setExtendedState(this.MAXIMIZED_BOTH);
         control.getGegevens(new Date(new Date().getTime() - 84600000), new Date(new Date().getTime() + 86400000), (DefaultTableModel) overzichtTabel.getModel());
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                sluitGUI();
+            }
+        });
     }
 
     /**
@@ -54,7 +66,7 @@ public class PlanningGUI extends javax.swing.JFrame {
         terugMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         startdatumTextField.setText("Startdatum");
 
@@ -77,6 +89,11 @@ public class PlanningGUI extends javax.swing.JFrame {
         });
 
         terugButton.setText("Terug");
+        terugButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                terugButtonActionPerformed(evt);
+            }
+        });
 
         printButton.setText("Printen");
 
@@ -157,6 +174,11 @@ public class PlanningGUI extends javax.swing.JFrame {
         fileMenu.setText("File");
 
         terugMenuItem.setLabel("Terug");
+        terugMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                terugMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(terugMenuItem);
 
         jMenuBar1.add(fileMenu);
@@ -204,6 +226,19 @@ public class PlanningGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_sofinummerButtonActionPerformed
 
+    private void terugMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugMenuItemActionPerformed
+        sluitGUI();
+    }//GEN-LAST:event_terugMenuItemActionPerformed
+
+    private void terugButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugButtonActionPerformed
+        sluitGUI();
+    }//GEN-LAST:event_terugButtonActionPerformed
+
+    private void sluitGUI() {
+        homeGUI.maakZichtbaar();
+        dispose();
+    }
+    
     private Date parseDate(String s) {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         try {

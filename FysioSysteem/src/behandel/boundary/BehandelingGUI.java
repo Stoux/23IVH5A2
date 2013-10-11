@@ -7,6 +7,8 @@ package behandel.boundary;
 import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
 import behandel.entity.Behandeling.Status;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -38,6 +40,7 @@ public class BehandelingGUI extends javax.swing.JFrame {
         initComponents();
         vulComboBoxen();
         patientBSNField.setEditable(true);
+        setLocationRelativeTo(null);
     }
     
     /**
@@ -64,6 +67,7 @@ public class BehandelingGUI extends javax.swing.JFrame {
         
         statusComboBox.setSelectedItem(behandeling.getStatus());
         opmerkingTextArea.setText(behandeling.getOpmerking());
+        setLocationRelativeTo(null);
     }
     
     /**
@@ -95,7 +99,15 @@ public class BehandelingGUI extends javax.swing.JFrame {
         //Implement voorbeelden
         PromptSupport.setPrompt("VB: 12:45", beginTijdField);
         PromptSupport.setPrompt("VB: 14:15", eindTijdField);
-    }
+        
+        //Voeg WindowListener toe
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e){
+                updateOverzicht(false);
+            }
+        });
+       }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,7 +152,7 @@ public class BehandelingGUI extends javax.swing.JFrame {
         jTextField5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField5.setText("jTextField1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         OpslaanButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         OpslaanButton.setText("Opslaan");
@@ -409,9 +421,9 @@ public class BehandelingGUI extends javax.swing.JFrame {
         if (fysioBSNlengte != 9 && fysioBSNlengte != 8) { //Check of de BSN lengte niet 8 of 9 is
             geefError("BSN van de fysio is niet de correcte lengte."); return;
         } 
-        long fysioBSN;
+        int fysioBSN;
         try {
-            fysioBSN = Long.parseLong(therapeutField.getText()); //Probeer de string om te zetten naar een long
+            fysioBSN = Integer.parseInt(therapeutField.getText()); //Probeer de string om te zetten naar een long
         } catch (NumberFormatException e) { //Geen valide nummer
             geefError("BSN van de fysio is geen valide nummer."); return;
         }
@@ -435,14 +447,14 @@ public class BehandelingGUI extends javax.swing.JFrame {
             if (manager.getPatient(bsn) == null) { //Kijk of de patient bestaat
                 geefError("Er is geen patient bekend met dit BSN."); return;
             }
-            if (!manager.isFysiotherapeutBeschikbaar((int) fysioBSN, begintijd, eindtijd)) { //Kijk of de therapeut beschikbaar is
+            if (!manager.isFysiotherapeutBeschikbaar(fysioBSN, begintijd, eindtijd)) { //Kijk of de therapeut beschikbaar is
                 geefError("Therapeut is niet beschikbaar voor deze periode."); return;
             }
-            manager.maakBehandeling(bsn, code, fysioBSN, begintijd, eindtijd, status, opmerking); //Maak de behandeling
+            behandeling = manager.maakBehandeling(bsn, code, fysioBSN, begintijd, eindtijd, status, opmerking); //Maak de behandeling
             updateOverzicht(true);
         } else {
             int id = behandeling.getBehandelingsID();            
-            if (!manager.isFysiotherapeutBeschikbaar((int) fysioBSN, begintijd, eindtijd, id)) { //Kijk of de therapeut beschikbaar is
+            if (!manager.isFysiotherapeutBeschikbaar(fysioBSN, begintijd, eindtijd, id)) { //Kijk of de therapeut beschikbaar is
                 geefError("Therapeut is niet beschikbaar voor deze periode."); return;
             }
             boolean succes = manager.updateBehandeling(id, code, fysioBSN, begintijd, eindtijd, status, opmerking); //Update behandeling
@@ -459,7 +471,10 @@ public class BehandelingGUI extends javax.swing.JFrame {
      */
     private void updateOverzicht(boolean aangepast) {
         if (aangepast) overzichtGUI.updateTabel();
-        overzichtGUI.setVisible(true);
+        overzichtGUI.setEnabled(true);
+        if (behandeling != null) {
+            overzichtGUI.reselectRow(behandeling.getBehandelingsID());
+        }
         dispose();
     }
     

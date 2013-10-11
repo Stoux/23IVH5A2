@@ -1,6 +1,8 @@
 package praktijk.boundary;
 
-import data.control.DataController;
+import home.boundary.HomeGUI;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -13,21 +15,33 @@ import praktijk.entity.Praktijk;
  * @author Leon
  */
 public class PraktijkOverzichtGUI extends javax.swing.JFrame {
+    
+    private HomeGUI homeGUI;
+    
     private PraktijkManager manager;
     private DefaultTableModel tableModel;
 
     /**
      * Creates new form PraktijkOverzichtGUI
      */
-    public PraktijkOverzichtGUI(DataController dataController) {       
+    public PraktijkOverzichtGUI(HomeGUI homeGUI, PraktijkManager praktijkManager) {       
+        this.homeGUI = homeGUI;
         initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
         
-        manager = new PraktijkManager(dataController);
+        manager = praktijkManager;
         tableModel = (DefaultTableModel) praktijkenTable.getModel();       
         
-        PromptSupport.setPrompt("Zoekenterm...", zoekTextField);
+        PromptSupport.setPrompt("Zoekterm...", zoekTextField);
         
-        vernieuwOverzicht();        
+        vernieuwOverzicht();     
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                sluitGUI();
+            }
+        });
     }
 
     /**
@@ -51,9 +65,9 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         bewerkenMenuItem = new javax.swing.JMenuItem();
         verwijderMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        terugMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Praktijken Overzicht");
 
         praktijkenTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -138,8 +152,13 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         jMenu1.add(verwijderMenuItem);
         jMenu1.add(jSeparator1);
 
-        jMenuItem3.setText("Terug");
-        jMenu1.add(jMenuItem3);
+        terugMenuItem.setText("Terug");
+        terugMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                terugMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(terugMenuItem);
 
         jMenuBar1.add(jMenu1);
 
@@ -224,7 +243,17 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_verwijderMenuItemActionPerformed
+
+    private void terugMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugMenuItemActionPerformed
+        sluitGUI();
+    }//GEN-LAST:event_terugMenuItemActionPerformed
      
+    private void sluitGUI() {
+        homeGUI.setVisible(true);
+        homeGUI.setLocationRelativeTo(null);
+        dispose();
+    }
+    
     private void leegTabel() {
         tableModel.setRowCount(0);
     }
@@ -240,11 +269,11 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem bewerkenMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTable praktijkenTable;
+    private javax.swing.JMenuItem terugMenuItem;
     private javax.swing.JMenuItem toevoegenMenuItem;
     private javax.swing.JMenuItem verwijderMenuItem;
     private javax.swing.JButton zoekButton;

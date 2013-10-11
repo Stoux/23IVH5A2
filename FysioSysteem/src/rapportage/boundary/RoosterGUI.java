@@ -5,6 +5,9 @@
 package rapportage.boundary;
 
 import behandel.control.BehandelingManager;
+import home.boundary.HomeGUI;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ import rapportage.control.RoosterControl;
  */
 public class RoosterGUI extends javax.swing.JFrame {
 
+    private HomeGUI homeGUI;
+    
     private RoosterControl control;
     private BehandelingManager bManager;
     private ArrayList<Therapeut> therapeuten;
@@ -32,8 +37,15 @@ public class RoosterGUI extends javax.swing.JFrame {
      * Creates new form RoosterGUI
      */
     // TODO new RoosterControl(defaulttablemodel van de jtable)
-    public RoosterGUI(BehandelingManager bManager) {
+    public RoosterGUI(HomeGUI homeGUI, BehandelingManager bManager) {
+        this.homeGUI = homeGUI;
         initComponents();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                sluitGUI();
+            }
+        });
         this.bManager = bManager;
         control = new RoosterControl((DefaultTableModel) roosterTabel.getModel(), bManager);
         roosterTabel.setShowGrid(true);
@@ -48,7 +60,6 @@ public class RoosterGUI extends javax.swing.JFrame {
         control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
         roosterTabel.setModel(control.getModel());
         this.repaint();
-
     }
 
     private boolean setDatumWeek() {
@@ -111,6 +122,11 @@ public class RoosterGUI extends javax.swing.JFrame {
         }
         return succes;
     }
+    
+    private void sluitGUI() {
+        homeGUI.maakZichtbaar();
+        dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,7 +150,7 @@ public class RoosterGUI extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         beschrijvingLabel1.setText("Selecteer de fysiotherapeut");
 

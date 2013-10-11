@@ -13,6 +13,9 @@
               <Properties>
                 <Property name="label" type="java.lang.String" value="Terug"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="terugMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -25,7 +28,7 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -118,6 +121,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Terug"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="terugButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="printenButton">
           <Properties>
