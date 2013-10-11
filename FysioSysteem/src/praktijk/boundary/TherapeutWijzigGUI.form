@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="voornaamLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="bsnLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="huisnrLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="telefoonnrLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="praktijkKvkLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="postcodeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="achternaamLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="tussenvoegselLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="geboortedatumLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="geslachtLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="huisnrTextField" max="32767" attributes="0"/>
+                  <Component id="voornaamTextField" max="32767" attributes="0"/>
+                  <Component id="bsnTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="postcodeTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="achternaamTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="tussenvoegselTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="geslachtComboBox" alignment="0" max="32767" attributes="0"/>
+                  <Component id="geboortedatumDatePicker" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="opslaanButton" min="-2" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="annulerenButton" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="telefoonnummerTextField" alignment="0" max="32767" attributes="0"/>
+                  <Component id="praktijkComboBox" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="voornaamTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="voornaamLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tussenvoegselTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tussenvoegselLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="achternaamTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="achternaamLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="geboortedatumDatePicker" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="geboortedatumLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="geslachtComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="geslachtLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bsnTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bsnLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="postcodeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="postcodeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="huisnrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="huisnrLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="telefoonnummerTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="telefoonnrLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="praktijkKvkLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="praktijkComboBox" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="opslaanButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="annulerenButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JTextField" name="voornaamTextField">
+    </Component>
+    <Component class="javax.swing.JLabel" name="voornaamLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Voornaam"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="bsnLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="BSN"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="postcodeLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Postcode"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="huisnrLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Huisnummer"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="telefoonnrLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telefoonnummer"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="praktijkKvkLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Praktijk"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="bsnTextField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="postcodeTextField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="huisnrTextField">
+    </Component>
+    <Component class="javax.swing.JButton" name="annulerenButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Annuleren"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="annulerenButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="opslaanButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Opslaan"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opslaanButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="achternaamTextField">
+    </Component>
+    <Component class="javax.swing.JLabel" name="achternaamLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Achternaam"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tussenvoegselTextField">
+    </Component>
+    <Component class="javax.swing.JLabel" name="tussenvoegselLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tussenvoegsel"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="geboortedatumLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Geboortedatum"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="geslachtComboBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="Mannelijk"/>
+            <StringItem index="1" value="Vrouwelijk"/>
+          </StringArray>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="geslachtLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Geslacht"/>
+      </Properties>
+    </Component>
+    <Component class="org.jdesktop.swingx.JXDatePicker" name="geboortedatumDatePicker">
+    </Component>
+    <Component class="javax.swing.JTextField" name="telefoonnummerTextField">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="praktijkComboBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

@@ -1,6 +1,7 @@
 package praktijk.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -51,7 +52,6 @@ public class Therapeut implements Serializable {
      * Er wordt gesorteerd op de naam van de therapeut.
      */
     public static Comparator<Therapeut> therapeutNameComparator = new Comparator<Therapeut>() {
-        // TODO: Comparator voor therapeuten: theorie, nog niet getest!
         @Override
         public int compare(Therapeut therapeut1, Therapeut therapeut2) {
             //omzetten naar kleine letters, maakt het sorter niet hoofdlettergevoelig
@@ -66,7 +66,7 @@ public class Therapeut implements Serializable {
      * Geeft de voornaam van de therapeut terug
      * @return de voornaam van de therapeut
      */
-    public String getVoorNaam() {
+    public String getVoornaam() {
         return voornaam;
     }
 
@@ -99,6 +99,10 @@ public class Therapeut implements Serializable {
      */
     public Date getGeboortedatum() {
         return geboortedatum;
+    }
+    
+    public String getGeboortedatumFormatted() {
+        return new SimpleDateFormat("dd-MM-yyyy").format(geboortedatum);
     }
 
     /**

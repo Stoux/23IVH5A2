@@ -9,6 +9,7 @@ import behandel.control.BehandelingManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import praktijk.boundary.PraktijkOverzichtGUI;
+import praktijk.boundary.TherapeutOverzichtGUI;
 import praktijk.control.PraktijkManager;
 import praktijk.control.TherapeutManager;
 import rapportage.boundary.CumulatiefGUI;
@@ -179,7 +180,8 @@ public class HomeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_praktijkOverzichtButtonActionPerformed
 
     private void therapeutenOverzichtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_therapeutenOverzichtButtonActionPerformed
-        // Waar is deze?
+        new TherapeutOverzichtGUI(this, therapeutManager).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_therapeutenOverzichtButtonActionPerformed
 
     private void behandelingOverzichtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_behandelingOverzichtButtonActionPerformed

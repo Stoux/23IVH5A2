@@ -44,7 +44,6 @@ public class Praktijk implements Serializable {
      * Er wordt gesorteerd op de naam van de praktijk.
      */
     public static Comparator<Praktijk> praktijkNameComparator = new Comparator<Praktijk>() {
-        // TODO: Theorie, nog niet getest!
         @Override
         public int compare(Praktijk praktijk1, Praktijk praktijk2) {
             //omzetten naar kleine letters, maakt het sorter niet hoofdlettergevoelig
