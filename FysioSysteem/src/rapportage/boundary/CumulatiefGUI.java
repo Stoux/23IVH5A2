@@ -8,8 +8,6 @@ import behandel.control.BehandelingManager;
 import home.boundary.HomeGUI;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +31,7 @@ public class CumulatiefGUI extends javax.swing.JFrame {
         control = new CumulatiefControl((DefaultTableModel) overzichtTabel.getModel(), manager);
         this.setExtendedState(this.MAXIMIZED_BOTH);
         control.getGegevens(new Date(new Date().getTime() - 86400000), new Date(new Date().getTime() + 86400000), (DefaultTableModel) overzichtTabel.getModel());
-        
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -53,16 +51,14 @@ public class CumulatiefGUI extends javax.swing.JFrame {
 
         inhoudPanel = new javax.swing.JPanel();
         terugButton = new javax.swing.JButton();
-        printenButton = new javax.swing.JButton();
-        startdatumTextField = new javax.swing.JTextField();
-        einddatumTextField = new javax.swing.JTextField();
         zoekButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         overzichtTabel = new org.jdesktop.swingx.JXTable();
+        startdatumTextField = new org.jdesktop.swingx.JXDatePicker();
+        einddatumTextField = new org.jdesktop.swingx.JXDatePicker();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         terugMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -72,12 +68,6 @@ public class CumulatiefGUI extends javax.swing.JFrame {
                 terugButtonActionPerformed(evt);
             }
         });
-
-        printenButton.setText("Printen");
-
-        startdatumTextField.setText("Startdatum");
-
-        einddatumTextField.setText("Einddatum");
 
         zoekButton.setText("Zoeken");
         zoekButton.addActionListener(new java.awt.event.ActionListener() {
@@ -119,17 +109,14 @@ public class CumulatiefGUI extends javax.swing.JFrame {
             inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inhoudPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(einddatumTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(startdatumTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
-                    .addComponent(zoekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(startdatumTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(einddatumTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(zoekButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(terugButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(printenButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(terugButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         inhoudPanelLayout.setVerticalGroup(
@@ -143,11 +130,13 @@ public class CumulatiefGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(einddatumTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(zoekButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(printenButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(terugButton)))
+                        .addGroup(inhoudPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(inhoudPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(terugButton))
+                            .addGroup(inhoudPanelLayout.createSequentialGroup()
+                                .addComponent(zoekButton)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
 
@@ -162,9 +151,6 @@ public class CumulatiefGUI extends javax.swing.JFrame {
         fileMenu.add(terugMenuItem);
 
         jMenuBar1.add(fileMenu);
-
-        helpMenu.setText("Help");
-        jMenuBar1.add(helpMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -189,7 +175,7 @@ public class CumulatiefGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
-        boolean b = control.zoek(parseDate(startdatumTextField.getText()), parseDate(einddatumTextField.getText()), (DefaultTableModel) overzichtTabel.getModel());
+        boolean b = control.zoek(startdatumTextField.getDate(), einddatumTextField.getDate(), (DefaultTableModel) overzichtTabel.getModel());
         if (b == true) {
             overzichtTabel.setModel(control.getModel());
         } else {
@@ -208,16 +194,6 @@ public class CumulatiefGUI extends javax.swing.JFrame {
     private void sluitGUI() {
         homeGUI.maakZichtbaar();
         dispose();
-    }
-    
-    private Date parseDate(String s) {
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            return df.parse(s);
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, ex.toString());
-            return null;
-        }
     }
     /**
      * @param args the command line arguments
@@ -249,15 +225,13 @@ public class CumulatiefGUI extends javax.swing.JFrame {
 //        });
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField einddatumTextField;
+    private org.jdesktop.swingx.JXDatePicker einddatumTextField;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel inhoudPanel;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.jdesktop.swingx.JXTable overzichtTabel;
-    private javax.swing.JButton printenButton;
-    private javax.swing.JTextField startdatumTextField;
+    private org.jdesktop.swingx.JXDatePicker startdatumTextField;
     private javax.swing.JButton terugButton;
     private javax.swing.JMenuItem terugMenuItem;
     private javax.swing.JButton zoekButton;
