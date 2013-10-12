@@ -30,8 +30,16 @@ public class CumulatiefGUI extends javax.swing.JFrame {
         initComponents();
         control = new CumulatiefControl((DefaultTableModel) overzichtTabel.getModel(), manager);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        control.getGegevens(new Date(new Date().getTime() - 86400000), new Date(new Date().getTime() + 86400000), (DefaultTableModel) overzichtTabel.getModel());
-
+        
+        startdatumTextField.setFormats(manager.getDatumFormat());
+        einddatumTextField.setFormats(manager.getDatumFormat());
+        startdatumTextField.setDate(new Date());
+        einddatumTextField.setDate(new Date());
+        
+        Date startdatum = new Date(startdatumTextField.getDate().getTime() - 86399999);
+        Date einddatum = new Date(einddatumTextField.getDate().getTime() + 86399999);
+        control.getGegevens(startdatum, einddatum, (DefaultTableModel) overzichtTabel.getModel());
+        
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -175,7 +183,9 @@ public class CumulatiefGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
-        boolean b = control.zoek(startdatumTextField.getDate(), einddatumTextField.getDate(), (DefaultTableModel) overzichtTabel.getModel());
+        Date startdatum = new Date(startdatumTextField.getDate().getTime() - 86399999);
+        Date einddatum = new Date(einddatumTextField.getDate().getTime() + 86399999);
+        boolean b = control.zoek(startdatum, einddatum, (DefaultTableModel) overzichtTabel.getModel());
         if (b == true) {
             overzichtTabel.setModel(control.getModel());
         } else {
