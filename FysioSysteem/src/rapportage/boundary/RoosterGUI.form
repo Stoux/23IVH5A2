@@ -74,50 +74,44 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="vierVijfLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="drieVierLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="negenTienLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="tienElfLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="elfTwaalfLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="twaalfEenLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="eenTweeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="tweeDrieLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="1026" max="-2" attributes="0"/>
+                  <Component id="terugKnop" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="terugKnop" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="vierVijfLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="drieVierLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="negenTienLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="tienElfLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="elfTwaalfLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="twaalfEenLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="eenTweeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="tweeDrieLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="908" max="32767" attributes="0"/>
+                          <Component id="beschrijvingLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="vorigeWeekKnop" min="-2" pref="138" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="volgendeWeekKnop" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="fysiotherapeutComboBox" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="beschrijvingLabel2" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="vorigeWeekKnop" min="-2" pref="138" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="volgendeWeekKnop" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="beschrijvingLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="beschrijvingLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="beschrijvingLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="beschrijvingLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="fysiotherapeutComboBox" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

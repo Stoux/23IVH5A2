@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import praktijk.entity.Therapeut;
 import rapportage.control.RoosterControl;
 
@@ -61,12 +62,15 @@ public class RoosterGUI extends javax.swing.JFrame {
             fysiotherapeutComboBox.addItem(therapeut.getBsn() + " | " + therapeut.getVolledigeNaam());
         }
 
-        setDatumWeek();
-        control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
-        setHeaders("huidige");
-        roosterTabel.setModel(control.getModel());
-
-
+        boolean check = setDatumWeek();
+        if (check) {
+            boolean succes = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
+            if (succes) {
+                roosterTabel.setModel(control.getModel());
+                setHeaders("huidige");
+            }
+        }
+        AutoCompleteDecorator.decorate(fysiotherapeutComboBox);
 
     }
 
@@ -96,10 +100,18 @@ public class RoosterGUI extends javax.swing.JFrame {
                 setDatumWeek(huidigeDatum, -5, +1, +1);
                 succes = true;
                 break;
+            case 6:
+                setDatumWeek(huidigeDatum, -6, +1, -1);
+                succes = true;
+                break;
+            case 7:
+                setDatumWeek(huidigeDatum, -7, +1, -2);
+                succes = true;
+                break;
         }
         return succes;
     }
-    
+
     private void setDatumWeek(Date huidigeDatum, int dagBegin, int dagWeek, int dagEind) {
         cal = Calendar.getInstance();
         cal.setTime(huidigeDatum);
@@ -114,27 +126,28 @@ public class RoosterGUI extends javax.swing.JFrame {
 
     private boolean setData(String kant) {
         boolean succes = false;
-        cal = Calendar.getInstance();
-        if (kant.equals("volgende")) {
-            cal.setTime(beginDatum);
-            cal.add(Calendar.DATE, +7);
-            beginDatum = new Date(cal.getTimeInMillis());
-            cal.setTime(eindDatum);
-            cal.add(Calendar.DATE, +7);
-            eindDatum = new Date(cal.getTimeInMillis());
-            succes = true;
-        } else if (kant.equals("vorige")) {
-            cal.setTime(beginDatum);
-            cal.add(Calendar.DATE, -7);
-            beginDatum = new Date(cal.getTimeInMillis());
-            cal.setTime(eindDatum);
-            cal.add(Calendar.DATE, -7);
-            eindDatum = new Date(cal.getTimeInMillis());
-            succes = true;
-        }
-        System.out.println("Begin: " + beginDatum + " | Eind: " + eindDatum);
+        switch (kant) {
 
+            case "volgende":
+                setData(+7);
+                succes = true;
+                break;
+            case "vorige":
+                setData(-7);
+                succes = true;
+                break;
+        }
         return succes;
+    }
+
+    private void setData(int addDagen) {
+        cal = Calendar.getInstance();
+        cal.setTime(beginDatum);
+        cal.add(Calendar.DATE, addDagen);
+        beginDatum = new Date(cal.getTimeInMillis());
+        cal.setTime(eindDatum);
+        cal.add(Calendar.DATE, addDagen);
+        eindDatum = new Date(cal.getTimeInMillis());
     }
 
     private void setHeaders(String kant) {
@@ -313,40 +326,37 @@ public class RoosterGUI extends javax.swing.JFrame {
         roosterPanelLayout.setHorizontalGroup(
             roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roosterPanelLayout.createSequentialGroup()
+                .addGap(239, 239, 239)
+                .addGroup(roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(vierVijfLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(drieVierLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(negenTienLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tienElfLabel)
+                    .addComponent(elfTwaalfLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(twaalfEenLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(eenTweeLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tweeDrieLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roosterPanelLayout.createSequentialGroup()
+                .addGap(1026, 1026, 1026)
+                .addComponent(terugKnop))
+            .addGroup(roosterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roosterPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(terugKnop))
-                    .addGroup(roosterPanelLayout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(vierVijfLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(drieVierLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(negenTienLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tienElfLabel)
-                            .addComponent(elfTwaalfLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(twaalfEenLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(eenTweeLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tweeDrieLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE))
+                        .addComponent(beschrijvingLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(vorigeWeekKnop, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(volgendeWeekKnop))
                     .addGroup(roosterPanelLayout.createSequentialGroup()
                         .addGroup(roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(roosterPanelLayout.createSequentialGroup()
-                                .addGroup(roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(fysiotherapeutComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(beschrijvingLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(vorigeWeekKnop, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(volgendeWeekKnop))
-                            .addGroup(roosterPanelLayout.createSequentialGroup()
-                                .addGroup(roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(beschrijvingLabel3)
-                                    .addComponent(beschrijvingLabel1))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                            .addComponent(beschrijvingLabel3)
+                            .addComponent(beschrijvingLabel1)
+                            .addComponent(fysiotherapeutComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)))
+                .addContainerGap())
         );
         roosterPanelLayout.setVerticalGroup(
             roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -455,8 +465,11 @@ public class RoosterGUI extends javax.swing.JFrame {
     private void fysiotherapeutComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fysiotherapeutComboBoxActionPerformed
         String therapeutNaam = fysiotherapeutComboBox.getSelectedItem().toString();
         setDatumWeek();
-        control.maakRooster(beginDatum, eindDatum, therapeutNaam);
-        roosterTabel.setModel(control.getModel());
+        boolean succes = control.maakRooster(beginDatum, eindDatum, therapeutNaam);
+        if (succes) {
+            roosterTabel.setModel(control.getModel());
+            setHeaders("huidige");
+        }
     }//GEN-LAST:event_fysiotherapeutComboBoxActionPerformed
 
     private void terugKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugKnopActionPerformed
