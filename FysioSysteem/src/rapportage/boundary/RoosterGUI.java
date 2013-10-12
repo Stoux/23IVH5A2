@@ -23,180 +23,202 @@ import rapportage.control.RoosterControl;
 
 /**
  *
- * @author Jan
+ * @author Rogier Welten
  */
 public class RoosterGUI extends javax.swing.JFrame {
 
-    private HomeGUI homeGUI;
-    private RoosterControl control;
-    private BehandelingManager bManager;
     private ArrayList<Therapeut> therapeuten;
+    private Calendar kalender;
     private Date beginDatum;
     private Date eindDatum;
     private Date beginWeek;
-    private Calendar cal;
     private DateFormat dagMaand;
+    private DateFormat dagWeek;
+    private HomeGUI homeGUI;
+    private RoosterControl control;
 
     /**
      * Creates new form RoosterGUI
      */
     // TODO new RoosterControl(defaulttablemodel van de jtable)
     public RoosterGUI(HomeGUI homeGUI, BehandelingManager bManager) {
-        dagMaand = new SimpleDateFormat("dd/MM");
+        //Maak de DateFormats
+        dagMaand = new SimpleDateFormat("dd/MM"); // dag/maand (bijvoorbeeld 12-10)
+        dagWeek = new SimpleDateFormat("u"); // Dag in de week (Maandag = 1 en Zondag = 7)
         this.homeGUI = homeGUI;
         initComponents();
         addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent e) { //Als het scherm gesloten wordt, roep de methode aan sluitGUI()
                 sluitGUI();
             }
         });
-        this.bManager = bManager;
-        control = new RoosterControl((DefaultTableModel) roosterTabel.getModel(), bManager);
-        roosterTabel.setShowGrid(true);
-        this.setExtendedState(this.MAXIMIZED_BOTH);
+        control = new RoosterControl((DefaultTableModel) roosterTabel.getModel(), bManager); //Aanmaken van de RoosterControl
+        
+        roosterTabel.setShowGrid(true); // lijnen in de roosterTabel laten zien
+        this.setExtendedState(this.MAXIMIZED_BOTH); // scherm schermvullend maken
 
-        therapeuten = bManager.getTherapeuten();
+        therapeuten = bManager.getTherapeuten(); //ophalen van de ArrayList met therapeuten
 
-        for (Therapeut therapeut : therapeuten) {
-            fysiotherapeutComboBox.addItem(therapeut.getBsn() + " | " + therapeut.getVolledigeNaam());
+        for (Therapeut therapeut : therapeuten) {// Voor elke Therapeut in de ArrayList wordt onderstaande uitgevoerd
+            fysiotherapeutComboBox.addItem(therapeut.getBsn() + " | " + therapeut.getVolledigeNaam()); // toevoegen van de String aan de fysiotherapeutComboBox (BSN | naam therapeut)
         }
 
-        boolean check = setDatumWeek();
-        if (check) {
-            boolean succes = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
-            if (succes) {
-                roosterTabel.setModel(control.getModel());
-                setHeaders("huidige");
+        boolean check = setDatumWeek(); //controle of setDatumWeek() succesvol is uitgevoerd
+        if (check) { // Als setDatumWeek() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+            boolean succes = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succes vol is uitgevoerd
+            if (succes) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+                roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
+                setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
             }
         }
-        AutoCompleteDecorator.decorate(fysiotherapeutComboBox);
+        AutoCompleteDecorator.decorate(fysiotherapeutComboBox); // toevoegen dat de fysiotherapeutComboBox automatisch het BSN aanvult
 
     }
-
+    /**
+     * Methode die de data van de huidige week maakt, waarbij setDatumweek (Date, int, int, int) wordt aangeroepen
+     * 
+     * @return succes boolean
+     */
     private boolean setDatumWeek() {
         boolean succes = false;
-        DateFormat dateFormat = new SimpleDateFormat("u");
-        Date huidigeDatum = new Date();
-        int dagNummer = Integer.parseInt(dateFormat.format(huidigeDatum));
-        switch (dagNummer) {
-            case 1:
-                setDatumWeek(huidigeDatum, -1, +1, +5);
-                succes = true;
-                break;
-            case 2:
-                setDatumWeek(huidigeDatum, -2, +1, +4);
-                succes = true;
-                break;
-            case 3:
-                setDatumWeek(huidigeDatum, -3, +1, +3);
-                succes = true;
-                break;
-            case 4:
-                setDatumWeek(huidigeDatum, -4, +1, +2);
-                succes = true;
-                break;
-            case 5:
-                setDatumWeek(huidigeDatum, -5, +1, +1);
-                succes = true;
-                break;
-            case 6:
-                setDatumWeek(huidigeDatum, -6, +1, -1);
-                succes = true;
-                break;
-            case 7:
-                setDatumWeek(huidigeDatum, -7, +1, -2);
-                succes = true;
-                break;
+        
+        Date huidigeDatum = new Date(); //Maken van de huidige datum
+        int dagNummer = Integer.parseInt(dagWeek.format(huidigeDatum)); // Het dagnummer in de week van de huidige datum
+        switch (dagNummer) { //Switch voor de dag in de week waarop de data gebaseerd zijn
+            case 1: setDatumWeek(huidigeDatum, -1, +1, +5); succes = true; break; //Als het dagnummer 1 is, wordt de methode setDatumWeek uitgevoerd
+            case 2: setDatumWeek(huidigeDatum, -2, +1, +4); succes = true; break; //Als het dagnummer 2 is, wordt de methode setDatumWeek uitgevoerd
+            case 3: setDatumWeek(huidigeDatum, -3, +1, +3); succes = true; break; //Als het dagnummer 3 is, wordt de methode setDatumWeek uitgevoerd
+            case 4: setDatumWeek(huidigeDatum, -4, +1, +2); succes = true; break; //Als het dagnummer 4 is, wordt de methode setDatumWeek uitgevoerd
+            case 5: setDatumWeek(huidigeDatum, -5, +1, +1); succes = true; break; //Als het dagnummer 5 is, wordt de methode setDatumWeek uitgevoerd
+            case 6: setDatumWeek(huidigeDatum, -6, +1, 0);  succes = true; break; //Als het dagnummer 6 is, wordt de methode setDatumWeek uitgevoerd
+            case 7: setDatumWeek(huidigeDatum, -7, +1, -1); succes = true; break; //Als het dagnummer 7 is, wordt de methode setDatumWeek uitgevoerd
         }
         return succes;
     }
 
+    /**
+     * Methode die de data van de huidige week maakt, waarbij beginDatum, beginWeek en eindDatum een waarde krijgen
+     * 
+     * @param huidigeDatum De huidige datum
+     * @param dagBegin aantal dagen wat van de huidigeDatum afgehaald moet worden, zodat beginDatum op zondag komt te staan
+     * @param dagWeek aantal dagen wat bij de datum opgeteld wordt, zodat beginWeek op maandag komt te staan
+     * @param dagEind aantal dagen wat bij de huidigeDatum opgeteld moet worden, zodat eindDatum op zaterdag komt te staan
+     */
     private void setDatumWeek(Date huidigeDatum, int dagBegin, int dagWeek, int dagEind) {
-        cal = Calendar.getInstance();
-        cal.setTime(huidigeDatum);
-        cal.add(Calendar.DATE, dagBegin);
-        beginDatum = new Date(cal.getTimeInMillis());
-        cal.add(Calendar.DATE, dagWeek);
-        beginWeek = new Date(cal.getTimeInMillis());
-        cal.setTime(huidigeDatum);
-        cal.add(Calendar.DATE, dagEind);
-        eindDatum = new Date(cal.getTimeInMillis());
+        kalender = Calendar.getInstance(); // Ophalen van de kalender met de huidige tijdzone
+        kalender.setTime(huidigeDatum); // De huidige datum van de kalender op huidigeDatum zetten
+        kalender.add(Calendar.DATE, dagBegin); //De huidige datum van de kalender optellen met x aantal dagen
+        beginDatum = new Date(kalender.getTimeInMillis()); // beginDatum maken op basis van de huidige tijd op de kalender
+        kalender.add(Calendar.DATE, dagWeek); //De huidige datum van de kalender optellen met x aantal dagen
+        beginWeek = new Date(kalender.getTimeInMillis()); // dagWeek maken als eerste dag van de week (maandag)
+        kalender.setTime(huidigeDatum); //De huidgie datum van de kalender op huidigeDatum zetten
+        kalender.add(Calendar.DATE, dagEind); //De huidige datum van de kalender optellen met x aantal dagen
+        eindDatum = new Date(kalender.getTimeInMillis()); // eindDatum maken op basis van de huidige tijd op de kalender
     }
-
+    /**
+     * Methode die bepaalt welk getal aan de methode setData(int) meegegeven wordt
+     * 
+     * @param kant de kant welke het rooster op moet (vorige week of volgende week)
+     * @return succes boolean
+     */
     private boolean setData(String kant) {
         boolean succes = false;
         switch (kant) {
-
-            case "volgende":
-                setData(+7);
-                succes = true;
-                break;
-            case "vorige":
-                setData(-7);
-                succes = true;
-                break;
+            case "volgende": setData(+7); succes = true; break; // als kant volgende is, wordt de methode setData(+7) uitgevoerd
+            case "vorige":   setData(-7); succes = true; break; // als kant vorige is, wordt de methode setData(-7) uitgevoerd
         }
         return succes;
     }
 
+    /**
+     * Methode die de data van de week maakt, waarbij begindatum en eindDatum een nieuwe waarde krijgen
+     * 
+     * @param addDagen aantal dagen wat bij de data opgeteld moet worden
+     */
     private void setData(int addDagen) {
-        cal = Calendar.getInstance();
-        cal.setTime(beginDatum);
-        cal.add(Calendar.DATE, addDagen);
-        beginDatum = new Date(cal.getTimeInMillis());
-        cal.setTime(eindDatum);
-        cal.add(Calendar.DATE, addDagen);
-        eindDatum = new Date(cal.getTimeInMillis());
+        kalender = Calendar.getInstance(); // Ophalen van de kalender met de huidige tijdzone
+        kalender.setTime(beginDatum); // De huidige datum van de kalender op beginDatum zetten
+        kalender.add(Calendar.DATE, addDagen); //De huidige datum van de kalender optellen/aftrekken met x aantal dagen
+        beginDatum = new Date(kalender.getTimeInMillis()); // beginDatum maken op basis van de huidige datum op de kalender
+        kalender.setTime(eindDatum); // De huidige datum van de kalender op eindDatum zetten
+        kalender.add(Calendar.DATE, addDagen); //De huidige datum van de kalender optellen/aftrekken met x aantal dagen
+        eindDatum = new Date(kalender.getTimeInMillis()); // eindDatum maken op basis van de huidige datum op de kalender
     }
 
+    /**
+     * Methode die bepaald welk getal aan de methode setHeaders(int) meegegeven wordt
+     * 
+     * @param kant de kant welke het rooster op moet (huidige week, vorige week of volgende week)
+     */
     private void setHeaders(String kant) {
         switch (kant) {
-            case "huidige":
-                setHeaders(0);
-                break;
-            case "vorige":
-                setHeaders(-7);
-                break;
-            case "volgende":
-                setHeaders(+7);
-                break;
+            case "huidige":  setHeaders(0);  break; // als kant huidige is, wordt de methode setHeaders(0) uitgevoerd
+            case "vorige":   setHeaders(-7); break; // als kant vorige is, wordt de methode setHeaders(-7) uitgevoerd
+            case "volgende": setHeaders(+7); break; // als kant volgende is, wordt de methode setHeaders(+7) uitgevoerd
         }
     }
 
+    /**
+     * Methode die de data van week maakt die in de headers geplaatst worden
+     * 
+     * @param addDagen aantal dagen wat bij de data opgeteld moet worden of afgetrokken
+     */
     private void setHeaders(int addDagen) {
-        JTableHeader header = roosterTabel.getTableHeader();
-        TableColumnModel tcm = header.getColumnModel();
-        cal = Calendar.getInstance();
-        cal.setTime(beginWeek);
-        cal.add(Calendar.DATE, addDagen);
-        beginWeek = new Date(cal.getTimeInMillis());
-        Date maandag = new Date(cal.getTimeInMillis());
-        tcm.getColumn(0).setHeaderValue("Maandag: " + dagMaand.format(maandag));
-        cal.setTime(beginWeek);
-        cal.add(Calendar.DATE, +1);
-        Date dinsdag = new Date(cal.getTimeInMillis());
-        tcm.getColumn(1).setHeaderValue("Dinsdag: " + dagMaand.format(dinsdag));
-        cal.setTime(beginWeek);
-        cal.add(Calendar.DATE, +2);
-        Date woensdag = new Date(cal.getTimeInMillis());
-        tcm.getColumn(2).setHeaderValue("Woensdag: " + dagMaand.format(woensdag));
-        cal.setTime(beginWeek);
-        cal.add(Calendar.DATE, +3);
-        Date donderdag = new Date(cal.getTimeInMillis());
-        tcm.getColumn(3).setHeaderValue("Donderdag: " + dagMaand.format(donderdag));
-        cal.setTime(beginWeek);
-        cal.add(Calendar.DATE, +4);
-        Date vrijdag = new Date(cal.getTimeInMillis());
-        tcm.getColumn(4).setHeaderValue("Vrijdag: " + dagMaand.format(vrijdag));
-        header.repaint();
+        JTableHeader header = roosterTabel.getTableHeader(); //Ophalen van de Header van de roosterTabel
+        TableColumnModel tcm = header.getColumnModel(); // ophalen van het ColumModel van de header
+        kalender = Calendar.getInstance();// Ophalen van de kalender met de huidige tijdzone
+        kalender.setTime(beginWeek); //De huidige datum van de kalender op beginWeek zetten
+        kalender.add(Calendar.DATE, addDagen); //De huidige datum van de kalender optellen/aftrekken met een x aantal dagen
+        beginWeek = new Date(kalender.getTimeInMillis()); // nieuwe beginWeek maken op basis van de huidige datum op de kalender
+        Date maandag = new Date(kalender.getTimeInMillis()); // maandag maken op basis van de huidige datum op de kalender
+        tcm.getColumn(0).setHeaderValue("Maandag: " + dagMaand.format(maandag)); // plaatsen van de String (Maandag: dag/maand) in de table header
+        kalender.setTime(beginWeek); // de huidige datum van de kalender op de nieuwe beginWeek zetten
+        kalender.add(Calendar.DATE, +1);// de huidige datum van de kalender optellen met 1 dag
+        Date dinsdag = new Date(kalender.getTimeInMillis()); // dinsdag maken op basis van de huidige datum op de kalender
+        tcm.getColumn(1).setHeaderValue("Dinsdag: " + dagMaand.format(dinsdag)); // plaatsen van de String (Dinsdag: dag/maand) in de table header
+        kalender.setTime(beginWeek); // de huidige datum van de kalender op de nieuwe beginWeek zetten
+        kalender.add(Calendar.DATE, +2); // de huidige datum van de kalender optellen met 2 dagen
+        Date woensdag = new Date(kalender.getTimeInMillis()); // woensdag maken op basis van de huidige datum op de kalender 
+        tcm.getColumn(2).setHeaderValue("Woensdag: " + dagMaand.format(woensdag)); // plaatsen van de String (Woensdag: dag/maand) in de table header
+        kalender.setTime(beginWeek); // de huidige datum van de kalender op de nieuwe beginWeek zetten
+        kalender.add(Calendar.DATE, +3); // de huidige datum van de kalender optellen met 3 dagen
+        Date donderdag = new Date(kalender.getTimeInMillis()); // donderdag maken op basis van de huidige datum op de kalender
+        tcm.getColumn(3).setHeaderValue("Donderdag: " + dagMaand.format(donderdag)); // plaatsen van de String (Donderdag: dag/maand) in de table header
+        kalender.setTime(beginWeek); // de huidige datum van de kalender op de nieuwe beginWeek zetten
+        kalender.add(Calendar.DATE, +4); // de huidige datum van de kalender optellen met 4 dagen
+        Date vrijdag = new Date(kalender.getTimeInMillis()); // // vrijdag maken op basis van de huidige datum op de kalender
+        tcm.getColumn(4).setHeaderValue("Vrijdag: " + dagMaand.format(vrijdag)); // plaatsen van de String (Vrijdag: dag/maand) in de table header
+        header.repaint(); // verversen van de header, waarbij de nieuwe header getoond wordt
     }
 
+    /**
+     *Methode die zorgt dat de homeGUI zichtbaar wordt en het huidige scherm afgesloten wordt
+     */
     private void sluitGUI() {
-        homeGUI.maakZichtbaar();
-        dispose();
+        homeGUI.maakZichtbaar(); // zichtbaar maken van de homeGUI
+        dispose(); // sluiten van het huidige scherm
     }
-
+    /**
+     * Methode die zorgt dat de juiste methoden aangeroepen worden als er een actie uitgevoerd wordt
+     * 
+     * @param kant de kant welke het rooster op moet (vorige week of volgende week)
+     * @param foutMelding1 foutmelding die gegeven moet worden als er geen rooster gemaakt kan worden
+     * @param foutMelding2 foutmelding die gegeven moet worden als de data van de week niet bepaald kunnen worden
+     */
+    private void actieUitgevoerdKnop(String kant, String foutMelding1, String foutMelding2){
+        if (setData(kant)) { // Als setData(String) succesvol is uitgevoerd, wordt onderstaande uitgevoerd
+                boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succesvol is uitgevoerd
+                if (success) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+                    roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
+                    setHeaders(kant); //Headers van de tabel aanpassen naar de data van deze week
+                } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
+                    JOptionPane.showMessageDialog(this, foutMelding1, "Fout", JOptionPane.ERROR_MESSAGE, null);
+                  }
+            } else {//Als setData(String) niet succesvol is uitgevoerd wordt een foutmelding getoond
+                JOptionPane.showMessageDialog(this, foutMelding2, "Fout", JOptionPane.ERROR_MESSAGE, null);
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -435,40 +457,24 @@ public class RoosterGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void vorigeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vorigeWeekKnopActionPerformed
-        if (setData("vorige")) {
-            boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
-            if (success) {
-                roosterTabel.setModel(control.getModel());
-                setHeaders("vorige");
-            } else {
-                JOptionPane.showMessageDialog(this, "Vorige week faal!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "DATUM CALCULATIE FAAL!");
-        }
+        actieUitgevoerdKnop("vorige", "Er kan geen rooster gemaakt worden voor vorige week" , "Data van de week kunnen niet worden bepaald");
     }//GEN-LAST:event_vorigeWeekKnopActionPerformed
 
     private void volgendeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volgendeWeekKnopActionPerformed
-        if (setData("volgende")) {
-            boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString());
-            if (success) {
-                roosterTabel.setModel(control.getModel());
-                setHeaders("volgende");
-            } else {
-                JOptionPane.showMessageDialog(this, "Vorige week faal!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "DATUM CALCULATIE FAAL!");
-        }
+        actieUitgevoerdKnop("volgende", "Er kan geen rooster gemaakt worden voor volgende week" , "Data van de week kunnen niet worden bepaald");
     }//GEN-LAST:event_volgendeWeekKnopActionPerformed
 
     private void fysiotherapeutComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fysiotherapeutComboBoxActionPerformed
-        String therapeutNaam = fysiotherapeutComboBox.getSelectedItem().toString();
-        setDatumWeek();
-        boolean succes = control.maakRooster(beginDatum, eindDatum, therapeutNaam);
-        if (succes) {
-            roosterTabel.setModel(control.getModel());
-            setHeaders("huidige");
+        if (setDatumWeek()) { // Als setDatumWeek() succesvol is uitgevoerd, wordt onderstaande uitgevoerd
+            boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succesvol is uitgevoerd
+            if (success) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+                roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
+                setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
+            } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
+                JOptionPane.showMessageDialog(this, "Er kan geen rooster gemaakt worden voor volgende week", "Fout", JOptionPane.ERROR_MESSAGE, null);
+              }
+        } else {//Als setData(String) niet succesvol is uitgevoerd wordt een foutmelding getoond
+            JOptionPane.showMessageDialog(this, "Data van de week kunnen niet worden bepaald", "Fout", JOptionPane.ERROR_MESSAGE, null);
         }
     }//GEN-LAST:event_fysiotherapeutComboBoxActionPerformed
 
