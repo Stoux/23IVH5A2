@@ -6,6 +6,8 @@ package home.boundary;
 
 import behandel.control.BehandelingManager;
 import home.control.StartThread;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
 import praktijk.control.PraktijkManager;
 import praktijk.control.TherapeutManager;
 
@@ -182,6 +184,16 @@ public class StartGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try {
+                    //Probeer Look & Feel naar Windows te zetten. Als die niet gevonden wordt word de default gebruikt
+                    for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                        if (info.getName().equals("Windows")) {
+                            UIManager.setLookAndFeel(info.getClassName());
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 new StartGUI().setVisible(true);
             }
         });
