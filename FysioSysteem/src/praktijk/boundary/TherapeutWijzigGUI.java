@@ -1,9 +1,11 @@
 package praktijk.boundary;
 
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import praktijk.control.TherapeutManager;
@@ -21,6 +23,7 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
     private Therapeut wijzigTherapeut;
     private boolean isNieuw;
     private HashMap<Long, String> praktijken;
+    private boolean allesGeldig;
 
     /**
      * Creates new form TherapeutWijzigGUI
@@ -163,12 +166,12 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
                     .addComponent(bsnLabel)
                     .addComponent(huisnrLabel)
                     .addComponent(telefoonnrLabel)
-                    .addComponent(praktijkKvkLabel)
                     .addComponent(postcodeLabel)
                     .addComponent(achternaamLabel)
                     .addComponent(tussenvoegselLabel)
                     .addComponent(geboortedatumLabel)
-                    .addComponent(geslachtLabel))
+                    .addComponent(geslachtLabel)
+                    .addComponent(praktijkKvkLabel))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(huisnrTextField)
@@ -181,9 +184,8 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
                     .addComponent(geboortedatumDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(opslaanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(annulerenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(annulerenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(telefoonnummerTextField)
                     .addComponent(praktijkComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -228,14 +230,14 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
                     .addComponent(telefoonnummerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(telefoonnrLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(praktijkKvkLabel)
-                    .addComponent(praktijkComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(praktijkComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(praktijkKvkLabel))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(opslaanButton)
                     .addComponent(annulerenButton))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,26 +252,39 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_annulerenButtonActionPerformed
 
     /**
-     * Maakt een nieuwe therapeut aan of wijzigd de gegevens van een bestaande therapeut
+     * Maakt een nieuwe therapeut aan of wijzigt de gegevens van een bestaande therapeut
      * @param evt 
      */
     private void opslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opslaanButtonActionPerformed
-        if (!voornaamTextField.getText().isEmpty() && !achternaamTextField.getText().isEmpty() && !bsnTextField.getText().isEmpty() && !postcodeTextField.getText().isEmpty() && !huisnrTextField.getText().isEmpty() && !telefoonnummerTextField.getText().isEmpty() && praktijkComboBox.getSelectedIndex() != -1) {
-            String voornaam = voornaamTextField.getText();
+        String voornaam = voornaamTextField.getText();
+        String achternaam = achternaamTextField.getText();
+        String bsnStr = bsnTextField.getText();
+        String postcode = postcodeTextField.getText();
+        String huisnr = huisnrTextField.getText();
+        String telnr = telefoonnummerTextField.getText();
+        int praktijkIndex = praktijkComboBox.getSelectedIndex();
+        
+        allesGeldig = true;
+        
+        checkGeldig(!voornaam.isEmpty(), voornaamLabel);
+        checkGeldig(!achternaam.isEmpty(), achternaamLabel);
+        checkGeldig(bsnStr.matches("\\d{8,9}"), bsnLabel);
+        checkGeldig(postcode.matches("\\d{4}[a-zA-Z]{2}"), postcodeLabel);
+        checkGeldig(huisnr.matches("\\d{1,}[a-zA-Z]?"), huisnrLabel);
+        checkGeldig(telnr.matches("\\d{10}"), telefoonnrLabel);
+        checkGeldig(praktijkIndex != 1, praktijkKvkLabel);
+        
+        if (allesGeldig) {
             String tussenvoegsel = tussenvoegselTextField.getText();
-            String achternaam = achternaamTextField.getText();
             Date geboortedatum = geboortedatumDatePicker.getDate();
+            int bsn = Integer.parseInt(bsnStr);
+            long praktijkKvk = (long) praktijken.keySet().toArray()[praktijkIndex];
             Geslacht geslacht = Geslacht.Mannelijk;
-            int bsn = Integer.parseInt(bsnTextField.getText());
-            String postcode = postcodeTextField.getText();
-            String huisnr = huisnrTextField.getText();
-            String telefoonnr = telefoonnummerTextField.getText();
-            long praktijkKvk = (long) praktijken.keySet().toArray()[praktijkComboBox.getSelectedIndex()];
             if (geslachtComboBox.getSelectedIndex() == 1) {
                 geslacht = Geslacht.Vrouwelijk;
             }
 
-            Therapeut therapeut = new Therapeut(voornaam, tussenvoegsel, achternaam, geboortedatum, geslacht, bsn, postcode, huisnr, telefoonnr, praktijkKvk);
+            Therapeut therapeut = new Therapeut(voornaam, tussenvoegsel, achternaam, geboortedatum, geslacht, bsn, postcode, huisnr, telnr, praktijkKvk);
             boolean succes;
             
             if(isNieuw) {
@@ -288,10 +303,20 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
             }
         }
         else {
-            JOptionPane.showMessageDialog(this, "Controleer of alle velden (correct) ingevuld zijn.", "Fout", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Controleer of alle velden (correct) ingevuld zijn.\nFoutief ingevulde velden zijn rood weergegeven.", "Fout", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_opslaanButtonActionPerformed
 
+    private void checkGeldig(boolean geldig, JLabel label) {
+        if (geldig) {
+            label.setForeground(Color.BLACK);
+        }
+        else {
+            label.setForeground(Color.RED);
+            allesGeldig = false;
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel achternaamLabel;
     private javax.swing.JTextField achternaamTextField;

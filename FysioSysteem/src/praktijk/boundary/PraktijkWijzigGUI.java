@@ -1,6 +1,11 @@
 package praktijk.boundary;
 
+import java.awt.Color;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import praktijk.control.PraktijkManager;
 import praktijk.entity.Praktijk;
 
@@ -14,6 +19,7 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
     private int index;
     private Praktijk wijzigPraktijk;
     private boolean isNieuw;
+    private boolean allesGeldig;
 
     /**
      * Creates new form PraktijkWijzigGUI
@@ -65,14 +71,14 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         naamTextField = new javax.swing.JTextField();
-        praktijkNaamLabel = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        naamLabel = new javax.swing.JLabel();
+        plaatsLabel = new javax.swing.JLabel();
+        postcodeLabel = new javax.swing.JLabel();
+        huisnummerLabel = new javax.swing.JLabel();
+        kvkLabel = new javax.swing.JLabel();
+        ibanLabel = new javax.swing.JLabel();
+        telnrLabel = new javax.swing.JLabel();
+        faxnrLabel = new javax.swing.JLabel();
         plaatsTextField = new javax.swing.JTextField();
         postcodeTextField = new javax.swing.JTextField();
         huisnrTextField = new javax.swing.JTextField();
@@ -85,21 +91,21 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        praktijkNaamLabel.setText("Naam");
+        naamLabel.setText("Naam");
 
-        jLabel2.setText("Plaats");
+        plaatsLabel.setText("Plaats");
 
-        jLabel1.setText("Postcode");
+        postcodeLabel.setText("Postcode");
 
-        jLabel3.setText("Huisnummer");
+        huisnummerLabel.setText("Huisnummer");
 
-        jLabel4.setText("KVK-nummer");
+        kvkLabel.setText("KVK-nummer");
 
-        jLabel5.setText("IBAN-nummer");
+        ibanLabel.setText("IBAN-nummer");
 
-        jLabel6.setText("Telefoonnummer");
+        telnrLabel.setText("Telefoonnummer");
 
-        jLabel7.setText("Faxnummer");
+        faxnrLabel.setText("Faxnummer");
 
         annulerenButton.setText("Annuleren");
         annulerenButton.addActionListener(new java.awt.event.ActionListener() {
@@ -122,14 +128,14 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(praktijkNaamLabel)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel5))
+                    .addComponent(naamLabel)
+                    .addComponent(plaatsLabel)
+                    .addComponent(huisnummerLabel)
+                    .addComponent(kvkLabel)
+                    .addComponent(telnrLabel)
+                    .addComponent(faxnrLabel)
+                    .addComponent(postcodeLabel)
+                    .addComponent(ibanLabel))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -152,34 +158,34 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(naamTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(praktijkNaamLabel))
+                    .addComponent(naamLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(plaatsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(plaatsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(postcodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(postcodeLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(huisnrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(huisnummerLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kvkNummerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(kvkLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ibannrTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(ibanLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(telefoonnummerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(telnrLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(faxnrLabel)
                     .addComponent(faxnummerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -200,21 +206,34 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_annulerenButtonActionPerformed
 
     /**
-     * Maakt een nieuwe praktijk aan of wijzigd de gegevens van een bestaande praktijk
+     * Maakt een nieuwe praktijk aan of wijzigt de gegevens van een bestaande praktijk
      * @param evt 
      */
     private void opslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opslaanButtonActionPerformed
-        if (!naamTextField.getText().isEmpty() && !plaatsTextField.getText().isEmpty() && !postcodeTextField.getText().isEmpty() && !huisnrTextField.getText().isEmpty() && !kvkNummerTextField.getText().isEmpty() && !ibannrTextField.getText().isEmpty() && !telefoonnummerTextField.getText().isEmpty() && !faxnummerTextField.getText().isEmpty()) {
-            String naam = naamTextField.getText();
-            String plaats = plaatsTextField.getText();
-            String postcode = postcodeTextField.getText();
-            String huisnr = huisnrTextField.getText();
-            long kvknr = Long.parseLong(kvkNummerTextField.getText());
-            String iban = ibannrTextField.getText();
-            String telefoonnr = telefoonnummerTextField.getText();
-            String faxnr = faxnummerTextField.getText();
+        String naam = naamTextField.getText();
+        String plaats = plaatsTextField.getText();
+        String postcode = postcodeTextField.getText().replace(" ", "");
+        String huisnr = huisnrTextField.getText();
+        String kvkStr = kvkNummerTextField.getText();
+        String iban = ibannrTextField.getText().replace(" ", "");
+        String telnr = telefoonnummerTextField.getText().replace(" ", "").replace("-", "");
+        String faxnr = faxnummerTextField.getText().replace(" ", "").replace("-", "");
+        
+        allesGeldig = true;
+        
+        checkGeldig(!naam.isEmpty(), naamLabel);
+        checkGeldig(!plaats.isEmpty(), plaatsLabel);
+        checkGeldig(postcode.matches("\\d{4}[a-zA-Z]{2}"), postcodeLabel);
+        checkGeldig(huisnr.matches("\\d{1,}[a-zA-Z]?"), huisnummerLabel);
+        checkGeldig(kvkStr.matches("\\d{8}"), kvkLabel);
+        checkGeldig(iban.matches("[a-zA-Z]{2}\\d{13,32}"), ibanLabel);
+        checkGeldig(telnr.matches("\\d{10}"), telnrLabel);
+        checkGeldig(faxnr.matches("\\d{10}"), faxnrLabel);
+        
+        if (allesGeldig) {
+            long kvknr = Long.parseLong(kvkStr);
 
-            Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telefoonnr, faxnr);
+            Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telnr, faxnr);
             boolean succes;
             
             if(isNieuw) {
@@ -233,28 +252,38 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
             }
         }
         else {
-            JOptionPane.showMessageDialog(this, "Controleer of alle velden (correct) ingevuld zijn.", "Fout", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Controleer of alle velden (correct) ingevuld zijn.\nFoutief ingevulde velden zijn rood weergegeven.", "Fout", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_opslaanButtonActionPerformed
 
+    private void checkGeldig(boolean geldig, JLabel label) {
+        if (geldig) {
+            label.setForeground(Color.BLACK);
+        }
+        else {
+            label.setForeground(Color.RED);
+            allesGeldig = false;
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton annulerenButton;
+    private javax.swing.JLabel faxnrLabel;
     private javax.swing.JTextField faxnummerTextField;
     private javax.swing.JTextField huisnrTextField;
+    private javax.swing.JLabel huisnummerLabel;
+    private javax.swing.JLabel ibanLabel;
     private javax.swing.JTextField ibannrTextField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel kvkLabel;
     private javax.swing.JTextField kvkNummerTextField;
+    private javax.swing.JLabel naamLabel;
     private javax.swing.JTextField naamTextField;
     private javax.swing.JButton opslaanButton;
+    private javax.swing.JLabel plaatsLabel;
     private javax.swing.JTextField plaatsTextField;
+    private javax.swing.JLabel postcodeLabel;
     private javax.swing.JTextField postcodeTextField;
-    private javax.swing.JLabel praktijkNaamLabel;
     private javax.swing.JTextField telefoonnummerTextField;
+    private javax.swing.JLabel telnrLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,14 +26,14 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="praktijkNaamLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="naamLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="plaatsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="huisnummerLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="kvkLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="telnrLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="faxnrLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="postcodeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="ibanLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -61,41 +61,41 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="naamTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="praktijkNaamLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="naamLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="plaatsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="plaatsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="postcodeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="postcodeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="huisnrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="huisnummerLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="kvkNummerTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="kvkLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ibannrTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ibanLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="telefoonnummerTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="telnrLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="faxnrLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="faxnummerTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -111,42 +111,42 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="naamTextField">
     </Component>
-    <Component class="javax.swing.JLabel" name="praktijkNaamLabel">
+    <Component class="javax.swing.JLabel" name="naamLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Naam"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="plaatsLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Plaats"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="postcodeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Postcode"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="huisnummerLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Huisnummer"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="kvkLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="KVK-nummer"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="ibanLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="IBAN-nummer"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
+    <Component class="javax.swing.JLabel" name="telnrLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Telefoonnummer"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
+    <Component class="javax.swing.JLabel" name="faxnrLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Faxnummer"/>
       </Properties>
