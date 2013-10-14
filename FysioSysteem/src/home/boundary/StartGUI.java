@@ -5,7 +5,12 @@
 package home.boundary;
 
 import behandel.control.BehandelingManager;
+import home.control.IconManager;
 import home.control.StartThread;
+import java.awt.Font;
+import java.awt.Image;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import praktijk.control.PraktijkManager;
@@ -22,12 +27,26 @@ public class StartGUI extends javax.swing.JFrame {
     /**
      * Creates new form StartScherm
      */
-    public StartGUI() {
+    public StartGUI() {    
+        initializeerIcon();
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
         sThread = new StartThread(this);
         sThread.start();
+    }
+    
+    /**
+     * Haal het Icon dat 
+     */
+    private void initializeerIcon() {
+        try {
+            Image image = ImageIO.read(getClass().getResource("/Icon.png"));
+            IconManager.intializeerIcon(image);
+            IconManager.setIcon(this);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     /**

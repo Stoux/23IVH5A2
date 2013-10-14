@@ -5,6 +5,7 @@
 package home.boundary;
 
 import behandel.control.BehandelingManager;
+import home.control.IconManager;
 import static java.lang.Thread.sleep;
 
 /**
@@ -25,6 +26,7 @@ public class AfsluitGUI extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
+        IconManager.setIcon(this); //Set icon
     }
     
     public void sluitAf() {

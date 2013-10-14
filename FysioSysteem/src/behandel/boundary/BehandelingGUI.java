@@ -7,6 +7,7 @@ package behandel.boundary;
 import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
 import behandel.entity.Behandeling.Status;
+import home.control.IconManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -40,7 +41,6 @@ public class BehandelingGUI extends javax.swing.JFrame {
         initComponents();
         vulComboBoxen();
         patientBSNField.setEditable(true);
-        setLocationRelativeTo(null);
     }
     
     /**
@@ -67,7 +67,6 @@ public class BehandelingGUI extends javax.swing.JFrame {
         
         statusComboBox.setSelectedItem(behandeling.getStatus());
         opmerkingTextArea.setText(behandeling.getOpmerking());
-        setLocationRelativeTo(null);
     }
     
     /**
@@ -108,6 +107,9 @@ public class BehandelingGUI extends javax.swing.JFrame {
                 updateOverzicht(false);
             }
         });
+        
+        IconManager.setIcon(this); //Set icon
+        setLocationRelativeTo(null);
        }
 
     /**
@@ -208,6 +210,8 @@ public class BehandelingGUI extends javax.swing.JFrame {
 
         beginTijdLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         beginTijdLabel.setText("Datum");
+
+        datumPicker.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         bsnLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         bsnLabel2.setText("Begin tijd");

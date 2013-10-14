@@ -7,6 +7,8 @@ package behandel.boundary;
 import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
 import home.boundary.HomeGUI;
+import home.control.IconManager;
+import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class OverzichtGUI extends javax.swing.JFrame {
                 dispose();
             }
         });
+        IconManager.setIcon(this); //Set icon
     }
 
     /**

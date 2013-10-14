@@ -6,6 +6,7 @@ package home.boundary;
 
 import behandel.boundary.OverzichtGUI;
 import behandel.control.BehandelingManager;
+import home.control.IconManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import praktijk.boundary.PraktijkOverzichtGUI;
@@ -48,6 +49,9 @@ public class HomeGUI extends javax.swing.JFrame {
                 sluitAf();
             }
         });
+        
+        //Set icon
+        IconManager.setIcon(this);
     }
     
     /**
