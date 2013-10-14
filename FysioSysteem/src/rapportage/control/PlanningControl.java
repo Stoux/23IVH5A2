@@ -6,9 +6,11 @@ package rapportage.control;
 
 import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
+import praktijk.entity.Therapeut;
 
 /**
  *
@@ -40,16 +42,6 @@ public class PlanningControl {
     }
 
     /**
-     * Print functie. Geeft een PDF bestand met de inhoud van de jTable in
-     * PlanningGUI
-     *
-     * @param planningModel Huidige model van de jTable
-     */
-    public void print(DefaultTableModel planningModel) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Haal gegevens op. Deze functie bevat een link naar subsysteem 2:
      * Behandelingen.
      *
@@ -66,7 +58,16 @@ public class PlanningControl {
         planningModel.setRowCount(0);
         for (Behandeling b : behandelingen) {
             if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
-                planningModel.addRow(new Object[]{"x", b.getFysiotherapeutBSN(), b.getBurgerServiceNummer(), b.getBehandelingscode(), b.getBegintijd(), b.getOpmerking()});
+                ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
+                Therapeut therapeut = null;
+                for(Therapeut th: therapeuten){
+                    if(th.getBsn() == b.getFysiotherapeutBSN()){
+                        therapeut = th;
+                        break;
+                    }
+                }
+                SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                planningModel.addRow(new Object[]{therapeut.getPraktijkKvk(), b.getFysiotherapeutBSN(), b.getBurgerServiceNummer(), b.getBehandelingscode(), sf.format(b.getBegintijd()), b.getOpmerking()});
             }
         }
         if (planningModel.getRowCount() > 0) {
@@ -81,7 +82,16 @@ public class PlanningControl {
         planningModel.setRowCount(0);
         for (Behandeling b : behandelingen) {
             if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
-                planningModel.addRow(new Object[]{"x", b.getFysiotherapeutBSN(), b.getBurgerServiceNummer(), b.getBehandelingscode(), b.getBegintijd(), b.getOpmerking()});
+                ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
+                Therapeut therapeut = null;
+                for(Therapeut th: therapeuten){
+                    if(th.getBsn() == b.getFysiotherapeutBSN()){
+                        therapeut = th;
+                        break;
+                    }
+                }
+                SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                planningModel.addRow(new Object[]{therapeut.getPraktijkKvk(), b.getFysiotherapeutBSN(), b.getBurgerServiceNummer(), b.getBehandelingscode(), sf.format(b.getBegintijd()), b.getOpmerking()});
             }
         }
         if (planningModel.getRowCount() > 0) {

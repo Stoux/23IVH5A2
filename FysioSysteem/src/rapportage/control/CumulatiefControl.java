@@ -6,6 +6,7 @@ package rapportage.control;
 
 import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -54,16 +55,6 @@ public class CumulatiefControl {
     }
 
     /**
-     * Print functie. Geeft een PDF bestand met de inhoud van de jTable in
-     * CumulatiefGUI
-     *
-     * @param cumulatiefModel Huidige model van de jTable
-     */
-    public void print(DefaultTableModel cumulatiefModel) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Haal gegevens op. Deze functie bevat een link naar subsysteem 2:
      * Behandelingen.
      *
@@ -83,26 +74,35 @@ public class CumulatiefControl {
         Integer one = 1;
         for (Behandeling b : behandelingen) {
             if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
-                boolean huh = false;
+                boolean found = false;
                 for (Behandeling bh : gevonden) {
                     if (bh.getBehandelingscode().equals(b.getBehandelingscode()) && bh.getFysiotherapeutBSN() == b.getFysiotherapeutBSN()) {
                         int index = gevonden.indexOf(bh);
                         Integer newCount = count.get(index) + 1;
                         count.set(index, newCount);
-                        huh = true;
+                        found = true;
                     }
                 }
-                if (huh == false) {
+                if (found == false) {
                     gevonden.add(b);
                     count.add(one);
                 } else {
-                    huh = false;
+                    found = false;
                 }
             }
         }
         for (Behandeling b : gevonden) {
             int index = gevonden.indexOf(b);
-            cumulatiefModel.addRow(new Object[]{"x", b.getFysiotherapeutBSN(), b.getBehandelingscode(), count.get(index), b.getBegintijd(), b.getOpmerking()});
+            ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
+            Therapeut therapeut = null;
+            for(Therapeut th: therapeuten){
+                if(th.getBsn() == b.getFysiotherapeutBSN()){
+                    therapeut = th;
+                    break;
+                }
+            }
+            SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+            cumulatiefModel.addRow(new Object[]{therapeut.getPraktijkKvk(), b.getFysiotherapeutBSN(), b.getBehandelingscode(), count.get(index), sf.format(b.getBegintijd()), b.getOpmerking()});
         }
         if (cumulatiefModel.getRowCount() > 0) {
             success = true;
