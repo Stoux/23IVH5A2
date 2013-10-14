@@ -276,7 +276,7 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         checkGeldig(postcode.matches("\\d{4}[a-zA-Z]{2}"), postcodeLabel);
         checkGeldig(huisnr.matches("\\d{1,}[a-zA-Z]?"), huisnrLabel);
         checkGeldig(telnr.matches("\\d{10}"), telefoonnrLabel);
-        checkGeldig(praktijkIndex != 1, praktijkKvkLabel);
+        checkGeldig(praktijkIndex != -1, praktijkKvkLabel);
         
         if (allesGeldig) {
             String tussenvoegsel = tussenvoegselTextField.getText();
@@ -288,7 +288,7 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
                 geslacht = Geslacht.Vrouwelijk;
             }
             
-            if (manager.bsnBestaat(bsn)) {
+            if (isNieuw && manager.bsnBestaat(bsn)) {
                 JOptionPane.showMessageDialog(this, "Er bestaat reeds een therapeut met ditzelfde BSN-nummer.\nHet BSN-nummer dient uniek te zijn, pas eventueel de andere praktijk aan.", "Fout", JOptionPane.ERROR_MESSAGE);
                 checkGeldig(false, bsnLabel);
                 return;
