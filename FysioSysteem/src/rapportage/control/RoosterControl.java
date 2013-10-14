@@ -81,11 +81,11 @@ public class RoosterControl {
         donderdag = new String[8];
         vrijdag = new String[8];
         if (!behandelingen.isEmpty()) { // Als de ArrayList met behandelingen niet leeg is, wordt onderstaande uitgevoerd
-            succes = true;
             for (Behandeling b : behandelingen) { // Voor elke Behandeling in de ArrayList wordt onderstaande uitgevoerd
                 int fysiotherapeutBSN = b.getFysiotherapeutBSN(); // Ophalen van het BSN van de fysiotherapeut uit de behandeling
                 if (therapeutBSN == fysiotherapeutBSN) { //BSN wordt vergeleken, als dit gelijk is, wordt onderstaande uitgevoerd
                     if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) { //controle of begintijd en eindtijd van de behandeling binnen de week vallen die getoond wordt
+                        succes = true;
                         int uurBehandeling = Integer.parseInt(dagUur.format(b.getBegintijd())); //Het uur waarin de behandeling plaatsvindt
                         int dagBehandeling = Integer.parseInt(dagWeek.format(b.getBegintijd())); // De dagnummer in de week waarop de behandeling plaatsvindt
 

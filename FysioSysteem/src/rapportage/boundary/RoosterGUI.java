@@ -59,18 +59,22 @@ public class RoosterGUI extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH); // scherm schermvullend maken
 
         therapeuten = bManager.getTherapeuten(); //ophalen van de ArrayList met therapeuten
-
-        for (Therapeut therapeut : therapeuten) {// Voor elke Therapeut in de ArrayList wordt onderstaande uitgevoerd
-            fysiotherapeutComboBox.addItem(therapeut.getBsn() + " | " + therapeut.getVolledigeNaam()); // toevoegen van de String aan de fysiotherapeutComboBox (BSN | naam therapeut)
-        }
-
-        boolean check = setDatumWeek(); //controle of setDatumWeek() succesvol is uitgevoerd
-        if (check) { // Als setDatumWeek() succesvol is uitgevoerd wordt onderstaande uitgevoerd
-            boolean succes = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succes vol is uitgevoerd
-            if (succes) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
-                roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
-                setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
+        
+        if(!therapeuten.isEmpty()){
+            for (Therapeut therapeut : therapeuten) {// Voor elke Therapeut in de ArrayList wordt onderstaande uitgevoerd
+                fysiotherapeutComboBox.addItem(therapeut.getBsn() + " | " + therapeut.getVolledigeNaam()); // toevoegen van de String aan de fysiotherapeutComboBox (BSN | naam therapeut)
             }
+            boolean check = setDatumWeek(); //controle of setDatumWeek() succesvol is uitgevoerd
+            if (check) { // Als setDatumWeek() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+                boolean succes = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succes vol is uitgevoerd
+                if (succes) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+                    roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
+                    setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
+                }
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Er zijn geen fysiotherapeuten gevonden", "Fout", JOptionPane.ERROR_MESSAGE, null);
         }
         AutoCompleteDecorator.decorate(fysiotherapeutComboBox); // toevoegen dat de fysiotherapeutComboBox automatisch het BSN aanvult
 
@@ -211,10 +215,10 @@ public class RoosterGUI extends javax.swing.JFrame {
                 boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succesvol is uitgevoerd
                 if (success) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
                     roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
-                    setHeaders(kant); //Headers van de tabel aanpassen naar de data van deze week
+                    
                 } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
-                    JOptionPane.showMessageDialog(this, foutMelding1, "Fout", JOptionPane.ERROR_MESSAGE, null);
-                  }
+                    JOptionPane.showMessageDialog(this, foutMelding1, "Melding", JOptionPane.INFORMATION_MESSAGE, null);
+                  }setHeaders(kant); //Headers van de tabel aanpassen naar de data van deze week
             } else {//Als setData(String) niet succesvol is uitgevoerd wordt een foutmelding getoond
                 JOptionPane.showMessageDialog(this, foutMelding2, "Fout", JOptionPane.ERROR_MESSAGE, null);
             }
@@ -457,11 +461,13 @@ public class RoosterGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void vorigeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vorigeWeekKnopActionPerformed
-        actieUitgevoerdKnop("vorige", "Er kan geen rooster gemaakt worden voor vorige week" , "Data van de week kunnen niet worden bepaald");
+        String therapeut = fysiotherapeutComboBox.getSelectedItem().toString();
+        actieUitgevoerdKnop("vorige", "Fysiotherapeut " +  therapeut.split(" | ")[2] + " " + therapeut.split(" | ")[3]  + " had vorige week geen behandelingen" , "Data van de week kunnen niet worden bepaald");
     }//GEN-LAST:event_vorigeWeekKnopActionPerformed
 
     private void volgendeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volgendeWeekKnopActionPerformed
-        actieUitgevoerdKnop("volgende", "Er kan geen rooster gemaakt worden voor volgende week" , "Data van de week kunnen niet worden bepaald");
+        String therapeut = fysiotherapeutComboBox.getSelectedItem().toString();
+        actieUitgevoerdKnop("volgende", "Fysiotherapeut " +  therapeut.split(" | ")[2] + " " + therapeut.split(" | ")[3]  + " heeft volgende week geen behandelingen" , "Data van de week kunnen niet worden bepaald");
     }//GEN-LAST:event_volgendeWeekKnopActionPerformed
 
     private void fysiotherapeutComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fysiotherapeutComboBoxActionPerformed

@@ -102,14 +102,9 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="volgendeWeekKnop" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="beschrijvingLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="beschrijvingLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="fysiotherapeutComboBox" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="beschrijvingLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="beschrijvingLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="fysiotherapeutComboBox" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
