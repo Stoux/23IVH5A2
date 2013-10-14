@@ -232,6 +232,12 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         
         if (allesGeldig) {
             long kvknr = Long.parseLong(kvkStr);
+            
+            if (manager.kvkBestaat(kvknr)) {
+                JOptionPane.showMessageDialog(this, "Er bestaat reeds een praktijk met ditzelfde KVK-nummer.\nHet KVK-nummer dient uniek te zijn, pas eventueel de andere praktijk aan.", "Fout", JOptionPane.ERROR_MESSAGE);
+                checkGeldig(false, kvkLabel);
+                return;
+            }
 
             Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telnr, faxnr);
             boolean succes;

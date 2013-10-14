@@ -15,6 +15,7 @@ import praktijk.entity.Praktijk;
  */
 public class TherapeutManager {
     private ArrayList<Therapeut> therapeuten;
+    private ArrayList<Integer> bsnNummers;
     private DataController dataController;
     
     /**
@@ -24,10 +25,12 @@ public class TherapeutManager {
     public TherapeutManager(DataController dataController) {
         this.dataController = dataController;
         therapeuten = new ArrayList<>();
+        bsnNummers = new ArrayList<>();
         
         //ophalen van objecten uit data subsysteem, cast deze naar therapeuten
         for (Object obj : dataController.laadObjectenUitFolder(Folder.Therapeuten, Therapeut.class)) {
             therapeuten.add((Therapeut) obj);
+            bsnNummers.add(((Therapeut) obj).getBsn());
         }
     }
     
@@ -58,8 +61,10 @@ public class TherapeutManager {
      */
     public boolean voegToe(Therapeut therapeut) {
         boolean succes = dataController.saveObject(Folder.Therapeuten, String.valueOf(therapeut.getBsn()), therapeut);
-        if (succes)
+        if (succes) {
             therapeuten.add(therapeut);
+            bsnNummers.add(therapeut.getBsn());
+        }
         return succes;
     }
     
@@ -83,9 +88,20 @@ public class TherapeutManager {
      */
     public boolean verwijder(int index) {
         boolean succes = dataController.verwijderBestand(Folder.Therapeuten, String.valueOf(therapeuten.get(index).getBsn()));
-        if (succes)
+        if (succes) {
             therapeuten.remove(index);
+            bsnNummers.remove(index);
+        }
         return succes;
+    }
+    
+    /**
+     * Bekijkt of er reeds een therapeut bestaat met dit BSN-nummer. Dit nummer dient namelijk uniek te zijn.
+     * @param bsn het BSN-nummer, dat zal worden opgezocht
+     * @return of het BSN-nummer al bestaat of neit
+     */
+    public boolean bsnBestaat(int bsn) {
+        return bsnNummers.contains(bsn);
     }
     
     /**

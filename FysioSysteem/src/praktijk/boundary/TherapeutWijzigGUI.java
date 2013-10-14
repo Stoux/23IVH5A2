@@ -82,7 +82,11 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         postcodeTextField.setText(wijzigTherapeut.getPostcode());
         huisnrTextField.setText(wijzigTherapeut.getHuisnummer());
         telefoonnummerTextField.setText(String.valueOf(wijzigTherapeut.getTelnr()));
-        praktijkComboBox.setSelectedItem(praktijken.get(wijzigTherapeut.getPraktijkKvk()));
+        
+        if (praktijken.containsKey(wijzigTherapeut.getPraktijkKvk()))
+            praktijkComboBox.setSelectedItem(praktijken.get(wijzigTherapeut.getPraktijkKvk()));
+        else
+            praktijkComboBox.setSelectedIndex(-1);
     }
 
     /**
@@ -282,6 +286,12 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
             Geslacht geslacht = Geslacht.Mannelijk;
             if (geslachtComboBox.getSelectedIndex() == 1) {
                 geslacht = Geslacht.Vrouwelijk;
+            }
+            
+            if (manager.bsnBestaat(bsn)) {
+                JOptionPane.showMessageDialog(this, "Er bestaat reeds een therapeut met ditzelfde BSN-nummer.\nHet BSN-nummer dient uniek te zijn, pas eventueel de andere praktijk aan.", "Fout", JOptionPane.ERROR_MESSAGE);
+                checkGeldig(false, bsnLabel);
+                return;
             }
 
             Therapeut therapeut = new Therapeut(voornaam, tussenvoegsel, achternaam, geboortedatum, geslacht, bsn, postcode, huisnr, telnr, praktijkKvk);

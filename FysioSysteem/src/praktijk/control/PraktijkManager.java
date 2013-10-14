@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class PraktijkManager {
     private ArrayList<Praktijk> praktijken;
+    private ArrayList<Long> kvkNummers;
     private DataController dataController;
     
     /**
@@ -21,10 +22,12 @@ public class PraktijkManager {
     public PraktijkManager(DataController dataController) {
         this.dataController = dataController;
         praktijken = new ArrayList<>();
+        kvkNummers = new ArrayList<>();
         
         //ophalen van objecten uit data subsysteem, cast deze naar praktijken
         for (Object obj : dataController.laadObjectenUitFolder(Folder.Praktijken, Praktijk.class)) {
             praktijken.add((Praktijk) obj);
+            kvkNummers.add(((Praktijk) obj).getKvk());
         }
     }
     
@@ -55,8 +58,10 @@ public class PraktijkManager {
      */
     public boolean voegToe(Praktijk praktijk) {
         boolean succes = dataController.saveObject(Folder.Praktijken, String.valueOf(praktijk.getKvk()), praktijk);
-        if (succes)
+        if (succes) {
             praktijken.add(praktijk);
+            kvkNummers.add(praktijk.getKvk());
+        }
         return succes;
     }
     
@@ -80,9 +85,20 @@ public class PraktijkManager {
      */
     public boolean verwijder(int index) {
         boolean succes = dataController.verwijderBestand(Folder.Praktijken, String.valueOf(praktijken.get(index).getKvk()));
-        if (succes)
+        if (succes) {
             praktijken.remove(index);
+            kvkNummers.remove(index);
+        }
         return succes;
+    }
+    
+    /**
+     * Bekijkt of er reeds een praktijk bestaat met dit KVK-nummer. Dit nummer dient namelijk uniek te zijn.
+     * @param kvk het KVK-nummer, dat zal worden opgezocht
+     * @return of het KVK-nummer al bestaat of neit
+     */
+    public boolean kvkBestaat(long kvk) {
+        return kvkNummers.contains(kvk);
     }
     
     /**
