@@ -30,12 +30,12 @@
                   <Component id="bsnLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="huisnrLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="telefoonnrLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="praktijkKvkLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="postcodeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="achternaamLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="tussenvoegselLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="geboortedatumLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="geslachtLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="praktijkKvkLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -49,9 +49,8 @@
                   <Component id="geboortedatumDatePicker" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="opslaanButton" min="-2" pref="81" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="annulerenButton" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   </Group>
                   <Component id="telefoonnummerTextField" alignment="0" max="32767" attributes="0"/>
                   <Component id="praktijkComboBox" alignment="0" max="32767" attributes="0"/>
@@ -109,16 +108,16 @@
                   <Component id="telefoonnrLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="praktijkKvkLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="praktijkComboBox" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="praktijkComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="praktijkKvkLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="opslaanButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="annulerenButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
