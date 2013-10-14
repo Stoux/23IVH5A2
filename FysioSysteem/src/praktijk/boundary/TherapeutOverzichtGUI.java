@@ -210,13 +210,7 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
      */
     private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
         String query = zoekTextField.getText();
-
-        ArrayList<Therapeut> gevondenTherapeuten = manager.zoekTherapeut(query);
-        
-        leegTabel();
-        for(Therapeut t : gevondenTherapeuten) {
-            tableModel.addRow(new Object[] { t.getVolledigeNaam(), t.getGeboortedatumFormatted(), t.getPostcode(), t.getHuisnummer(), praktijken.get(t.getPraktijkKvk()) });
-        }
+        vulTabel(manager.zoekTherapeut(query));
     }//GEN-LAST:event_zoekButtonActionPerformed
 
     /**
@@ -296,21 +290,24 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
     }
     
     /**
-     * Maakt de tabel waarin de therapeuten getoond worden leeg
+     * Leegt de tabel en vult deze vervolgens met therapeuten
+     * @param therapeuten de therapeuten waarmee de tabel gevuld moet worden
      */
-    private void leegTabel() {
+    private void vulTabel(ArrayList<Therapeut> therapeuten) {
+        //leeg de tabel
         tableModel.setRowCount(0);
+        
+        for(Therapeut t : therapeuten) {
+            String praktijknaam = (t.getPraktijkKvk() == 0) ? "" : praktijken.get(t.getPraktijkKvk());
+            tableModel.addRow(new Object[] { t.getVolledigeNaam(), t.getGeboortedatumFormatted(), t.getPostcode(), t.getHuisnummer(), praktijknaam });
+        }
     }
     
-     /**
-     * Maakt de tabel waarin de therapeuten getoond worden leeg
-     * en vult deze opnieuw met alle therapeuten
+    /**
+     * Vraagt de lijst met therapeuten op en zorgt dat de tabel gevuld wordt.
      */
     public void vernieuwOverzicht() {
-        leegTabel();
-        for(Therapeut t : manager.getTherapeuten()) {
-            tableModel.addRow(new Object[] { t.getVolledigeNaam(), t.getGeboortedatumFormatted(), t.getPostcode(), t.getHuisnummer(), praktijken.get(t.getPraktijkKvk()) });
-        }
+        vulTabel(manager.getTherapeuten());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

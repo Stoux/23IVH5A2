@@ -5,6 +5,7 @@ import praktijk.entity.Praktijk;
 import data.control.DataController;
 import data.entity.Folder;
 import java.util.*;
+import praktijk.entity.Therapeut;
 
 /**
  * Manager van {@link praktijk.boundary.PraktijkOverzichtGUI PraktijkOverzichtGUI} en {@link praktijk.boundary.PraktijkWijzigGUI PraktijkWijzigGUI}
@@ -79,12 +80,25 @@ public class PraktijkManager {
     }
     
     /**
-     * Verwijder een praktijk, deze wordt ook verwijderd uit het {@link data datasubsysteem}
+     * Verwijder een praktijk, deze wordt ook verwijderd uit het {@link data datasubsysteem}. <br />
+     * Daarnaast word het KVK-nummer in de therapeuten bij deze praktijk op 0 gezet.
      * @param index De index die deze prakijk heeft in de {@link java.util.ArrayList ArrayList} en JTable
      * @return succes: is het toevoegen geslaagd?
      */
     public boolean verwijder(int index) {
-        boolean succes = dataController.verwijderBestand(Folder.Praktijken, String.valueOf(praktijken.get(index).getKvk()));
+        long kvk = praktijken.get(index).getKvk();
+        TherapeutManager therapeutManager = new TherapeutManager(dataController);
+        ArrayList<Therapeut> therapeuten = therapeutManager.getTherapeuten();
+        
+        for (Therapeut therapeut : therapeuten) {
+            if (therapeut.getPraktijkKvk() == kvk) {
+                int therapeutIndex = therapeuten.indexOf(therapeut);
+                therapeut.setPraktijkKvk(0);
+                therapeutManager.wijzig(therapeutIndex, therapeut);
+            }
+        }
+        
+        boolean succes = dataController.verwijderBestand(Folder.Praktijken, String.valueOf(kvk));
         if (succes) {
             praktijken.remove(index);
             kvkNummers.remove(index);

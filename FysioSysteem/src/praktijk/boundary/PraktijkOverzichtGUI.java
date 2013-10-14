@@ -215,12 +215,7 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
             isNaam = false;
         }
 
-        ArrayList<Praktijk> gevondenPraktijken = manager.zoekPraktijk(query, isNaam);
-        
-        leegTabel();
-        for(Praktijk p : gevondenPraktijken) {
-            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getKvk(), p.getTelnr(), p.getFaxnr()});
-        }
+        vulTabel(manager.zoekPraktijk(query, isNaam));
     }//GEN-LAST:event_zoekButtonActionPerformed
 
     /**
@@ -300,21 +295,23 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
     }
     
     /**
-     * Maakt de tabel waarin de praktijken getoond worden leeg
+     * Leegt de tabel en vult deze vervolgens met praktijken
+     * @param praktijken de praktijken waarmee de tabel gevuld moet worden
      */
-    private void leegTabel() {
+    private void vulTabel(ArrayList<Praktijk> praktijken) {
+        //leeg de tabel
         tableModel.setRowCount(0);
+        
+        for(Praktijk p : praktijken) {
+            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getKvk(), p.getTelnr(), p.getFaxnr()});
+        }
     }
     
     /**
-     * Maakt de tabel waarin de praktijken getoond worden leeg
-     * en vult deze opnieuw met alle praktijken
+     * Vraagt de lijst met praktijken op en zorgt dat de tabel gevuld wordt.
      */
     public void vernieuwOverzicht() {
-        leegTabel();
-        for(Praktijk p : manager.getPraktijken()) {
-            tableModel.addRow(new Object[] { p.getNaam(), p.getPlaats(), p.getKvk(), p.getTelnr(), p.getFaxnr()});
-        }
+        vulTabel(manager.getPraktijken());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
