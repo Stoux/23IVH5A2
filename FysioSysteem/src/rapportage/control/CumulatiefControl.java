@@ -9,6 +9,8 @@ import behandel.entity.Behandeling;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import praktijk.entity.Therapeut;
 
@@ -68,41 +70,46 @@ public class CumulatiefControl {
     public boolean getGegevens(Date beginDatum, Date eindDatum, DefaultTableModel cumulatiefModel) {
         boolean success = false;
         cumulatiefModel.setRowCount(0);
+        
         ArrayList<Behandeling> behandelingen = manager.getBehandelingen();
-        ArrayList<Behandeling> gevonden = new ArrayList<>();
-        ArrayList<Integer> count = new ArrayList<>();
-        Integer one = 1;
+        ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
+        
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        
+        HashMap<Integer, HashMap<String, Integer>> gevondenTherapeuten = new HashMap<>();
+        
         for (Behandeling b : behandelingen) {
             if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
-                boolean found = false;
-                for (Behandeling bh : gevonden) {
-                    if (bh.getBehandelingscode().equals(b.getBehandelingscode()) && bh.getFysiotherapeutBSN() == b.getFysiotherapeutBSN()) {
-                        int index = gevonden.indexOf(bh);
-                        Integer newCount = count.get(index) + 1;
-                        count.set(index, newCount);
-                        found = true;
+                int bsn = b.getFysiotherapeutBSN();
+                HashMap<String, Integer> th = gevondenTherapeuten.get(bsn);
+                if (th == null) { //Zit nog niet in de hashmap
+                    HashMap<String, Integer> behandeling = new HashMap<>();
+                    behandeling.put(b.getBehandelingscode(), 1);
+                    gevondenTherapeuten.put(bsn,behandeling);
+                } else { //Zit in de hashmap
+                    Integer aantal = th.get(b.getBehandelingscode());
+                    if (aantal != null) { //Code is al toegevoegd
+                        aantal++;
+                        th.put(b.getBehandelingscode(), aantal);
+                    } else { //Nog niet toegevoegd
+                        th.put(b.getBehandelingscode(), 1);
                     }
-                }
-                if (found == false) {
-                    gevonden.add(b);
-                    count.add(one);
-                } else {
-                    found = false;
                 }
             }
         }
-        for (Behandeling b : gevonden) {
-            int index = gevonden.indexOf(b);
-            ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
-            Therapeut therapeut = null;
-            for(Therapeut th: therapeuten){
-                if(th.getBsn() == b.getFysiotherapeutBSN()){
-                    therapeut = th;
+        for (Map.Entry<Integer, HashMap<String, Integer>> entry : gevondenTherapeuten.entrySet()) {
+            Therapeut t = null;
+            for (Therapeut therapeut : therapeuten) {
+                if (therapeut.getBsn() == entry.getKey()) {
+                    t = therapeut;
                     break;
                 }
             }
-            SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-            cumulatiefModel.addRow(new Object[]{therapeut.getPraktijkKvk(), b.getFysiotherapeutBSN(), b.getBehandelingscode(), count.get(index), sf.format(b.getBegintijd()), b.getOpmerking()});
+            for (Map.Entry<String, Integer> therapeutEntry : entry.getValue().entrySet()) {
+                cumulatiefModel.addRow(new Object[]{t.getPraktijkKvk(), entry.getKey(), therapeutEntry.getKey(), therapeutEntry.getValue()});
+            }
+            
+            
         }
         if (cumulatiefModel.getRowCount() > 0) {
             success = true;
