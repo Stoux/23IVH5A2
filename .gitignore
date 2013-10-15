@@ -1,3 +1,5 @@
 /FysioSysteem/nbproject/private/
 /FysioSysteem/build/
 /FysioSysteem/dist/
+/FysioSysteem/.jacocoverage/
+/FysioSysteem/jacoco.exec-*
