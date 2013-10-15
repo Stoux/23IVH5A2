@@ -86,17 +86,17 @@ public class CumulatiefGUI extends javax.swing.JFrame {
 
         overzichtTabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Bedrijfscode", "Therapeutcode", "Behandelingscode", "Aantal Behandelingen", "Datum", "Opmerkingen"
+                "Bedrijfscode", "Therapeutcode", "Behandelingscode", "Aantal Behandelingen"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,8 +108,6 @@ public class CumulatiefGUI extends javax.swing.JFrame {
         overzichtTabel.getColumnModel().getColumn(1).setResizable(false);
         overzichtTabel.getColumnModel().getColumn(2).setResizable(false);
         overzichtTabel.getColumnModel().getColumn(3).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(4).setResizable(false);
-        overzichtTabel.getColumnModel().getColumn(5).setResizable(false);
 
         javax.swing.GroupLayout inhoudPanelLayout = new javax.swing.GroupLayout(inhoudPanel);
         inhoudPanel.setLayout(inhoudPanelLayout);

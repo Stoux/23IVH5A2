@@ -20,6 +20,8 @@ public class PlanningControl {
 
     private DefaultTableModel model;
     private BehandelingManager manager;
+    
+    private SimpleDateFormat sf;
 
     /**
      * Constructor voor PlanningControl, waar alle logica in zit.
@@ -30,6 +32,7 @@ public class PlanningControl {
     public PlanningControl(DefaultTableModel model, BehandelingManager manager) {
         this.model = model;
         this.manager = manager;
+        sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
     }
 
     /**
@@ -56,9 +59,9 @@ public class PlanningControl {
         ArrayList<Behandeling> behandelingen = manager.getBehandelingen();
         boolean success = false;
         planningModel.setRowCount(0);
+        ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
         for (Behandeling b : behandelingen) {
             if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
-                ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
                 Therapeut therapeut = null;
                 for(Therapeut th: therapeuten){
                     if(th.getBsn() == b.getFysiotherapeutBSN()){
@@ -66,7 +69,6 @@ public class PlanningControl {
                         break;
                     }
                 }
-                SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
                 planningModel.addRow(new Object[]{therapeut.getPraktijkKvk(), b.getFysiotherapeutBSN(), b.getBurgerServiceNummer(), b.getBehandelingscode(), sf.format(b.getBegintijd()), b.getOpmerking()});
             }
         }
@@ -80,9 +82,9 @@ public class PlanningControl {
     public boolean getGegevensVanArrayList(Date beginDatum, Date eindDatum, DefaultTableModel planningModel, ArrayList<Behandeling> behandelingen) {
         boolean success = false;
         planningModel.setRowCount(0);
+        ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
         for (Behandeling b : behandelingen) {
             if (!b.getBegintijd().before(beginDatum) && !b.getEindtijd().after(eindDatum)) {
-                ArrayList <Therapeut> therapeuten = manager.getTherapeuten();
                 Therapeut therapeut = null;
                 for(Therapeut th: therapeuten){
                     if(th.getBsn() == b.getFysiotherapeutBSN()){
@@ -90,7 +92,6 @@ public class PlanningControl {
                         break;
                     }
                 }
-                SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
                 planningModel.addRow(new Object[]{therapeut.getPraktijkKvk(), b.getFysiotherapeutBSN(), b.getBurgerServiceNummer(), b.getBehandelingscode(), sf.format(b.getBegintijd()), b.getOpmerking()});
             }
         }
