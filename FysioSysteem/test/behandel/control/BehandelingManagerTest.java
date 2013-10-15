@@ -42,7 +42,9 @@ public class BehandelingManagerTest {
                 "ID", "Patiënt BSN", "Fysiotherapeut BSN", "Behandelcode", "Datum", "Begin tijd", "Eind tijd", "Status", "Opmerkingen"
             }
         );
+        dc = new DataController();
         bm = new BehandelingManager(dc, tm);
+        tm = new TherapeutManager(dc);
     }
     
     @BeforeClass
@@ -87,7 +89,7 @@ public class BehandelingManagerTest {
     public void testGetBehandeling() {
         System.out.println("getBehandeling");
         Behandeling maak = bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
-        Behandeling get = bm.getBehandeling(1);
+        Behandeling get = bm.getBehandeling(maak.getBehandelingsID());
         Assert.assertEquals(maak, get);
     }
     
@@ -97,10 +99,10 @@ public class BehandelingManagerTest {
     @Test
     public void testUpdateBehandeling() {
         System.out.println("updateBehandeling");
-        bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
-        Behandeling voor = bm.getBehandeling(1);
-        bm.updateBehandeling(1, "CD2", 456987123, bm.parseDateString("10/12/2013 09:30"), bm.parseDateString("10/12/2013 10:15"), Behandeling.Status.Ingepland, "Opmerking nummero 2");
-        Behandeling na = bm.getBehandeling(1);
+        Behandeling a = bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
+        Behandeling voor = bm.getBehandeling(a.getBehandelingsID());
+        bm.updateBehandeling(a.getBehandelingsID(), "CD2", 456987123, bm.parseDateString("10/12/2013 09:30"), bm.parseDateString("10/12/2013 10:15"), Behandeling.Status.Ingepland, "Opmerking nummero 2");
+        Behandeling na = bm.getBehandeling(a.getBehandelingsID());
         Assert.assertNotSame(voor, na);
     }
     /**
@@ -112,7 +114,7 @@ public class BehandelingManagerTest {
         ArrayList<Behandeling> voor = bm.getBehandelingen();
         bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
         ArrayList<Behandeling> na = bm.getBehandelingen();
-        Assert.assertNotSame(voor, na);
+        Assert.assertTrue("Arrays zijn niet zelfde lengte", voor.size() == na.size());
     }
     /**
      * Test of deleteBehandeling method
@@ -120,10 +122,10 @@ public class BehandelingManagerTest {
     @Test
     public void testDeleteBehandeling() {
         System.out.println("deleteBehandeling");
-        bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
-        Behandeling voor = bm.getBehandeling(1);
-        bm.deleteBehandeling(1);
-        Behandeling na = bm.getBehandeling(1);
+        Behandeling a = bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
+        Behandeling voor = bm.getBehandeling(a.getBehandelingsID());
+        bm.deleteBehandeling(a.getBehandelingsID());
+        Behandeling na = bm.getBehandeling(a.getBehandelingsID());
         Assert.assertNotSame(voor, na);
     }
     /**
@@ -133,7 +135,7 @@ public class BehandelingManagerTest {
     public void testIsFysiotherapeutBeschikbaarPositief() {
         System.out.println("isFysiotherapeutBeschikbaarPositief");
         bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 15:30"), bm.parseDateString("10/12/2013 16:30"), Behandeling.Status.Ingepland, "Opmerking test");
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = bm.isFysiotherapeutBeschikbaar(987654321, bm.parseDateString("10/12/2013 14:30"), bm.parseDateString("10/12/2013 15:00"));
         Assert.assertEquals(expResult, result);
     }
@@ -145,7 +147,7 @@ public class BehandelingManagerTest {
     public void testIsFysiotherapeutBeschikbaarNegatief() {
         System.out.println("isFysiotherapeutBeschikbaarNegatief");
         bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Ingepland, "Opmerking test");
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = bm.isFysiotherapeutBeschikbaar(987654321, bm.parseDateString("10/12/2013 14:30"), bm.parseDateString("10/12/2013 15:00"));
         Assert.assertEquals(expResult, result);
     }
