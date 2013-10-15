@@ -5,6 +5,7 @@
 package behandel.control;
 
 import behandel.entity.Behandeling;
+import behandel.entity.Behandeling.Status;
 import data.control.DataController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,6 @@ public class BehandelingManagerTest {
     private DefaultTableModel dm;
     
     public BehandelingManagerTest() {
-        DataController dc = new DataController();
         dm = new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -42,9 +42,11 @@ public class BehandelingManagerTest {
                 "ID", "Patiënt BSN", "Fysiotherapeut BSN", "Behandelcode", "Datum", "Begin tijd", "Eind tijd", "Status", "Opmerkingen"
             }
         );
-        dc = new DataController();
-        bm = new BehandelingManager(dc, tm);
+        DataController dc = new DataController();
         tm = new TherapeutManager(dc);
+        bm = new BehandelingManager(dc, tm);
+        bm.getTherapeuten().clear();
+        bm.getBehandelingen().clear();
     }
     
     @BeforeClass
@@ -99,11 +101,29 @@ public class BehandelingManagerTest {
     @Test
     public void testUpdateBehandeling() {
         System.out.println("updateBehandeling");
+        //Maak behandeling
         Behandeling a = bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
-        Behandeling voor = bm.getBehandeling(a.getBehandelingsID());
-        bm.updateBehandeling(a.getBehandelingsID(), "CD2", 456987123, bm.parseDateString("10/12/2013 09:30"), bm.parseDateString("10/12/2013 10:15"), Behandeling.Status.Ingepland, "Opmerking nummero 2");
-        Behandeling na = bm.getBehandeling(a.getBehandelingsID());
-        Assert.assertNotSame(voor, na);
+        //Get alle info uit de behandeling
+        int id = a.getBehandelingsID();
+        int bsn = a.getBurgerServiceNummer();
+        String code = a.getBehandelingscode();
+        int fysio = a.getFysiotherapeutBSN();
+        Date begin = a.getBegintijd();
+        Date eind = a.getEindtijd();
+        Status status = a.getStatus();
+        String opmerking = a.getOpmerking();
+        //Update behandeling
+        boolean succes = bm.updateBehandeling(a.getBehandelingsID(), "CD2", 456987123, bm.parseDateString("10/12/2013 09:30"), bm.parseDateString("10/12/2013 10:15"), Behandeling.Status.Ingepland, "Opmerking nummero 2");
+        Assert.assertTrue(succes);
+        //Compare
+        Assert.assertTrue(a.getBehandelingsID() == id);
+        Assert.assertTrue(a.getBurgerServiceNummer() == bsn);
+        Assert.assertTrue(a.getBehandelingscode() != code);
+        Assert.assertTrue(a.getFysiotherapeutBSN() != fysio);
+        Assert.assertTrue(!a.getBegintijd().equals(begin));
+        Assert.assertTrue(!a.getEindtijd().equals(eind));
+        Assert.assertTrue(!a.getStatus().equals(status));
+        Assert.assertTrue(!a.getOpmerking().equals(opmerking));
     }
     /**
      * Test of getBehandelingen method
@@ -134,10 +154,13 @@ public class BehandelingManagerTest {
     @Test
     public void testIsFysiotherapeutBeschikbaarPositief() {
         System.out.println("isFysiotherapeutBeschikbaarPositief");
-        bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 15:30"), bm.parseDateString("10/12/2013 16:30"), Behandeling.Status.Ingepland, "Opmerking test");
-        boolean expResult = false;
-        boolean result = bm.isFysiotherapeutBeschikbaar(987654321, bm.parseDateString("10/12/2013 14:30"), bm.parseDateString("10/12/2013 15:00"));
-        Assert.assertEquals(expResult, result);
+        //Voeg therapeut toe
+        tm.voegToe(new Therapeut("Kees", "van", "Voort", null, Therapeut.Geslacht.Mannelijk, 123123123, null, null, null, 1));
+        //Voeg nieuwe behandeling aan de therapeut toe
+        bm.maakBehandeling(123456789, "AB1", 123123123, bm.parseDateString("10/12/2013 15:30"), bm.parseDateString("10/12/2013 16:30"), Behandeling.Status.Ingepland, "Opmerking test");
+        //Controleer of die beschikbaar is
+        boolean result = bm.isFysiotherapeutBeschikbaar(123123123, bm.parseDateString("10/12/2013 14:30"), bm.parseDateString("10/12/2013 15:00"));
+        Assert.assertEquals(true, result);
     }
     
     /**
@@ -146,10 +169,10 @@ public class BehandelingManagerTest {
     @Test
     public void testIsFysiotherapeutBeschikbaarNegatief() {
         System.out.println("isFysiotherapeutBeschikbaarNegatief");
-        bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Ingepland, "Opmerking test");
-        boolean expResult = true;
-        boolean result = bm.isFysiotherapeutBeschikbaar(987654321, bm.parseDateString("10/12/2013 14:30"), bm.parseDateString("10/12/2013 15:00"));
-        Assert.assertEquals(expResult, result);
+        tm.voegToe(new Therapeut("Kees", "van", "Voort", null, Therapeut.Geslacht.Mannelijk, 123123123, null, null, null, 1));
+        bm.maakBehandeling(123456789, "AB1", 123123123, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Ingepland, "Opmerking test");
+        boolean result = bm.isFysiotherapeutBeschikbaar(123123123, bm.parseDateString("10/12/2013 14:30"), bm.parseDateString("10/12/2013 15:00"));
+        Assert.assertEquals(false, result);
     }
     
     /*
@@ -158,7 +181,7 @@ public class BehandelingManagerTest {
     @Test
     public void testIsBestaandeTherapeutPositief() {
         System.out.println("isBestaandeTherapeutPositief");
-        tm.voegToe(new Therapeut("Kees", "van", "Voort", bm.parseDateString("19/08/1978"), Therapeut.Geslacht.Mannelijk, 456789123, "5964AB", "103", "010390349", 8964745));
+        tm.voegToe(new Therapeut("Kees", "van", "Voort", null, Therapeut.Geslacht.Mannelijk, 456789123, "5964AB", "103", "010390349", 8964745));
         boolean expResult = true;
         boolean result = bm.isBestaandeTherapeut(456789123); 
         Assert.assertEquals(expResult, result);   

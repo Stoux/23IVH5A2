@@ -162,13 +162,15 @@ public class BehandelingManager {
      * @return De nieuwe behandeling
      */
     public Behandeling maakBehandeling(int bsn, String behandelingscode, int fysiotherapeutBSN, Date begintijd, Date eindtijd, Status status, String opmerking) {
-        int id = 1;
+        int id = 0;
         for (Behandeling behandeling : behandelingen) {
             if (behandeling.getBehandelingsID() > id) id = behandeling.getBehandelingsID();
         }
+        id = id + 1;
         Behandeling behandeling = new Behandeling(id, bsn, behandelingscode, fysiotherapeutBSN, begintijd, eindtijd, status, opmerking);
         dataController.saveObject(Folder.Behandelingen, String.valueOf(id), behandeling);
         aangepastePatienten.add(bsn);
+        behandelingen.add(behandeling);
         return behandeling;
     }
     
