@@ -134,7 +134,7 @@ public class BehandelingManagerTest {
         ArrayList<Behandeling> voor = bm.getBehandelingen();
         bm.maakBehandeling(123456789, "AB1", 987654321, bm.parseDateString("10/12/2013 14:15"), bm.parseDateString("10/12/2013 15:30"), Behandeling.Status.Voltooid, "Opmerking test");
         ArrayList<Behandeling> na = bm.getBehandelingen();
-        Assert.assertTrue("Arrays zijn niet zelfde lengte", voor.size() == na.size());
+        Assert.assertTrue("Arrays zijn niet zelfde lengte", voor.size() != na.size());
     }
     /**
      * Test of deleteBehandeling method
