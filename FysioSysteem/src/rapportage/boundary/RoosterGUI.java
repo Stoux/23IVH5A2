@@ -20,6 +20,7 @@ import javax.swing.table.TableColumnModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import praktijk.entity.Therapeut;
 import rapportage.control.RoosterControl;
+import home.control.IconManager;
 
 /**
  *
@@ -42,6 +43,7 @@ public class RoosterGUI extends javax.swing.JFrame {
      */
     // TODO new RoosterControl(defaulttablemodel van de jtable)
     public RoosterGUI(HomeGUI homeGUI, BehandelingManager bManager) {
+        IconManager.setIcon(this);
         //Maak de DateFormats
         dagMaand = new SimpleDateFormat("dd/MM"); // dag/maand (bijvoorbeeld 12-10)
         dagWeek = new SimpleDateFormat("u"); // Dag in de week (Maandag = 1 en Zondag = 7)
@@ -256,6 +258,7 @@ public class RoosterGUI extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Rooster");
 
         beschrijvingLabel1.setText("Selecteer de fysiotherapeut");
 
@@ -376,12 +379,9 @@ public class RoosterGUI extends javax.swing.JFrame {
                         .addComponent(vorigeWeekKnop, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(volgendeWeekKnop))
-                    .addGroup(roosterPanelLayout.createSequentialGroup()
-                        .addGroup(roosterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(beschrijvingLabel3)
-                            .addComponent(beschrijvingLabel1)
-                            .addComponent(fysiotherapeutComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)))
+                    .addComponent(beschrijvingLabel3)
+                    .addComponent(beschrijvingLabel1)
+                    .addComponent(fysiotherapeutComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         roosterPanelLayout.setVerticalGroup(

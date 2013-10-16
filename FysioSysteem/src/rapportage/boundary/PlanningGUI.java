@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rapportage.control.PlanningControl;
+import home.control.IconManager;
 
 /**
  *
@@ -27,6 +28,7 @@ public class PlanningGUI extends javax.swing.JFrame {
      * Creates new form PlanningGUI
      */
     public PlanningGUI(HomeGUI homeGUI, BehandelingManager manager) {
+        IconManager.setIcon(this);
         this.homeGUI = homeGUI;
         initComponents();
         control = new PlanningControl((DefaultTableModel) overzichtTabel.getModel(), manager);
@@ -72,6 +74,7 @@ public class PlanningGUI extends javax.swing.JFrame {
         terugMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Planning");
 
         datumButton.setText("Zoek op datum");
         datumButton.addActionListener(new java.awt.event.ActionListener() {
