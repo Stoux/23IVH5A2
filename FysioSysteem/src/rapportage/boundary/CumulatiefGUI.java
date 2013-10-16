@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rapportage.control.CumulatiefControl;
+import home.control.IconManager;
 
 /**
  *
@@ -26,6 +27,7 @@ public class CumulatiefGUI extends javax.swing.JFrame {
      * Creates new form CumulatiefGUI
      */
     public CumulatiefGUI(HomeGUI homeGUI, BehandelingManager manager) {
+        IconManager.setIcon(this);
         this.homeGUI = homeGUI;
         initComponents();
         control = new CumulatiefControl((DefaultTableModel) overzichtTabel.getModel(), manager);
@@ -69,6 +71,7 @@ public class CumulatiefGUI extends javax.swing.JFrame {
         terugMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Cumulatief overzicht");
 
         terugButton.setText("Terug");
         terugButton.addActionListener(new java.awt.event.ActionListener() {
