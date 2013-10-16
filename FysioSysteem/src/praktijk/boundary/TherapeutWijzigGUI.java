@@ -1,5 +1,6 @@
 package praktijk.boundary;
 
+import home.control.IconManager;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,12 +28,15 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form TherapeutWijzigGUI
+     * @param overzicht het therapeutoverzicht dat vernieuwd dient te worden
+     * @param manager de manager voor het lezen en schrijven van objecten
      */
     public TherapeutWijzigGUI(TherapeutOverzichtGUI overzicht, TherapeutManager manager) {
         initComponents();
         this.manager = manager;
         this.overzichtGUI = overzicht;
         this.isNieuw = true;
+        IconManager.setIcon(this);
         
         this.setTitle("Therapeut toevoegen");
         geboortedatumDatePicker.setFormats(new SimpleDateFormat("dd-MM-yyyy"));
@@ -40,6 +44,12 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         vulComboBox();
     }
     
+    /**
+     *
+     * @param overzicht het therapeutoverzicht dat vernieuwd dient te worden
+     * @param manager de manager voor het lezen en schrijven van objecten
+     * @param index index van de te wijzigen therapeut
+     */
     public TherapeutWijzigGUI(TherapeutOverzichtGUI overzicht, TherapeutManager manager, int index) {
         initComponents();
         this.manager = manager;
@@ -47,6 +57,7 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         this.index = index;
         this.isNieuw = false;
         this.wijzigTherapeut = manager.getTherapeut(index);
+        IconManager.setIcon(this);
         
         bsnTextField.setEnabled(false);
         this.setTitle("Therapeut wijzigen");

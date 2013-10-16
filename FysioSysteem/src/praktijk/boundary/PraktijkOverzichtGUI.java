@@ -1,6 +1,7 @@
 package praktijk.boundary;
 
 import home.boundary.HomeGUI;
+import home.control.IconManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -21,17 +22,19 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form PraktijkOverzichtGUI
+     * @param homeGUI het startscherm waar naar terug gekeerd wordt
+     * @param praktijkManager de manager voor het lezen en schrijven van objecten
      */
     public PraktijkOverzichtGUI(HomeGUI homeGUI, PraktijkManager praktijkManager) {       
         this.homeGUI = homeGUI;
+        manager = praktijkManager;
+        IconManager.setIcon(this);
+        
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        
-        manager = praktijkManager;
-        tableModel = (DefaultTableModel) praktijkenTable.getModel();       
+        tableModel = (DefaultTableModel) praktijkenTable.getModel();    
         
         PromptSupport.setPrompt("Zoekterm...", zoekTextField);
-        
         vernieuwOverzicht();     
         
         addWindowListener(new WindowAdapter() {

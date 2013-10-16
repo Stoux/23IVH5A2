@@ -17,7 +17,7 @@ import praktijk.entity.*;
 
 /**
  * TestSuite voor klassen uit het deelsysteem Praktijken en Therpeuten<br />
- * Voor het runnen, aangeraden eerst alle therapeuten en praktijken te verwijderen!
+ * Voor het testen van de suite is het aangeraden eerst alle therapeuten en praktijken te verwijderen!
  * @author Dennis
  */
 @RunWith(Suite.class)

@@ -1,5 +1,6 @@
 package praktijk.boundary;
 
+import home.control.IconManager;
 import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -22,17 +23,26 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
     private boolean allesGeldig;
 
     /**
-     * Creates new form PraktijkWijzigGUI
+     * Constructor voor het toevoegen van een praktijk
+     * @param overzicht het praktijkoverzicht dat vernieuwd dient te worden
+     * @param manager de manager voor het lezen en schrijven van objecten
      */
     public PraktijkWijzigGUI(PraktijkOverzichtGUI overzicht, PraktijkManager manager) {
         initComponents();
         this.manager = manager;
         this.overzichtGUI = overzicht;
         this.isNieuw = true;
+        IconManager.setIcon(this);
         
         this.setTitle("Praktijk toevoegen");
     }
     
+    /**
+     * Constructor voor het wijzigen van een praktijk
+     * @param overzicht het praktijkoverzicht dat vernieuwd dient te worden
+     * @param manager de manager voor het lezen en schrijven van objecten
+     * @param index index van de te wijzigen praktijk
+     */
     public PraktijkWijzigGUI(PraktijkOverzichtGUI overzicht, PraktijkManager manager, int index) {
         initComponents();
         this.manager = manager;
@@ -40,6 +50,7 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         this.index = index;
         this.isNieuw = false;
         this.wijzigPraktijk = manager.getPraktijk(index);
+        IconManager.setIcon(this);
         
         kvkNummerTextField.setEnabled(false);
         this.setTitle("Praktijk wijzigen");

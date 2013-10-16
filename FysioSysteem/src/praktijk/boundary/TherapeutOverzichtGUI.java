@@ -1,6 +1,7 @@
 package praktijk.boundary;
 
 import home.boundary.HomeGUI;
+import home.control.IconManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -23,18 +24,20 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form TherapeutOverzichtGUI
+     * @param homeGUI het startscherm waar naar terug gekeerd wordt
+     * @param therapeutManager de manager voor het lezen en schrijven van objecten
      */
     public TherapeutOverzichtGUI(HomeGUI homeGUI, TherapeutManager therapeutManager) {       
         this.homeGUI = homeGUI;
+        manager = therapeutManager;
+        IconManager.setIcon(this);
+        
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        
-        manager = therapeutManager;
-        praktijken = manager.getPraktijkNamen();
         tableModel = (DefaultTableModel) therapeutenTable.getModel();
+        praktijken = manager.getPraktijkNamen();
         
         PromptSupport.setPrompt("Zoekterm...", zoekTextField);
-        
         vernieuwOverzicht();     
         
         addWindowListener(new WindowAdapter() {
