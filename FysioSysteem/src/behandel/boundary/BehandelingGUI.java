@@ -438,6 +438,11 @@ public class BehandelingGUI extends javax.swing.JFrame {
         Status status = Status.valueOf(statusComboBox.getSelectedItem().toString());
         String opmerking = opmerkingTextArea.getText();
         
+        String s = (String) behandelingCodeBox.getSelectedItem(); //Check de BehandelGegevens combobox
+        if (manager.getBehandelGegevens(s) == null) {
+            geefError("Er zijn geen goede behandelgegevens geselecteerd."); return;
+        }
+        
         if (behandeling == null) {
             int patientBSNlengte = patientBSNField.getText().length();
             if (patientBSNlengte != 8 && patientBSNlengte != 9) { //Check de lengte van het BSN

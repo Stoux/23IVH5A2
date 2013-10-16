@@ -102,9 +102,44 @@ public class BehandelingManager {
      */
     private void haalOpgeslagenStamGegevensOp() {
         ArrayList<Object> opgeslagenObjecten = dataController.laadObjectenUitFolder(Folder.BehandelingGegevens, BehandelGegevens.class); //Haal alle opgeslagen stamgegevens op
-        for (Object opgeslagenObject : opgeslagenObjecten) {
-            BehandelGegevens gegevens = (BehandelGegevens) opgeslagenObject;
-            stamGegevens.put(gegevens.getBehandelingscode(), gegevens); //Sla de gegevens op in de HashMap
+        if (opgeslagenObjecten.size() == 20) {
+            for (Object opgeslagenObject : opgeslagenObjecten) {
+                BehandelGegevens gegevens = (BehandelGegevens) opgeslagenObject;
+                stamGegevens.put(gegevens.getBehandelingscode(), gegevens); //Sla de gegevens op in de HashMap
+            }
+        } else {
+            /*
+             * Hardcoded StamGegevens
+             */
+            stamGegevens.clear();
+            String[][] gegevens = new String[][] {
+                new String[]{"AF1", "Algemene fysiotherapie (45 minuten)", "De fysiotherapeut helpt mensen die niet vooruit komen in het dagelijks leven"},
+                new String[]{"AF2", "Algemene fysiotherapie (60 minuten)", "De fysiotherapeut helpt mensen die niet vooruit komen in het dagelijks leven"},
+                new String[]{"BF1", "Bekkenfysiotherapie (45 minuten)", "De fysiotherapeut helpt mensen met problemen in het gebied van het bekken, de lage rug, buik en bekkenbodem"},
+                new String[]{"BF2", "Bekkenfysiotherapie (60 minuten)", "De fysiotherapeut helpt mensen met problemen in het gebied van het bekken, de lage rug, buik en bekkenbodem"},
+                new String[]{"KF1", "Kinderfysiotherapie (45 minuten)", "De kinderfysiotherapeut helpt kinderen tot 18 jaar met bewegingsproblemen of een bewegingsachterstand"},
+                new String[]{"KF2", "Kinderfysiotherapie (60 minuten)", "De kinderfysiotherapeut helpt kinderen tot 18 jaar met bewegingsproblemen of een bewegingsachterstand"},
+                new String[]{"OF1", "Oedeemfysiotherapie (45 minuten)", "De oedeemfysiotherapeut helpt mensen die last hebben van een abnormale ophoping van vocht in het lichaam, een oedeem"},
+                new String[]{"OF2", "Oedeemfysiotherapie (60 minuten)", "De oedeemfysiotherapeut helpt mensen die last hebben van een abnormale ophoping van vocht in het lichaam, een oedeem"},
+                new String[]{"PF1", "Psychosomatische fysiotherapie (45 minuten)", "De psychosomatische fysiotherapeut helpt mensen die last hebben van klachten die met spanning of stress te maken hebben"},
+                new String[]{"PF2", "Psychosomatische fysiotherapie (60 minuten)", "De psychosomatische fysiotherapeut helpt mensen die last hebben van klachten die met spanning of stress te maken hebben"},
+                new String[]{"AR1", "Arbeidsfysiotherapie (45 minuten)", "De arbeidsfysiotherapeut helpt mensen die last hebben van lichamelijke problemen door werk"},
+                new String[]{"AR2", "Arbeidsfysiotherapie (60 minuten)", "De arbeidsfysiotherapeut helpt mensen die last hebben van lichamelijke problemen door werk"},
+                new String[]{"GF1", "Geriatriefysiotherapie (45 minuten)", "De geriatriefysiotherapeut helpt mensen die last hebben van ouderdomsklachten, hierdoor worden ze vaak ook minder beweeglijk"},
+                new String[]{"GF2", "Geriatriefysiotherapie (60 minuten)", "De geriatriefysiotherapeut helpt mensen die last hebben van ouderdomsklachten, hierdoor worden ze vaak ook minder beweeglijk"},
+                new String[]{"MF1", "Manuele fysiotherapie (45 minuten)", "De manueel fysiotherapeut helpt mensen die last aan de wervelkolom en de gewrichten in armen en benen."},
+                new String[]{"MF2", "Manuele fysiotherapie (60 minuten)", "De manueel fysiotherapeut helpt mensen die last aan de wervelkolom en de gewrichten in armen en benen."},
+                new String[]{"OR1", "Orofaciale fysiotherapie (45 minuten)", "De orofaciaal fysiotherapeut helpt mensen die last hebben van de spieren en gewrichten in het hoofd, maar ook halsgebied en rondom de kaak."},
+                new String[]{"OR2", "Orofaciale fysiotherapie (60 minuten)", "De orofaciaal fysiotherapeut helpt mensen die last hebben van de spieren en gewrichten in het hoofd, maar ook halsgebied en rondom de kaak."},
+                new String[]{"SF1", "Sportfysiotherapie (45 minuten)", "De sportfysiotherapeut helpt mensen te begeleiden die na ziekte of een blessure weer willen sporten."},
+                new String[]{"SF2", "Sportfysiotherapie (60 minuten)", "De sportfysiotherapeut helpt mensen te begeleiden die na ziekte of een blessure weer willen sporten."}
+            };
+            
+            for (String[] stam : gegevens) { //Laad de stam gegevens
+                BehandelGegevens bGegevens = new BehandelGegevens(stam[0], stam[1], stam[2]); //Maak de entity aan
+                stamGegevens.put(stam[0], bGegevens); //Stop die in de hashmap
+                dataController.saveObject(Folder.BehandelingGegevens, stam[0], bGegevens); //Sla hem ook op om later te gebruiken
+            }   
         }
     }
     
