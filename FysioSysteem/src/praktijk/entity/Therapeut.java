@@ -157,7 +157,7 @@ public class Therapeut implements Serializable {
      * Wijzig de voornaam van de therapeut
      * @param voornaam De nieuwe voornaam
      */
-    public void setVoorNaam(String voornaam) {
+    public void setVoornaam(String voornaam) {
         this.voornaam = voornaam;
     }
 

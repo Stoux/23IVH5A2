@@ -78,7 +78,7 @@ public class OverzichtGUI extends javax.swing.JFrame {
         int rows = overzichtModel.getRowCount();
         int x = 0;
         while (x < rows) {
-            if (behandelingID == overzichtModel.getValueAt(x, 0)) {
+            if (behandelingID == (Integer) overzichtModel.getValueAt(x, 0)) {
                 int row = overzichtTabelX.convertRowIndexToModel(x);
                 overzichtTabelX.setRowSelectionInterval(row, row);
             }

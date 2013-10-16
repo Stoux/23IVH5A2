@@ -19,6 +19,7 @@ public class PraktijkManager {
     /**
      * Constructor<br />
      * Haalt de praktijken op uit het {@link data datasubsysteem}
+     * @param dataController de controller voor het lezen en schrijven van objecten
      */
     public PraktijkManager(DataController dataController) {
         this.dataController = dataController;
@@ -118,6 +119,7 @@ public class PraktijkManager {
     /**
      * Doorzoekt de namen van de praktijken op de woorden in de query
      * @param query de woorden waarop gezocht wordt
+     * @param isName true wanneer gezocht wordt op naam, false waneer gezocht wordt op plaatsnaam
      * @return de praktijken die voldoen aan de zoekopdracht
      */
     public ArrayList<Praktijk> zoekPraktijk(String query, boolean isName) {

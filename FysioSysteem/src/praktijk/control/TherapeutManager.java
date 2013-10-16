@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import praktijk.entity.Therapeut;
 import data.control.DataController;
 import data.entity.Folder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import praktijk.entity.Praktijk;
 
@@ -21,6 +19,7 @@ public class TherapeutManager {
     /**
      * Constructor<br />
      * Haalt de therapeuten op uit het {@link data datasubsysteem}
+     * @param dataController de controller voor het lezen en schrijven van objecten
      */
     public TherapeutManager(DataController dataController) {
         this.dataController = dataController;
