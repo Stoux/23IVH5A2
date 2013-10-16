@@ -189,8 +189,13 @@ public class HomeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_therapeutenOverzichtButtonActionPerformed
 
     private void behandelingOverzichtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_behandelingOverzichtButtonActionPerformed
-        new OverzichtGUI(this, behandelingManager).setVisible(true);
-        setVisible(false);
+        OverzichtGUI oGUI = new OverzichtGUI(this, behandelingManager);
+        if (oGUI.isSuccesvolOpgehaald()) {
+            oGUI.setVisible(true);
+            setVisible(false);
+        } else {
+            oGUI.dispose();
+        }
     }//GEN-LAST:event_behandelingOverzichtButtonActionPerformed
 
     private void roosterTherapeutenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roosterTherapeutenButtonActionPerformed

@@ -71,6 +71,8 @@ public class BehandelingManager {
         tijd = new SimpleDateFormat("HH:mm");
         datumTijd = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         
+        stamGegevens.put("AR1", new BehandelGegevens("AR1", "Power", "Needed more power"));
+        
         //Haal de opgeslagen gegevens op
         haalPatientenHashMapOp();
         haalOpgeslagenStamGegevensOp();
@@ -84,7 +86,7 @@ public class BehandelingManager {
      * Haal de opgeslagen patienten op (van het andere systeem)
      */
     private void haalPatientenHashMapOp() {
-        HashMap object = (HashMap) dataController.laadObject(Folder.FTPFacturatie, "klanten", HashMap.class); //Laad het object
+        HashMap object = (HashMap) dataController.laadObject(Folder.FTPFacturatie, "patienten", HashMap.class); //Laad het object
         if (object == null) { //Als die null is, is die nog niet opgehaald/bestaat die niet
             patienten = new HashMap<>(); //Maak een nieuwe lege hashmap
             patientenOpgehaald = false;
@@ -246,9 +248,11 @@ public class BehandelingManager {
             patientenHashMaps.put(bsn, new HashMap<Long, String>()); //Maak een nieuwe HashMap aan voor de persoon
         }        
         for (Behandeling behandeling : behandelingen) { //Loop alle behandelingen door
-            int bsn = behandeling.getBurgerServiceNummer();
-            if (aangepastePatienten.contains(bsn)) { //Als de patient is aangepast
-                patientenHashMaps.get(bsn).put(behandeling.getBegintijd().getTime(), behandeling.getBehandelingscode()); //Voeg de behandeling toe aan die persoon's hashmap
+            if (behandeling.getStatus() == Status.Voltooid) { //Check of die voltooid is
+                int bsn = behandeling.getBurgerServiceNummer();
+                if (aangepastePatienten.contains(bsn)) { //Als de patient is aangepast
+                    patientenHashMaps.get(bsn).put(behandeling.getBegintijd().getTime(), behandeling.getBehandelingscode()); //Voeg de behandeling toe aan die persoon's hashmap
+                }
             }
         }
         boolean returnBool = true;

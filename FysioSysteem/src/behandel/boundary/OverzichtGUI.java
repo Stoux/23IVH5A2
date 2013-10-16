@@ -8,7 +8,6 @@ import behandel.control.BehandelingManager;
 import behandel.entity.Behandeling;
 import home.boundary.HomeGUI;
 import home.control.IconManager;
-import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -43,11 +42,19 @@ public class OverzichtGUI extends javax.swing.JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                homeGUI.setVisible(true);
+                homeGUI.maakZichtbaar();
                 dispose();
             }
         });
         IconManager.setIcon(this); //Set icon
+    }
+    
+    /**
+     * Kijk of het systeem succesvol is geladen
+     * @return succes
+     */
+    public boolean isSuccesvolOpgehaald() {
+        return manager.isPatientenOpgehaald();
     }
 
     /**
