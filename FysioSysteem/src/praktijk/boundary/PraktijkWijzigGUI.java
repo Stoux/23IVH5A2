@@ -237,23 +237,22 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         checkGeldig(postcode.matches("\\d{4}[a-zA-Z]{2}"), postcodeLabel);
         checkGeldig(huisnr.matches("\\d{1,}[a-zA-Z]?"), huisnummerLabel);
         checkGeldig(kvkStr.matches("\\d{8}"), kvkLabel);
-        checkGeldig(iban.matches("[a-zA-Z]{2}\\d{13,32}"), ibanLabel);
+        checkGeldig(iban.matches("[a-zA-Z]{2}\\d{2}[a-zA-Z]{4}\\d{10}"), ibanLabel);
         checkGeldig(telnr.matches("\\d{10}"), telnrLabel);
         checkGeldig(faxnr.matches("\\d{10}"), faxnrLabel);
         
         if (allesGeldig) {
             long kvknr = Long.parseLong(kvkStr);
-            
-            if (manager.kvkBestaat(kvknr)) {
-                JOptionPane.showMessageDialog(this, "Er bestaat reeds een praktijk met ditzelfde KVK-nummer.\nHet KVK-nummer dient uniek te zijn, pas eventueel de andere praktijk aan.", "Fout", JOptionPane.ERROR_MESSAGE);
-                checkGeldig(false, kvkLabel);
-                return;
-            }
 
             Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telnr, faxnr);
             boolean succes;
             
             if(isNieuw) {
+                if (manager.kvkBestaat(kvknr)) {
+                    JOptionPane.showMessageDialog(this, "Er bestaat reeds een praktijk met ditzelfde KVK-nummer.\nHet KVK-nummer dient uniek te zijn, pas eventueel de andere praktijk aan.", "Fout", JOptionPane.ERROR_MESSAGE);
+                    checkGeldig(false, kvkLabel);
+                return;
+                }
                 succes = manager.voegToe(praktijk);
             }
             else {
