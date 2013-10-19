@@ -490,14 +490,14 @@ public class BehandelingGUI extends javax.swing.JFrame {
     
     private String checkTijdString(String tijd) {
         if (tijd.length() == 4) {
-            tijd = tijd.substring(0, 2) + ":" + tijd.substring(2);
+            tijd = tijd.substring(0, 2) + ":" + tijd.substring(2);   
         }
         try {
             int uren = Integer.parseInt(tijd.substring(0,2));
             if (uren < 0 || uren > 23) throw new NumberFormatException();
             int minuten = Integer.parseInt(tijd.substring(3));
             if (minuten < 0 || minuten > 59) throw new NumberFormatException();
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             return null;
         }
         return tijd;
