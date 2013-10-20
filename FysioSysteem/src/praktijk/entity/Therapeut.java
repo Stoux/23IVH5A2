@@ -86,6 +86,10 @@ public class Therapeut implements Serializable {
         return achternaam;
     }
     
+    /**
+     * Geeft de volledige naam van de therapeut terug
+     * @return de naam in het format <i>Achternaam, Voornaam tussenvoegsels</i>
+     */
     public String getVolledigeNaam() {
         String naam = achternaam + ", " + voornaam;
         if (!tussenvoegsel.isEmpty())
@@ -101,6 +105,10 @@ public class Therapeut implements Serializable {
         return geboortedatum;
     }
     
+    /**
+     * Geeft de geboortedatum van de therapeut als string terug
+     * @return de geboortedatum van de therapeut als string in het format <i>dd-MM-yyyy</i>
+     */
     public String getGeboortedatumFormatted() {
         return new SimpleDateFormat("dd-MM-yyyy").format(geboortedatum);
     }
@@ -216,7 +224,7 @@ public class Therapeut implements Serializable {
     public void setTelnr(String telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
     }
-    
+
     /**
      * Wijzig de praktijk waar de therapeut werkzaam is
      * @param praktijkKvk Het nieuwe KVK-nummer van de praktijk
@@ -230,6 +238,13 @@ public class Therapeut implements Serializable {
      * Kan mannelijk of vrouwelijk zijn.
      */
     public enum Geslacht {
-        Mannelijk, Vrouwelijk;
+        /**
+         * Geslacht is mannelijk
+         */
+        Mannelijk,
+        /**
+         * Geslacht is vrouwelijk
+         */
+        Vrouwelijk;
     }
 }
