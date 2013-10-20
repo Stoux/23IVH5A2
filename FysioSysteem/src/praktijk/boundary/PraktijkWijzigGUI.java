@@ -2,6 +2,8 @@ package praktijk.boundary;
 
 import home.control.IconManager;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,8 +34,8 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         this.manager = manager;
         this.overzichtGUI = overzicht;
         this.isNieuw = true;
-        IconManager.setIcon(this);
         
+        setupFrame();
         this.setTitle("Praktijk toevoegen");
     }
     
@@ -50,12 +52,25 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         this.index = index;
         this.isNieuw = false;
         this.wijzigPraktijk = manager.getPraktijk(index);
-        IconManager.setIcon(this);
         
+        setupFrame();
         kvkNummerTextField.setEnabled(false);
         this.setTitle("Praktijk wijzigen");
         vulVelden();
+    }
+    
+    /**
+     * 
+     */
+    private void setupFrame() {
+        IconManager.setIcon(this);
         
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                closeWindow();
+            }
+        });
     }
     
     /**
@@ -213,11 +228,11 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void annulerenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerenButtonActionPerformed
-        this.dispose();
+        closeWindow();
     }//GEN-LAST:event_annulerenButtonActionPerformed
 
     /**
-     * Maakt een nieuwe praktijk aan of wijzigt de gegevens van een bestaande praktijk
+     * Maakt een nieuwe praktijk aan of wijzigt de gegevens van een bestaande praktijk. Ook worden alle gegevens geconroleerd.
      * @param evt 
      */
     private void opslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opslaanButtonActionPerformed
@@ -227,7 +242,7 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         String huisnr = huisnrTextField.getText();
         String kvkStr = kvkNummerTextField.getText();
         String iban = ibannrTextField.getText().replace(" ", "");
-        String telnr = telefoonnummerTextField.getText().replace(" ", "").replace("-", "");
+        String telnr = telefoonnummerTextField.getText();
         String faxnr = faxnummerTextField.getText().replace(" ", "").replace("-", "");
         
         allesGeldig = true;
@@ -238,21 +253,22 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         checkGeldig(huisnr.matches("\\d{1,}[a-zA-Z]?"), huisnummerLabel);
         checkGeldig(kvkStr.matches("\\d{8}"), kvkLabel);
         checkGeldig(iban.matches("[a-zA-Z]{2}\\d{2}[a-zA-Z]{4}\\d{10}"), ibanLabel);
-        checkGeldig(telnr.matches("\\d{10}"), telnrLabel);
+        checkGeldig(telnr.replace(" ", "").replace("-", "").matches("(\\d{10})|(\\+\\d{11})"), telnrLabel);
         checkGeldig(faxnr.matches("\\d{10}"), faxnrLabel);
         
         if (allesGeldig) {
             long kvknr = Long.parseLong(kvkStr);
 
+            if (isNieuw && manager.kvkBestaat(kvknr)) {
+                JOptionPane.showMessageDialog(this, "Er bestaat reeds een praktijk met ditzelfde KVK-nummer.\nHet KVK-nummer dient uniek te zijn, pas eventueel de andere praktijk aan.", "Fout", JOptionPane.ERROR_MESSAGE);
+                checkGeldig(false, kvkLabel);
+                return;
+            }
+
             Praktijk praktijk = new Praktijk(naam, plaats, postcode, huisnr, kvknr, iban, telnr, faxnr);
             boolean succes;
             
             if(isNieuw) {
-                if (manager.kvkBestaat(kvknr)) {
-                    JOptionPane.showMessageDialog(this, "Er bestaat reeds een praktijk met ditzelfde KVK-nummer.\nHet KVK-nummer dient uniek te zijn, pas eventueel de andere praktijk aan.", "Fout", JOptionPane.ERROR_MESSAGE);
-                    checkGeldig(false, kvkLabel);
-                return;
-                }
                 succes = manager.voegToe(praktijk);
             }
             else {
@@ -272,6 +288,12 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_opslaanButtonActionPerformed
 
+    /**
+     * Controleerd of het veld goed ingevuld is.<br />
+     * Zo ja dan wordt het label zwart gekleurd. Zo nee, dan wordt het label rood gekleurd en het opslaan verhinderd.
+     * @param geldig of het veld goed ingevuld is
+     * @param label label dat bij het veld hoort
+     */
     private void checkGeldig(boolean geldig, JLabel label) {
         if (geldig) {
             label.setForeground(Color.BLACK);
@@ -279,6 +301,16 @@ public class PraktijkWijzigGUI extends javax.swing.JFrame {
         else {
             label.setForeground(Color.RED);
             allesGeldig = false;
+        }
+    }
+    
+    /**
+     * Vraagt een bevestiging of het scherm gesloten moet worden
+     */
+    private void closeWindow() {
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Weet u zeker dat u dit scherm wilt sluiten zonder op te slaan?", "Sluiten", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            this.dispose();
         }
     }
     

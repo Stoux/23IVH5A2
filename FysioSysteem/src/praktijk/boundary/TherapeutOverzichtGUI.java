@@ -61,7 +61,6 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
         therapeutenTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         zoekTextField = new javax.swing.JTextField();
-        zoekComboBox = new javax.swing.JComboBox();
         zoekButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -97,8 +96,6 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
 
         zoekTextField.setName(""); // NOI18N
 
-        zoekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Naam" }));
-
         zoekButton.setText("Zoeken");
         zoekButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +118,6 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(zoekTextField)
-                    .addComponent(zoekComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 156, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(zoekButton, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -133,8 +129,6 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(zoekTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zoekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(zoekButton)
@@ -213,7 +207,12 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
      */
     private void zoekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoekButtonActionPerformed
         String query = zoekTextField.getText();
-        vulTabel(manager.zoekTherapeut(query));
+        
+        ArrayList<Therapeut> gevondenTherapeuten = manager.zoekTherapeut(query);
+        vulTabel(gevondenTherapeuten);
+        
+        if (gevondenTherapeuten.isEmpty())
+            JOptionPane.showMessageDialog(this, "Er zijn geen therapeuten gevonden voor deze zoekwoorden.", "Geen zoekresultaten", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_zoekButtonActionPerformed
 
     /**
@@ -310,6 +309,7 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
      * Vraagt de lijst met therapeuten op en zorgt dat de tabel gevuld wordt.
      */
     public void vernieuwOverzicht() {
+        zoekTextField.setText(null);
         vulTabel(manager.getTherapeuten());
     }
     
@@ -326,7 +326,6 @@ public class TherapeutOverzichtGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem toevoegenMenuItem;
     private javax.swing.JMenuItem verwijderMenuItem;
     private javax.swing.JButton zoekButton;
-    private javax.swing.JComboBox zoekComboBox;
     private javax.swing.JTextField zoekTextField;
     // End of variables declaration//GEN-END:variables
 }

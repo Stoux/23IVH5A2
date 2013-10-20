@@ -217,8 +217,12 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
         if(zoekComboBox.getSelectedIndex() == 1) {
             isNaam = false;
         }
-
-        vulTabel(manager.zoekPraktijk(query, isNaam));
+        
+        ArrayList<Praktijk> gevondenPraktijken = manager.zoekPraktijk(query, isNaam);
+        vulTabel(gevondenPraktijken);
+        
+        if (gevondenPraktijken.isEmpty())
+            JOptionPane.showMessageDialog(this, "Er zijn geen praktijken gevonden voor deze zoekwoorden.", "Geen zoekresultaten", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_zoekButtonActionPerformed
 
     /**
@@ -314,6 +318,7 @@ public class PraktijkOverzichtGUI extends javax.swing.JFrame {
      * Vraagt de lijst met praktijken op en zorgt dat de tabel gevuld wordt.
      */
     public void vernieuwOverzicht() {
+        zoekTextField.setText(null);
         vulTabel(manager.getPraktijken());
     }
     

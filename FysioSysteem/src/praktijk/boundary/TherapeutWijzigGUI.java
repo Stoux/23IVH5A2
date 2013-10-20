@@ -2,6 +2,8 @@ package praktijk.boundary;
 
 import home.control.IconManager;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,12 +38,10 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         this.manager = manager;
         this.overzichtGUI = overzicht;
         this.isNieuw = true;
-        IconManager.setIcon(this);
         
+        setupFrame();
         this.setTitle("Therapeut toevoegen");
-        geboortedatumDatePicker.setFormats(new SimpleDateFormat("dd-MM-yyyy"));
         geboortedatumDatePicker.setDate(new Date());
-        vulComboBox();
     }
     
     /**
@@ -57,27 +57,33 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         this.index = index;
         this.isNieuw = false;
         this.wijzigTherapeut = manager.getTherapeut(index);
-        IconManager.setIcon(this);
         
+        
+        setupFrame();
         bsnTextField.setEnabled(false);
         this.setTitle("Therapeut wijzigen");
-        geboortedatumDatePicker.setFormats(new SimpleDateFormat("dd-MM-yyyy"));
-        vulComboBox();
         vulVelden();
-        
     }
     
     /**
      * Vult de combobox met de namen van alle praktijken
      */
-    private void vulComboBox() {
-        praktijken = manager.getPraktijkNamen();
+    private void setupFrame() {
+        IconManager.setIcon(this);
+        geboortedatumDatePicker.setFormats(new SimpleDateFormat("dd-MM-yyyy"));
         
+        praktijken = manager.getPraktijkNamen();
         for(Entry<Long, String> entry : praktijken.entrySet()) {
             praktijkComboBox.addItem(entry.getValue());
         }
-        
         AutoCompleteDecorator.decorate(praktijkComboBox);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                closeWindow();
+            }
+        });
     }
     
     /**
@@ -263,18 +269,18 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void annulerenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerenButtonActionPerformed
-        this.dispose();
+        closeWindow();
     }//GEN-LAST:event_annulerenButtonActionPerformed
 
     /**
-     * Maakt een nieuwe therapeut aan of wijzigt de gegevens van een bestaande therapeut
+     * Maakt een nieuwe therapeut aan of wijzigt de gegevens van een bestaande therapeut. Ook worden alle gegevens geconroleerd.
      * @param evt 
      */
     private void opslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opslaanButtonActionPerformed
         String voornaam = voornaamTextField.getText();
         String achternaam = achternaamTextField.getText();
         String bsnStr = bsnTextField.getText();
-        String postcode = postcodeTextField.getText();
+        String postcode = postcodeTextField.getText().replace(" ", "");
         String huisnr = huisnrTextField.getText();
         String telnr = telefoonnummerTextField.getText();
         int praktijkIndex = praktijkComboBox.getSelectedIndex();
@@ -286,7 +292,7 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         checkGeldig(bsnStr.matches("\\d{8,9}"), bsnLabel);
         checkGeldig(postcode.matches("\\d{4}[a-zA-Z]{2}"), postcodeLabel);
         checkGeldig(huisnr.matches("\\d{1,}[a-zA-Z]?"), huisnrLabel);
-        checkGeldig(telnr.matches("\\d{10}"), telefoonnrLabel);
+        checkGeldig(telnr.replace(" ", "").replace("-", "").matches("(\\d{10})|(\\+\\d{11})"), telefoonnrLabel);
         checkGeldig(praktijkIndex != -1, praktijkKvkLabel);
         
         if (allesGeldig) {
@@ -328,6 +334,12 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_opslaanButtonActionPerformed
 
+    /**
+     * Controleerd of het veld goed ingevuld is.<br />
+     * Zo ja dan wordt het label zwart gekleurd. Zo nee, dan wordt het label rood gekleurd en het opslaan verhinderd.
+     * @param geldig of het veld goed ingevuld is
+     * @param label label dat bij het veld hoort
+     */
     private void checkGeldig(boolean geldig, JLabel label) {
         if (geldig) {
             label.setForeground(Color.BLACK);
@@ -335,6 +347,16 @@ public class TherapeutWijzigGUI extends javax.swing.JFrame {
         else {
             label.setForeground(Color.RED);
             allesGeldig = false;
+        }
+    }
+    
+    /**
+     * Vraagt een bevestiging of het scherm gesloten moet worden
+     */
+    private void closeWindow() {
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Weet u zeker dat u dit scherm wilt sluiten zonder op te slaan?", "Sluiten", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            this.dispose();
         }
     }
     
