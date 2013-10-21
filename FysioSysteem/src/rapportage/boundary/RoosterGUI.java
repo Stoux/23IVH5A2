@@ -478,7 +478,7 @@ public class RoosterGUI extends javax.swing.JFrame {
                 roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
                 setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
             } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
-                JOptionPane.showMessageDialog(this, "Er kan geen rooster gemaakt worden voor volgende week", "Fout", JOptionPane.ERROR_MESSAGE, null);
+                JOptionPane.showMessageDialog(this, "Er kan geen rooster gemaakt worden voor de huidige week", "Fout", JOptionPane.ERROR_MESSAGE, null);
               }
         } else {//Als setData(String) niet succesvol is uitgevoerd wordt een foutmelding getoond
             JOptionPane.showMessageDialog(this, "Data van de week kunnen niet worden bepaald", "Fout", JOptionPane.ERROR_MESSAGE, null);
