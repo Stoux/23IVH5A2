@@ -55,7 +55,8 @@ public class RoosterControl {
     /**
      *  Methode die de string uit de JComboBox splitst, zodat het BurgerServiceNummer overblijft
      * 
-     * @param comboBoxString String van de JComboBox (BSN | Achternaam, Voornaam Tussenvoegsel)
+     * @param comboBoxString String van de JComboBox (BSN | Achternaam, Voornaam Tussenvoegsel)* @return 
+     * @return BSN van therapeut 
      */
     public int zoekTherapeutBSN(String comboBoxString) {
         return Integer.parseInt(comboBoxString.split(" | ")[0]); //Splitsen van de String, zodat alleen het BurgerServiceNummer overblijft

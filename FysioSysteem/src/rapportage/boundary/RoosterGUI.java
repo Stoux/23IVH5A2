@@ -39,9 +39,10 @@ public class RoosterGUI extends javax.swing.JFrame {
     private RoosterControl control;
 
     /**
-     * Creates new form RoosterGUI
+     * Constructor voor RoosterGUI
+     * @param homeGUI HomeGUI
+     * @param bManager BehandelingManager
      */
-    // TODO new RoosterControl(defaulttablemodel van de jtable)
     public RoosterGUI(HomeGUI homeGUI, BehandelingManager bManager) {
         IconManager.setIcon(this);
         //Maak de DateFormats
