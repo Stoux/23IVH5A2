@@ -40,6 +40,7 @@ public class RoosterGUI extends javax.swing.JFrame {
 
     /**
      * Constructor voor RoosterGUI
+     *
      * @param homeGUI HomeGUI
      * @param bManager BehandelingManager
      */
@@ -57,60 +58,83 @@ public class RoosterGUI extends javax.swing.JFrame {
             }
         });
         control = new RoosterControl((DefaultTableModel) roosterTabel.getModel(), bManager); //Aanmaken van de RoosterControl
-        
+
         roosterTabel.setShowGrid(true); // lijnen in de roosterTabel laten zien
         this.setExtendedState(this.MAXIMIZED_BOTH); // scherm schermvullend maken
 
         therapeuten = bManager.getTherapeuten(); //ophalen van de ArrayList met therapeuten
-        
-        if(!therapeuten.isEmpty()){
+        fysiotherapeutComboBox.addItem(" ");
+        if (!therapeuten.isEmpty()) {
             for (Therapeut therapeut : therapeuten) {// Voor elke Therapeut in de ArrayList wordt onderstaande uitgevoerd
                 fysiotherapeutComboBox.addItem(therapeut.getBsn() + " | " + therapeut.getVolledigeNaam()); // toevoegen van de String aan de fysiotherapeutComboBox (BSN | naam therapeut)
             }
             boolean check = setDatumWeek(); //controle of setDatumWeek() succesvol is uitgevoerd
-            if (check) { // Als setDatumWeek() succesvol is uitgevoerd wordt onderstaande uitgevoerd
-                boolean succes = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succes vol is uitgevoerd
-                if (succes) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
-                    roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
-                    setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
-                }
+            if (check) {
+                roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
+                setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
             }
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(this, "Er zijn geen fysiotherapeuten gevonden", "Fout", JOptionPane.ERROR_MESSAGE, null);
         }
         AutoCompleteDecorator.decorate(fysiotherapeutComboBox); // toevoegen dat de fysiotherapeutComboBox automatisch het BSN aanvult
 
     }
+
     /**
-     * Methode die de data van de huidige week maakt, waarbij setDatumweek (Date, int, int, int) wordt aangeroepen
-     * 
+     * Methode die de data van de huidige week maakt, waarbij setDatumweek
+     * (Date, int, int, int) wordt aangeroepen
+     *
      * @return succes boolean
      */
     private boolean setDatumWeek() {
         boolean succes = false;
-        
+
         Date huidigeDatum = new Date(); //Maken van de huidige datum
         int dagNummer = Integer.parseInt(dagWeek.format(huidigeDatum)); // Het dagnummer in de week van de huidige datum
         switch (dagNummer) { //Switch voor de dag in de week waarop de data gebaseerd zijn
-            case 1: setDatumWeek(huidigeDatum, -1, +1, +5); succes = true; break; //Als het dagnummer 1 is, wordt de methode setDatumWeek uitgevoerd
-            case 2: setDatumWeek(huidigeDatum, -2, +1, +4); succes = true; break; //Als het dagnummer 2 is, wordt de methode setDatumWeek uitgevoerd
-            case 3: setDatumWeek(huidigeDatum, -3, +1, +3); succes = true; break; //Als het dagnummer 3 is, wordt de methode setDatumWeek uitgevoerd
-            case 4: setDatumWeek(huidigeDatum, -4, +1, +2); succes = true; break; //Als het dagnummer 4 is, wordt de methode setDatumWeek uitgevoerd
-            case 5: setDatumWeek(huidigeDatum, -5, +1, +1); succes = true; break; //Als het dagnummer 5 is, wordt de methode setDatumWeek uitgevoerd
-            case 6: setDatumWeek(huidigeDatum, -6, +1, 0);  succes = true; break; //Als het dagnummer 6 is, wordt de methode setDatumWeek uitgevoerd
-            case 7: setDatumWeek(huidigeDatum, -7, +1, -1); succes = true; break; //Als het dagnummer 7 is, wordt de methode setDatumWeek uitgevoerd
+            case 1:
+                setDatumWeek(huidigeDatum, -1, +1, +5);
+                succes = true;
+                break; //Als het dagnummer 1 is, wordt de methode setDatumWeek uitgevoerd
+            case 2:
+                setDatumWeek(huidigeDatum, -2, +1, +4);
+                succes = true;
+                break; //Als het dagnummer 2 is, wordt de methode setDatumWeek uitgevoerd
+            case 3:
+                setDatumWeek(huidigeDatum, -3, +1, +3);
+                succes = true;
+                break; //Als het dagnummer 3 is, wordt de methode setDatumWeek uitgevoerd
+            case 4:
+                setDatumWeek(huidigeDatum, -4, +1, +2);
+                succes = true;
+                break; //Als het dagnummer 4 is, wordt de methode setDatumWeek uitgevoerd
+            case 5:
+                setDatumWeek(huidigeDatum, -5, +1, +1);
+                succes = true;
+                break; //Als het dagnummer 5 is, wordt de methode setDatumWeek uitgevoerd
+            case 6:
+                setDatumWeek(huidigeDatum, -6, +1, 0);
+                succes = true;
+                break; //Als het dagnummer 6 is, wordt de methode setDatumWeek uitgevoerd
+            case 7:
+                setDatumWeek(huidigeDatum, -7, +1, -1);
+                succes = true;
+                break; //Als het dagnummer 7 is, wordt de methode setDatumWeek uitgevoerd
         }
         return succes;
     }
 
     /**
-     * Methode die de data van de huidige week maakt, waarbij beginDatum, beginWeek en eindDatum een waarde krijgen
-     * 
+     * Methode die de data van de huidige week maakt, waarbij beginDatum,
+     * beginWeek en eindDatum een waarde krijgen
+     *
      * @param huidigeDatum De huidige datum
-     * @param dagBegin aantal dagen wat van de huidigeDatum afgehaald moet worden, zodat beginDatum op zondag komt te staan
-     * @param dagWeek aantal dagen wat bij de datum opgeteld wordt, zodat beginWeek op maandag komt te staan
-     * @param dagEind aantal dagen wat bij de huidigeDatum opgeteld moet worden, zodat eindDatum op zaterdag komt te staan
+     * @param dagBegin aantal dagen wat van de huidigeDatum afgehaald moet
+     * worden, zodat beginDatum op zondag komt te staan
+     * @param dagWeek aantal dagen wat bij de datum opgeteld wordt, zodat
+     * beginWeek op maandag komt te staan
+     * @param dagEind aantal dagen wat bij de huidigeDatum opgeteld moet worden,
+     * zodat eindDatum op zaterdag komt te staan
      */
     private void setDatumWeek(Date huidigeDatum, int dagBegin, int dagWeek, int dagEind) {
         kalender = Calendar.getInstance(); // Ophalen van de kalender met de huidige tijdzone
@@ -123,24 +147,34 @@ public class RoosterGUI extends javax.swing.JFrame {
         kalender.add(Calendar.DATE, dagEind); //De huidige datum van de kalender optellen met x aantal dagen
         eindDatum = new Date(kalender.getTimeInMillis()); // eindDatum maken op basis van de huidige tijd op de kalender
     }
+
     /**
-     * Methode die bepaalt welk getal aan de methode setData(int) meegegeven wordt
-     * 
-     * @param kant de kant welke het rooster op moet (vorige week of volgende week)
+     * Methode die bepaalt welk getal aan de methode setData(int) meegegeven
+     * wordt
+     *
+     * @param kant de kant welke het rooster op moet (vorige week of volgende
+     * week)
      * @return succes boolean
      */
     private boolean setData(String kant) {
         boolean succes = false;
         switch (kant) {
-            case "volgende": setData(+7); succes = true; break; // als kant volgende is, wordt de methode setData(+7) uitgevoerd
-            case "vorige":   setData(-7); succes = true; break; // als kant vorige is, wordt de methode setData(-7) uitgevoerd
+            case "volgende":
+                setData(+7);
+                succes = true;
+                break; // als kant volgende is, wordt de methode setData(+7) uitgevoerd
+            case "vorige":
+                setData(-7);
+                succes = true;
+                break; // als kant vorige is, wordt de methode setData(-7) uitgevoerd
         }
         return succes;
     }
 
     /**
-     * Methode die de data van de week maakt, waarbij begindatum en eindDatum een nieuwe waarde krijgen
-     * 
+     * Methode die de data van de week maakt, waarbij begindatum en eindDatum
+     * een nieuwe waarde krijgen
+     *
      * @param addDagen aantal dagen wat bij de data opgeteld moet worden
      */
     private void setData(int addDagen) {
@@ -154,22 +188,31 @@ public class RoosterGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Methode die bepaald welk getal aan de methode setHeaders(int) meegegeven wordt
-     * 
-     * @param kant de kant welke het rooster op moet (huidige week, vorige week of volgende week)
+     * Methode die bepaald welk getal aan de methode setHeaders(int) meegegeven
+     * wordt
+     *
+     * @param kant de kant welke het rooster op moet (huidige week, vorige week
+     * of volgende week)
      */
     private void setHeaders(String kant) {
         switch (kant) {
-            case "huidige":  setHeaders(0);  break; // als kant huidige is, wordt de methode setHeaders(0) uitgevoerd
-            case "vorige":   setHeaders(-7); break; // als kant vorige is, wordt de methode setHeaders(-7) uitgevoerd
-            case "volgende": setHeaders(+7); break; // als kant volgende is, wordt de methode setHeaders(+7) uitgevoerd
+            case "huidige":
+                setHeaders(0);
+                break; // als kant huidige is, wordt de methode setHeaders(0) uitgevoerd
+            case "vorige":
+                setHeaders(-7);
+                break; // als kant vorige is, wordt de methode setHeaders(-7) uitgevoerd
+            case "volgende":
+                setHeaders(+7);
+                break; // als kant volgende is, wordt de methode setHeaders(+7) uitgevoerd
         }
     }
 
     /**
      * Methode die de data van week maakt die in de headers geplaatst worden
-     * 
-     * @param addDagen aantal dagen wat bij de data opgeteld moet worden of afgetrokken
+     *
+     * @param addDagen aantal dagen wat bij de data opgeteld moet worden of
+     * afgetrokken
      */
     private void setHeaders(int addDagen) {
         JTableHeader header = roosterTabel.getTableHeader(); //Ophalen van de Header van de roosterTabel
@@ -200,32 +243,40 @@ public class RoosterGUI extends javax.swing.JFrame {
     }
 
     /**
-     *Methode die zorgt dat de homeGUI zichtbaar wordt en het huidige scherm afgesloten wordt
+     * Methode die zorgt dat de homeGUI zichtbaar wordt en het huidige scherm
+     * afgesloten wordt
      */
     private void sluitGUI() {
         homeGUI.maakZichtbaar(); // zichtbaar maken van de homeGUI
         dispose(); // sluiten van het huidige scherm
     }
+
     /**
-     * Methode die zorgt dat de juiste methoden aangeroepen worden als er een actie uitgevoerd wordt
-     * 
-     * @param kant de kant welke het rooster op moet (vorige week of volgende week)
-     * @param foutMelding1 foutmelding die gegeven moet worden als er geen rooster gemaakt kan worden
-     * @param foutMelding2 foutmelding die gegeven moet worden als de data van de week niet bepaald kunnen worden
+     * Methode die zorgt dat de juiste methoden aangeroepen worden als er een
+     * actie uitgevoerd wordt
+     *
+     * @param kant de kant welke het rooster op moet (vorige week of volgende
+     * week)
+     * @param foutMelding1 foutmelding die gegeven moet worden als er geen
+     * rooster gemaakt kan worden
+     * @param foutMelding2 foutmelding die gegeven moet worden als de data van
+     * de week niet bepaald kunnen worden
      */
-    private void actieUitgevoerdKnop(String kant, String foutMelding1, String foutMelding2){
+    private void actieUitgevoerdKnop(String kant, String foutMelding1, String foutMelding2) {
         if (setData(kant)) { // Als setData(String) succesvol is uitgevoerd, wordt onderstaande uitgevoerd
-                boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succesvol is uitgevoerd
-                if (success) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
-                    roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
-                    
-                } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
-                    JOptionPane.showMessageDialog(this, foutMelding1, "Melding", JOptionPane.INFORMATION_MESSAGE, null);
-                  }setHeaders(kant); //Headers van de tabel aanpassen naar de data van deze week
-            } else {//Als setData(String) niet succesvol is uitgevoerd wordt een foutmelding getoond
-                JOptionPane.showMessageDialog(this, foutMelding2, "Fout", JOptionPane.ERROR_MESSAGE, null);
+            boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succesvol is uitgevoerd
+            if (success) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+                roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
+
+            } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
+                JOptionPane.showMessageDialog(this, foutMelding1, "Melding", JOptionPane.INFORMATION_MESSAGE, null);
             }
+            setHeaders(kant); //Headers van de tabel aanpassen naar de data van deze week
+        } else {//Als setData(String) niet succesvol is uitgevoerd wordt een foutmelding getoond
+            JOptionPane.showMessageDialog(this, foutMelding2, "Fout", JOptionPane.ERROR_MESSAGE, null);
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -463,26 +514,31 @@ public class RoosterGUI extends javax.swing.JFrame {
 
     private void vorigeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vorigeWeekKnopActionPerformed
         String therapeut = fysiotherapeutComboBox.getSelectedItem().toString();
-        actieUitgevoerdKnop("vorige", "Fysiotherapeut " +  therapeut.split(" | ")[2] + " " + therapeut.split(" | ")[3]  + " had vorige week geen behandelingen" , "Data van de week kunnen niet worden bepaald");
+        actieUitgevoerdKnop("vorige", "Fysiotherapeut " + therapeut.split(" | ")[2] + " " + therapeut.split(" | ")[3] + " had vorige week geen behandelingen", "Data van de week kunnen niet worden bepaald");
     }//GEN-LAST:event_vorigeWeekKnopActionPerformed
 
     private void volgendeWeekKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volgendeWeekKnopActionPerformed
         String therapeut = fysiotherapeutComboBox.getSelectedItem().toString();
-        actieUitgevoerdKnop("volgende", "Fysiotherapeut " +  therapeut.split(" | ")[2] + " " + therapeut.split(" | ")[3]  + " heeft volgende week geen behandelingen" , "Data van de week kunnen niet worden bepaald");
+        actieUitgevoerdKnop("volgende", "Fysiotherapeut " + therapeut.split(" | ")[2] + " " + therapeut.split(" | ")[3] + " heeft volgende week geen behandelingen", "Data van de week kunnen niet worden bepaald");
     }//GEN-LAST:event_volgendeWeekKnopActionPerformed
 
     private void fysiotherapeutComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fysiotherapeutComboBoxActionPerformed
         if (setDatumWeek()) { // Als setDatumWeek() succesvol is uitgevoerd, wordt onderstaande uitgevoerd
-            boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succesvol is uitgevoerd
-            if (success) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
-                roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
-                setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
-            } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
-                JOptionPane.showMessageDialog(this, "Er kan geen rooster gemaakt worden voor de huidige week", "Fout", JOptionPane.ERROR_MESSAGE, null);
-              }
+            if (fysiotherapeutComboBox.getSelectedItem().toString().equals(" ")) {
+            } else {
+                boolean success = control.maakRooster(beginDatum, eindDatum, fysiotherapeutComboBox.getSelectedItem().toString()); //controle of maakRooster() succesvol is uitgevoerd
+                if (success) { // als maakRooster() succesvol is uitgevoerd wordt onderstaande uitgevoerd
+                    roosterTabel.setModel(control.getModel()); //het TableModel ophalen uit de control en toewijzen aan de roosterTabal
+                    setHeaders("huidige"); //Headers van de tabel aanpassen naar de data van deze week
+                } else { //Als maakRooster() niet succesvol is uitgevoerd wordt een foutmelding getoond
+                    String therapeut = fysiotherapeutComboBox.getSelectedItem().toString();
+                    JOptionPane.showMessageDialog(this, "Fysiotherapeut " + therapeut.split(" | ")[2] + " " + therapeut.split(" | ")[3] + " heeft in de huidige week geen behandelingen", "Melding", JOptionPane.INFORMATION_MESSAGE, null);
+                }
+            }
         } else {//Als setData(String) niet succesvol is uitgevoerd wordt een foutmelding getoond
             JOptionPane.showMessageDialog(this, "Data van de week kunnen niet worden bepaald", "Fout", JOptionPane.ERROR_MESSAGE, null);
         }
+
     }//GEN-LAST:event_fysiotherapeutComboBoxActionPerformed
 
     private void terugKnopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terugKnopActionPerformed
