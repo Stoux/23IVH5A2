@@ -6,6 +6,7 @@ package praktijk.control;
 
 import data.control.DataController;
 import java.util.ArrayList;
+import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import praktijk.entity.Praktijk;
+import praktijk.entity.Therapeut;
 
 /**
  *
@@ -83,9 +85,31 @@ public class PraktijkManagerTest {
     @Test
     public void testVerwijder() {
         assertTrue(manager.voegToe(testPraktijk));
+        
+        //tijdelijke therapeuten
+        TherapeutManager therapeutManager = new TherapeutManager(dataController);
+        
+        for (int i = (therapeutManager.getTherapeuten().size() - 1); i >= 0; i--) {
+            therapeutManager.verwijder(i);
+        }
+        
+        Therapeut testTherapeut = new Therapeut("Henkie", "", "Stamp", new Date(), Therapeut.Geslacht.Mannelijk, 234567890, "1234AB", "1a", "07612345678", 12345678);
+        assertTrue(therapeutManager.voegToe(testTherapeut));
+        testTherapeut = new Therapeut("Jan-Pieter", "de", "Klerk", new Date(), Therapeut.Geslacht.Mannelijk, 345678901, "1234AB", "1a", "07612345678", 87654321);
+        assertTrue(therapeutManager.voegToe(testTherapeut));
+        testTherapeut = new Therapeut("Josef", "", "Raaymakers", new Date(), Therapeut.Geslacht.Mannelijk, 456789012, "1234AB", "1a", "07612345678", 12345678);
+        assertTrue(therapeutManager.voegToe(testTherapeut));
+        
         assertEquals(1, manager.getPraktijken().size());
         assertTrue(manager.verwijder(0));
         assertTrue(manager.getPraktijken().isEmpty());
+
+        //opnieuw ophalen van gegevens
+        therapeutManager = new TherapeutManager(dataController);
+        //kijkt of de KVK-nummers bij therapeuten inderdaad op 0 staan
+        assertEquals(0, therapeutManager.getTherapeut(0).getPraktijkKvk());
+        assertEquals(87654321, therapeutManager.getTherapeut(1).getPraktijkKvk());
+        assertEquals(0, therapeutManager.getTherapeut(2).getPraktijkKvk());
     }
 
     @Test
