@@ -19,6 +19,7 @@ import praktijk.entity.Praktijk;
  * @author Dennis
  */
 public class PraktijkManagerTest {
+    private static DataController dataController;
     private PraktijkManager manager;
     private Praktijk testPraktijk;
     
@@ -27,6 +28,7 @@ public class PraktijkManagerTest {
     
     @BeforeClass
     public static void setUpClass() {
+        dataController = new DataController();
     }
     
     @AfterClass
@@ -35,7 +37,7 @@ public class PraktijkManagerTest {
     
     @Before
     public void setUp() {
-        manager = new PraktijkManager(new DataController());
+        manager = new PraktijkManager(dataController);
         testPraktijk = new Praktijk("Het Krakebeentje", "Breda", "1234AB", "1a", 12345678, "NL123456789101112131415", "0761234567", "0781234567");
         for (int i = (manager.getPraktijken().size() - 1); i >= 0; i--) {
             manager.verwijder(i);

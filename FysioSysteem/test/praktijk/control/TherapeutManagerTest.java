@@ -123,7 +123,12 @@ public class TherapeutManagerTest {
 
     @Test
     public void testGetPraktijkNamen() {
+        //verwijder alle praktijken
         PraktijkManager praktijkManager = new PraktijkManager(dataController);
+        for (int i = (praktijkManager.getPraktijken().size() - 1); i >= 0; i--) {
+            praktijkManager.verwijder(i);
+        }
+        
         assertTrue(praktijkManager.getPraktijken().isEmpty());
         
         Praktijk testPraktijk = new Praktijk("Prakkie", "Oosterhout", "1234AB", "1a", 23456789, "NL123456789101112131415", "0761234567", "0781234567");
