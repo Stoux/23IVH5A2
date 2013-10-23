@@ -4,13 +4,16 @@
  */
 package behandel.control;
 
+import behandel.entity.BehandelGegevens;
 import behandel.entity.Behandeling;
 import behandel.entity.Behandeling.Status;
 import data.control.DataController;
+import data.entity.Folder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,7 +31,10 @@ import praktijk.entity.Therapeut;
 public class BehandelingManagerTest {
     private BehandelingManager bm;
     private TherapeutManager tm;
+    private DataController dc;
     private DefaultTableModel dm;
+    private HashMap<String, BehandelGegevens> stamGegevens;
+
     
     public BehandelingManagerTest() {
         dm = new javax.swing.table.DefaultTableModel(
@@ -199,5 +205,42 @@ public class BehandelingManagerTest {
         boolean expResult = false;
         boolean result = bm.isBestaandeTherapeut(456789123); 
         Assert.assertEquals(expResult, result);   
+    }
+    /*
+     * Test of getBehandelGegevens method
+     */
+    @Test
+    public void testGetBehandelGegevens() {
+        DataController dc = new DataController();
+        stamGegevens = new HashMap<>();
+        String[][] gegevens = new String[][] {
+            new String[]{"AF1", "Algemene fysiotherapie (45 minuten)", "De fysiotherapeut helpt mensen die niet vooruit komen in het dagelijks leven"},
+            };
+            for (String[] stam : gegevens) { //Laad de stam gegevens
+                BehandelGegevens bGegevens = new BehandelGegevens(stam[0], stam[1], stam[2]); //Maak de entity aan
+                stamGegevens.put(stam[0], bGegevens); //Stop die in de hashmap
+                dc.saveObject(Folder.BehandelingGegevens, stam[0], bGegevens); //Sla hem ook op om later te gebruiken
+            }   
+        
+            BehandelGegevens a = new BehandelGegevens("AF1", "Algemene fysiotherapie (45 minuten)", "De fysiotherapeut helpt mensen die niet vooruit komen in het dagelijks leven");
+            BehandelGegevens b = bm.getBehandelGegevens("AF1");
+
+            Assert.assertEquals(a.getBehandelingscode(), b.getBehandelingscode());
+            Assert.assertEquals(a.getNaam(), b.getNaam());
+            Assert.assertEquals(a.getOmschrijving(), b.getOmschrijving());
+    }
+    
+    @Test
+    public void testIsPatientenOpgehaald() {
+        boolean patientenOpgehaald = true;
+        boolean result = true;
+    }
+    
+    @Test
+    public void testSynchroniseerBehandelingen() {
+       boolean expResult = true; // Alleen testen als er verbinding is met FTP, anders is result false
+       boolean result = bm.synchroniseerBehandelingen();
+       
+       Assert.assertEquals(expResult, result);
     }
 }
