@@ -392,15 +392,12 @@ public class BehandelingGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_AnnulerenButtonActionPerformed
 
     private void OpslaanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpslaanButtonActionPerformed
-        String code = String.valueOf(behandelingCodeBox.getSelectedItem());
-        
+        String code = String.valueOf(behandelingCodeBox.getSelectedItem()); 
         try {
             datumPicker.getDate().getTime(); //Check of er een datum is ingevuld
         } catch (NullPointerException e) {
             geefError("Er is geen datum ingevuld."); return;
         }
-        Date nu = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, -1);
         Date dt = c.getTime();
