@@ -232,8 +232,10 @@ public class BehandelingManagerTest {
     
     @Test
     public void testIsPatientenOpgehaald() {
-        boolean patientenOpgehaald = true;
-        boolean result = true;
+        boolean result = bm.isPatientenOpgehaald();
+        boolean expResult = false;
+        
+        Assert.assertEquals(expResult, result);
     }
     
     @Test
