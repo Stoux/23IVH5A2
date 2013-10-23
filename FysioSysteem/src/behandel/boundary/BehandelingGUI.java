@@ -10,7 +10,9 @@ import behandel.entity.Behandeling.Status;
 import home.control.IconManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -397,7 +399,12 @@ public class BehandelingGUI extends javax.swing.JFrame {
         } catch (NullPointerException e) {
             geefError("Er is geen datum ingevuld."); return;
         }
-        if (new Date().after(datumPicker.getDate())) { //Check of de ingevulde datum niet eerder dan vandaag is
+        Date nu = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        Date dt = c.getTime();
+        if (datumPicker.getDate().before(dt)) { //Check of de ingevulde datum niet eerder dan vandaag is
             geefError("De ingevulde datum ligt in het verleden."); return;
         }
         String datum = manager.formatDatum(datumPicker.getDate()); //Format de datum
