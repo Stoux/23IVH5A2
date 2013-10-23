@@ -49,6 +49,7 @@ public class PlanningControlTest {
     
     @BeforeClass
     public static void setUpClass() {
+        DummyData.setDummyData();
     }
     
     @AfterClass
@@ -75,8 +76,8 @@ public class PlanningControlTest {
         Date eindDatum;
         SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         try{
-            beginDatum = sf.parse("14-10-2013 10:00");
-            eindDatum = sf.parse("14-10-2013 15:00");
+            beginDatum = sf.parse("16-10-2013 10:00");
+            eindDatum = sf.parse("16-10-2013 15:00");
             boolean expResult = true;
             boolean result = pc.getGegevens(beginDatum, eindDatum, dm);
             assertEquals(expResult, result);

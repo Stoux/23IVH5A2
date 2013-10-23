@@ -46,6 +46,7 @@ public class CumulatiefControlTest {
     
     @BeforeClass
     public static void setUpClass() {
+        DummyData.setDummyData();
     }
     
     @AfterClass
@@ -70,8 +71,8 @@ public class CumulatiefControlTest {
         Date beginDatum = new Date();
         Date eindDatum = new Date();
         try {
-            beginDatum = sf.parse("14-10-2013 10:00");
-            eindDatum = sf.parse("14-10-2013 15:00");
+            beginDatum = sf.parse("16-10-2013 10:00");
+            eindDatum = sf.parse("16-10-2013 15:00");
         } catch (ParseException ex) {
             System.out.println("Derp: testGetGegevens(CumulatiefControlTest) " + ex.toString());
         }

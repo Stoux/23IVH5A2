@@ -56,6 +56,7 @@ public class RoosterControlTest {
 
     @BeforeClass
     public static void setUpClass() {
+        DummyData.setDummyData();
     }
 
     @AfterClass
