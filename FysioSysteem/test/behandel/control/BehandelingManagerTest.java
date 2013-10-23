@@ -34,7 +34,7 @@ public class BehandelingManagerTest {
     private DataController dc;
     private DefaultTableModel dm;
     private HashMap<String, BehandelGegevens> stamGegevens;
-
+    private SimpleDateFormat datumTijd;
     
     public BehandelingManagerTest() {
         dm = new javax.swing.table.DefaultTableModel(
@@ -233,16 +233,93 @@ public class BehandelingManagerTest {
     @Test
     public void testIsPatientenOpgehaald() {
         boolean result = bm.isPatientenOpgehaald();
-        boolean expResult = false;
-        
+        boolean expResult = true;
+
         Assert.assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testSynchroniseerBehandelingen() {
-       boolean expResult = true; // Alleen testen als er verbinding is met FTP, anders is result false
-       boolean result = bm.synchroniseerBehandelingen();
-       
-       Assert.assertEquals(expResult, result);
+        boolean expResult = true; // Alleen testen als er verbinding is met FTP, anders is result false
+        boolean result = bm.synchroniseerBehandelingen();
+
+        Assert.assertEquals(expResult, result);
+    }
+
+     /*
+     * Test of getBehandelCodes method
+     */
+    @Test
+    public void testGetBehandelCodes() {
+        ArrayList<String> behandelcodes = new ArrayList<String>(); 
+        behandelcodes.add("AF1");
+        behandelcodes.add("AF2");
+        behandelcodes.add("BF1");
+        behandelcodes.add("BF2");
+        behandelcodes.add("KF1");
+        behandelcodes.add("KF2");
+        behandelcodes.add("OF1");
+        behandelcodes.add("OF2");
+        behandelcodes.add("PF1");
+        behandelcodes.add("PF2");
+        behandelcodes.add("AR1");
+        behandelcodes.add("AR2");
+        behandelcodes.add("GF1");
+        behandelcodes.add("GF2");
+        behandelcodes.add("MF1");
+        behandelcodes.add("MF2");
+        behandelcodes.add("OR1");
+        behandelcodes.add("OR2");
+        behandelcodes.add("SF1");
+        behandelcodes.add("SF2");
+        
+        for (String codeOpgehaald : bm.getBehandelCodes()) {
+            boolean match = false;
+            for (String codeToegevoegd : behandelcodes) {
+                if (codeOpgehaald.equals(codeToegevoegd))
+                    match = true;
+            }
+            Assert.assertTrue(match);
+        }
+    }
+    /**
+     * Test of formatDatum method
+     */
+    @Test
+    public void testFormatDatum() {
+        datumTijd = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = new Date();
+        try {
+            date = datumTijd.parse("20/01/2008 15:00");
+        } catch (ParseException ex) {
+            System.out.println("Fout testParseDateString() " + ex.toString());  
+        }
+        String formatDate = bm.formatDatum(date);
+        Assert.assertEquals("20/01/2008", formatDate);
+    }
+    /**
+     * Test of formatTijd method
+     */
+    @Test
+    public void testFormatTijd() {
+        datumTijd = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date time = new Date();
+        try {
+            time = datumTijd.parse("20/01/2008 15:00");
+        } catch (ParseException ex) {
+            System.out.println("Fout testParseDateString() " + ex.toString());  
+        }
+        String formatTime = bm.formatTijd(time);
+        Assert.assertEquals("15:00", formatTime);
+    }
+    /**
+     * Test of getDatumFormat method
+     */
+    @Test
+    public void testGetDatumFormat() {
+        SimpleDateFormat expResult = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat result = bm.getDatumFormat();
+        
+        Assert.assertEquals(expResult, result);
     }
 }

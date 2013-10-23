@@ -26,7 +26,7 @@ public class DummyData {
             
             HashMap<Integer, String> hP = new HashMap<>();
             hP.put(441, "Bert van der Ven");
-            dC.saveObject(Folder.FTPFacturatie, "klanten", hP);
+            dC.saveObject(Folder.FTPFacturatie, "patienten", hP);
             
             Behandeling behandeling = new Behandeling(200000000, 441, "AR1", 352, sF.parse("16/10/2013 14:00"), sF.parse("16/10/2013 15:00"), Behandeling.Status.Voltooid, null);
             dC.saveObject(Folder.Behandelingen, String.valueOf(behandeling.getBehandelingsID()), behandeling);
